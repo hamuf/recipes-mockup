@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark" ng-controller="navCtrl">
+    <a class="navbar-brand" href="#">מחברת המתכונים</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse row" id="collapsibleNavbar">
+        <ul class="navbar-nav col-8">
+            <li class="nav-item">
+                <a class="nav-link" href="#">המתכונים שלי</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">כל המתכונים</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav col-4">
+            <li class="nav-item" ng-show="connected" >
+                <a class="nav-link" href="#">מתכון חדש</a>
+            </li>
+            <li class="nav-item" ng-show="connected" ng-model="connected">
+                <a class="nav-link" href="javascript:void(0)" ng-click="login(false)">התנתקות</a>
+            </li>
+            <li class="nav-item" ng-show="!connected">
+                <a class="nav-link" href="javascript:void(0)" ng-click="login(true)">התחברות</a>
+            </li>
+            <li class="nav-item" ng-show="!connected">
+                <a class="nav-link" href="#">רישום</a>
+            </li>
+        <!-- </div> -->
+        </ul>
+    </div>
+</nav>
