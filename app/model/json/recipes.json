@@ -1,0 +1,32 @@
+[
+    {
+        "rId": 1,
+        "recipeName": "מאפינס שוקולד סלק",
+        "recipeImg": "http://www.hamuf.com/recipes/sites/default/files/styles/recipe-img/public/styles/recipe-img/public/beetroot--chocolate-muffins_0.jpg"
+    },
+    {
+        "rId": 2,
+        "recipeName": "רוקוט קרומפלי",
+        "recipeImg": "http://www.hamuf.com/recipes/sites/default/files/styles/recipe-img/public/styles/recipe-img/public/7.jpg"
+    },
+    {
+        "rId": 3,
+        "recipeName": "פנקייק",
+        "recipeImg": "http://www.hamuf.com/recipes/sites/default/files/styles/recipe-img/public/styles/recipe-img/public/20.jpg"
+    },
+    {
+        "rId": 4,
+        "recipeName": "חביתה טבעונית מקמח עדשים",
+        "recipeImg": "http://www.hamuf.com/recipes/sites/default/files/styles/recipe-img/public/styles/recipe-img/public/vegan_lentil_omlete.jpg"
+    },
+    {
+        "rId": 5,
+        "recipeName": "מאפינס קישואים טבעוני",
+        "recipeImg": "http://www.hamuf.com/recipes/sites/default/files/styles/recipe-img/public/styles/recipe-img/public/vegan-zukini-pastry1_s.jpg"
+    },
+    {
+        "rId": 6,
+        "recipeName": "תבשיל שעועית אדומה",
+        "recipeImg": "http://www.hamuf.com/recipes/sites/default/files/styles/recipe-img/public/styles/recipe-img/public/redbean-stew.jpg"
+    }
+]

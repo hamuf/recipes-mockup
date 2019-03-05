@@ -1,0 +1,21 @@
+<h2>רשימת מתכונים</h2>
+
+<div class="card-deck">
+    <div class="row flex-grow-1">
+
+        <div class="col-xl-3 col-md-4 col-sm-6 my-2" ng-repeat="recipe in recipes">
+            <!--Move to a directive?-->
+            <div class="card h-100">
+                <!-- make cards the same height as the tallest -->
+                <img class="card-img-top" ng-src="{{recipe.imageUrl}}" alt="{{recipe.name}} photo">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {{recipe.name}}
+                    </h4>
+                </div>
+
+            </div>
+            <!--Move to a directive?-->
+        </div>
+    </div>
+</div>
