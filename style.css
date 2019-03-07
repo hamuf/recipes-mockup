@@ -25,3 +25,13 @@
   overflow: visible;
   height: auto;
 }
+
+/**
+* When main menu is not collapsed
+**/
+@media only screen and (min-width: 768px) {
+    /* set menu items to the left */
+    .left-menu-items {
+        margin-right: auto!important;
+    }
+}
