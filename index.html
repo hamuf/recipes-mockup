@@ -20,6 +20,17 @@
     <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- back4app -->
+    <script src="node_modules/parse/dist/parse.min.js"></script>
+
+    <script>
+    Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+    Parse.initialize(
+      'Ubmbhqz8eIdPXGrtk00xDzb9xm9nJHfkf8mtsGyZ', // This is your Application ID
+      'MSnFO35ga2mtI6IGUPIncs4G92boFHOtBJ9ZSsmJ' // This is your Javascript key
+    );
+    </script>
+
     <link rel="stylesheet" href="style.css">  
     <script src="app/app.js"></script>
     <script src="app/shared/nav/navDir.js"></script>

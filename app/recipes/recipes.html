@@ -19,12 +19,13 @@
     <div class="col-8">
         <div class="form-group form-row">
             <div class="col-xl-4" style="text-align: left">
-                <label for="restrict">עוד העדפות תזונתיות</label>
+                <label for="restrict">סוגי תזונה</label>
             </div>
             <div class="col-xl-8">
                 <select class="form-control" id="restrict">
+                    <option>-- סוגי תזונה --</option>
                     <option>ללא לקטוז</option>
-                    <option>ללא סוכר</option>
+                    <option>כשר </option>
                 </select>
             </div>
         </div>
@@ -37,7 +38,7 @@
             <!--Move to a directive?-->
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->
-                <img class="card-img-top" ng-src="{{recipe.imageUrl}}" alt="{{recipe.name}} photo">
+                <img class="card-img-top" ng-src="{{recipe.imageUrl}}" alt="{{recipe.name}}">
                 <div class="card-body">
                     <h4 class="card-title">
                         {{recipe.name}}
