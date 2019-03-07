@@ -32,6 +32,7 @@
     </script>
 
     <link rel="stylesheet" href="style.css">  
+    <link rel="stylesheet" href="style-rtl.css">  
     <script src="app/app.js"></script>
     <script src="app/shared/nav/navDir.js"></script>
     <script src="app/shared/nav/navCtrl.js"></script>
@@ -42,9 +43,11 @@
 
   </head>
   <body>
-
+      <div id="main-skip-link">
+          <a href="#main" class="element-invisible element-focusable">דילוג לתוכן העיקרי</a>
+        </div>
       <main-nav></main-nav>
-      <main class="container mt-3">
+      <main id="main" class="container mt-3">
         <ng-view></ng-view>  
       </main>
 

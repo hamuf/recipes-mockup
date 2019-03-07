@@ -1,0 +1,20 @@
+* {
+    direction: rtl;
+}
+
+body {
+    text-align: right;
+}
+
+h1, h2, h3, h4 {
+    text-align: right;
+}
+
+.form-check {
+    text-align: left;
+}
+
+.form-check-input {
+    margin-right: -1em;
+    
+}

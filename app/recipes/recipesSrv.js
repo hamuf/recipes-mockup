@@ -1,7 +1,7 @@
 app.factory("recipesSrv", function ($q, $http) {
 
     function Recipe(parseRecipe) {
-        this.id = parseRecipe.get("objectId");
+        this.id = parseRecipe.id;
         this.name = parseRecipe.get("recipeName");
         this.imageUrl = parseRecipe.get("recipeImg").url();
     }
@@ -18,10 +18,8 @@ app.factory("recipesSrv", function ($q, $http) {
         query.find().then(function(results) {
 
           for (var i = 0; i < results.length; i++) {
-            // console.log(results[i].get("recipeImg").url());
+            // console.log(results[i]);
             recipes.push(new Recipe(results[i]));
-            console.log(recipes[i].imgUrl);
-
           }
 
           async.resolve(recipes);
