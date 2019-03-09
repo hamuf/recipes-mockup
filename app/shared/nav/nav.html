@@ -7,6 +7,12 @@
     </button>
     <div class="collapse navbar-collapse row" id="collapsibleNavbar">        
         <ul class="navbar-nav">
+            <li class="nav-item" ng-show="connected" >
+                <a class="nav-link" href="#" nobr>הפרופיל שלי</a>
+            </li>
+            <li class="nav-item" ng-show="connected" >
+                <a class="nav-link" href="#" nobr>מתכון חדש</a>
+            </li>
             <li class="nav-item" ng-show="connected">
                 <a class="nav-link" href="#">המתכונים שלי</a>
             </li>
@@ -15,9 +21,7 @@
             </li>
         </ul>
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" ng-show="connected" >
-                <a class="nav-link" href="#" nobr>מתכון חדש</a>
-            </li>
+
             <li class="nav-item" ng-show="connected" ng-model="connected">
                 <a class="nav-link" href="javascript:void(0)" ng-click="login(false)">התנתקות</a>
             </li>
