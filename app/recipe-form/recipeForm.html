@@ -27,12 +27,19 @@
     <div class="form-row">
         <div class="col-md-6">
             <label>מתאים לתזונה מסוג:</label>
-            <div class="form-check" ng-repeat="diet in dietType">
+            <div class="form-check">
                 <!--3 -->
-                <div class="container">
-                    <input class="form-check-input" type="checkbox" value="" id="{{'diet'+$index}}">
-                    <label class="form-check-label" for="{{'diet'+$index}}">{{diet}}
-                    </label>
+                <div class="form-row container">
+                    <div class="col-md-6" ng-repeat="diet in dietType | filter:oddColumns">
+                        <input class="form-check-input" type="checkbox" value="" id="{{'diet'+$index}}">
+                        <label class="form-check-label" for="{{'diet'+$index}}">{{diet}}
+                        </label>
+                    </div>
+                    <div class="col-md-6" ng-repeat="diet in dietType | filter:evenColumns">
+                        <input class="form-check-input" type="checkbox" value="" id="{{'diet'+$index}}">
+                        <label class="form-check-label" for="{{'diet'+$index}}">{{diet}}
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,7 +147,8 @@
     <!-- Accordion -->
     <div class="form-row mt-2">
         <div class="col-md-1 col-6">
-            <input class="btn btn-danger" type="button" value="מחק מתכון">
+            <!-- Show only on edit page -->
+            <input class="btn btn-danger" type="button" value="מחק מתכון" ng-show="false">
         </div>
         <div class="col-md-11 col-6 align-left">
             <input class="btn btn-primary" type="button" value="שמור מתכון">
