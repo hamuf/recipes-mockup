@@ -60,22 +60,18 @@ app.factory("recipesSrv", function ($q, $http) {
 
 
     function deleteRecipe(recipeId) {
-        const query = new Parse.Query("Recipe");
-        // Retrieve the object by id
-        query.get(recipeId)
-            .then((recipe) => {
-                // The object was retrieved successfully and it is ready to update.
-                recipe.destroy().then((recipe) => {
-                    // The object was deleted from the Parse Cloud.
-                }, (error) => {
-                    // The delete failed.
-                    // error is a Parse.Error with an error code and message.
-                    console.error(error);
-                })
-            }, (error) => {
-                // The object was not retrieved successfully.
-                console.error(error);
-            });;
+        const Recipe = Parse.Object.extend('Recipe');
+        const query = new Parse.Query(Recipe);
+        // here you put the objectId that you want to delete
+        query.get(recipeId).then((object) => {
+          object.destroy().then((response) => {
+            if (typeof document !== 'undefined') document.write(`Deleted Recipe: ${JSON.stringify(response)}`);
+            console.log('Deleted Recipe', response);
+          }, (error) => {
+            if (typeof document !== 'undefined') document.write(`Error while deleting Recipe: ${JSON.stringify(error)}`);
+            console.error('Error while deleting Recipe', error);
+          });
+        });
     }
     
     return {
