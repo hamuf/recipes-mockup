@@ -11,7 +11,8 @@ h1, h2, h3, h4 {
 }
 
 .form-check {
-    text-align: left;
+    /* text-align: left; */
+    text-align: right;
 }
 
 .form-check-input {

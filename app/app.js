@@ -7,6 +7,9 @@ app.config(function($routeProvider) {
     }).when("/recipe/:recipeId", {
       templateUrl: "app/recipe-details/recipeDetails.html",
       controller: "recipeDetailsCtrl"
+    }).when("/new-recipe", {
+      templateUrl: "app/recipe-form/recipeForm.html",
+      controller: "formCtrl"
     }).otherwise({
       redirectTo: "/"
     });
