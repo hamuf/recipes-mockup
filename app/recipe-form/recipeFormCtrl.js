@@ -1,23 +1,12 @@
-app.controller("formCtrl", function ($scope, $location) {
-    $scope.hamu="test";
+app.controller("formCtrl", function ($scope, $log, $location,recipesSrv) {
 
-    $scope.dietType = [
-        "טבעוני",
-        "ללא גלוטן",
-        "ללא לקטוז",
-        "פליאו",
-        "פרווה",
-        "כשר"
-    ];
+    $scope.dietType = recipesSrv.dietType;
+    $scope.dishType = recipesSrv.dishType;
 
-    $scope.dishType = [
-        "מאפים מתוקים", 
-        "פשטידות",
-        "מנות עיקריות",
-        "קינוחים",
-        "פנקייקים",
-        "קציצות ולביבות",
-        "מרקים",
-        "עוגות ועוגיות"
-    ];    
+
+    var toDeleteId = "DEBjDvXgh8";
+    recipesSrv.deleteRecipe(toDeleteId).then(function (toDeleteId) {
+      }, function (err) {
+        $log.error(err);
+      })
 });

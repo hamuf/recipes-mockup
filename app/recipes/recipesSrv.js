@@ -6,6 +6,32 @@ app.factory("recipesSrv", function ($q, $http) {
         this.imageUrl = parseRecipe.get("recipeImg").url();
     }
 
+    /**
+     * Load closed list from DB once
+     * TODO: read from server 
+     */
+    
+    var dietType = [
+        "טבעוני",
+        "ללא גלוטן",
+        "כשר",
+        "ללא לקטוז",
+        "פרווה",
+        "פליאו"
+    ];
+
+    var dishType = [
+        "מאפים מתוקים", 
+        "פשטידות",
+        "מנות עיקריות",
+        "קינוחים",
+        "פנקייקים",
+        "קציצות ולביבות",
+        "מרקים",
+        "עוגות ועוגיות"
+    ];       
+    
+
     function getRecipes() {
         var async = $q.defer();
         // var activeUserId = userSrv.getActiveUser().id;
@@ -31,47 +57,32 @@ app.factory("recipesSrv", function ($q, $http) {
 
         return async.promise;
     }
-    // Breed constructor
-    // function Recipe(id, name, imageUrl) {
-    //     this.id = id;
-    //     this.name = name;
-    //     this.imageUrl = imageUrl;
-    // }  
 
-    
-    // var recipes = [];
-    // var wasEverLoaded = false;
 
-    // // initiliaze recipes gallery
-    // function getRecipes() {
-    //     var async = $q.defer();
-    //     var recipeArr;
-    //     if (wasEverLoaded) {
-    //         async.resolve(recipes);
-    //     } else {
-    //         $http.get('app/model/json/recipes.json').then(function (res) {
-    //             // Get all recipes    
-    //             recipeArr = res.data;
-    //             var recipe;
-    //             // set each recipe to recipe object, and add it to the scope array
-    //             for (var idx = 0; idx < recipeArr.length; idx++) {
-    //                 recipe = recipeArr[idx];
-    //                 recipes.push(new Recipe(recipe.rId, recipe.recipeName, recipe.recipeImg));
-    //             }
-    //             wasEverLoaded = true;
-
-    //             async.resolve(recipes); // resolving the promise with the breeds array      
-    //         }, function (err) {
-    //             console.error(err);
-    //             async.reject(err);  // rejecting the promise
-    //         });
-    //     }
-    //     return async.promise;
-    // } 
-    
+    function deleteRecipe(recipeId) {
+        const query = new Parse.Query("Recipe");
+        // Retrieve the object by id
+        query.get(recipeId)
+            .then((recipe) => {
+                // The object was retrieved successfully and it is ready to update.
+                recipe.destroy().then((recipe) => {
+                    // The object was deleted from the Parse Cloud.
+                }, (error) => {
+                    // The delete failed.
+                    // error is a Parse.Error with an error code and message.
+                    console.error(error);
+                })
+            }, (error) => {
+                // The object was not retrieved successfully.
+                console.error(error);
+            });;
+    }
     
     return {
-        getRecipes: getRecipes
+        getRecipes: getRecipes,
+        dietType: dietType,
+        dishType: dishType,
+        deleteRecipe: deleteRecipe
     }
 
 });

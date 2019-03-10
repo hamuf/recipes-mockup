@@ -1,10 +1,17 @@
 <form>
     <div class="form-row">
-        <div class="form-group col">
+        <div class="form-group col-md-6">
             <!-- 1 -->
             <label for="recipeName">שם המתכון</label>
             <input type="input" class="form-control" id="recipeName" placeholder="שם המתכון">
         </div>
+        <div class="form-group col-md-6">
+            <div class="form-group">
+                <label for="recipeImgUpload">תמונה ראשית</label>
+                <input type="file" class="form-control-file" id="recipeImgUpload">
+            </div>
+        </div>
+
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -52,7 +59,7 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <label for="exampleFormControlTextarea3">תיאור רקע של המתכון. ייכתב מתחת לכותרת</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea3" rows="7"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea3" rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -99,9 +106,9 @@
                                 <input type="input" class="form-control" id="quantity" placeholder="">
                             </div>
                             <div class="form-group col-md-1">
-                                    <label for="unit">יח' מידה</label>
-                                    <input type="input" class="form-control" id="unit" placeholder="">
-                                </div>                            
+                                <label for="unit">יח' מידה</label>
+                                <input type="input" class="form-control" id="unit" placeholder="">
+                            </div>
                             <div class="form-group col-md-5">
                                 <label for="ingredient">רכיב</label>
                                 <input type="input" class="form-control" id="ingredient" placeholder="מרשימה סגורה">
@@ -116,19 +123,27 @@
                             </div>
                         </div>
                         <div class="form-row">
-                                <div class="form-group col-md-1">&nbsp;
-                                </div>
-                                <div class="form-group col-md-9">
-                                        <div class="help">למשל: כוס, גרם וכו' (לבחור מרשימה סגורה כדי שאפשר יהיה לעשות המרות)</div>
-                                    </div>                            
-                                <div class="form-group col-md-2">&nbsp;
-                                </div>
+                            <div class="form-group col-md-1">&nbsp;
                             </div>
-                            
-                    </div>                    
+                            <div class="form-group col-md-9">
+                                <div class="help">למשל: כוס, גרם וכו' (לבחור מרשימה סגורה כדי שאפשר יהיה לעשות המרות)</div>
+                            </div>
+                            <div class="form-group col-md-2">&nbsp;
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Accordion -->
+    <div class="form-row mt-2">
+        <div class="col-md-1 col-6">
+            <input class="btn btn-danger" type="button" value="מחק מתכון">
+        </div>
+        <div class="col-md-11 col-6 align-left">
+            <input class="btn btn-primary" type="button" value="שמור מתכון">
+        </div>
+    </div>
 </form>
