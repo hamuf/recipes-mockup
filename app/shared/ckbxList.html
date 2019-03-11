@@ -1,13 +1,8 @@
 <div class="form-check">
         <div class="form-row container">
-            <div class="col-md-6" ng-repeat="diet in dietType | filter:oddColumns">
-                <input class="form-check-input" type="checkbox" value="" id="{{'diet'+$index}}">
-                <label class="form-check-label" for="{{'diet'+$index}}">{{diet}}
-                </label>
-            </div>
-            <div class="col-md-6" ng-repeat="diet in dietType | filter:evenColumns">
-                <input class="form-check-input" type="checkbox" value="" id="{{'diet2'+$index}}">
-                <label class="form-check-label" for="{{'diet2'+$index}}">{{diet}}
+            <div class="col-lg-3 col-sm-4 col-xs-6" ng-repeat="(idx, diet) in dietType">
+                <input class="form-check-input" type="checkbox" value="" id="{{'diet'+idx}}">
+                <label class="form-check-label" for="{{'diet'+idx}}">{{diet[idx]}}
                 </label>
             </div>
         </div>
