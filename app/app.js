@@ -4,6 +4,9 @@ app.config(function($routeProvider) {
     $routeProvider.when("/", {
       templateUrl: "app/recipes/recipes.html",
       controller: "recipesCtrl"
+    }).when("/:userId", {
+      templateUrl: "app/recipes/recipes.html",
+      controller: "recipesCtrl"
     }).when("/recipe/:recipeId", {
       templateUrl: "app/recipe-details/recipeDetails.html",
       controller: "recipeDetailsCtrl"
