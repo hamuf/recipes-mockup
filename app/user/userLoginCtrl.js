@@ -1,5 +1,20 @@
-app.controller("loginCtrl", function($scope, $location, userSrv) {
-    
+app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
+
+    // DUPLICATED CODE !!! (also in recipeFormCtrl) move to shared location
+    $scope.dietType = recipesSrv.dietType;
+    // Add filter on ng repeat to create columns    
+    $scope.oddColumns = function(a_type,$index) {
+        console.log("type="+a_type+", idx="+$index);
+        if ($index%2 == 0)
+            return true;
+        }
+        $scope.evenColumns = function(a_type,$index) {
+        console.log("type="+a_type+", idx="+$index);
+        if ($index%2 == 1)
+            return true;
+        }
+    // DUPLICATED CODE END
+
     $scope.invalidLogin = false;
     $scope.email = "hamu@hamuf.com";
     $scope.pwd = "myRecipes19";
@@ -13,7 +28,11 @@ app.controller("loginCtrl", function($scope, $location, userSrv) {
             $('#loginWin').collapse('show');
             document.getElementById("email").focus();
         } else {
+            console.log($scope.email+" logged out");
             $scope.connected = disconnected;    
+            $scope.email = "";
+            $scope.pwd = "";
+        
         }
             
     }
@@ -37,7 +56,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv) {
     }
 
     $scope.addUser = function() {
-        
+
     }
 
     /**

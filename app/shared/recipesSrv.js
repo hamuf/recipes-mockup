@@ -17,7 +17,10 @@ app.factory("recipesSrv", function ($q, $http) {
         "כשר",
         "ללא לקטוז",
         "פרווה",
-        "פליאו"
+        "פליאו",
+        "קטגוני",
+        "צמחוני",
+        "רואו"
     ];
 
     var dishType = [
