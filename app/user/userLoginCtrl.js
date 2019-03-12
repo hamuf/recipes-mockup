@@ -43,6 +43,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
             $('#loginWin').collapse('hide');
             $scope.connected = true; // imitate successfull login
             $location.path("/");
+            console.log(activeUser.dietTypes);
         }, function(error) {
             if (error.code === 101) {
                 // set error message:
@@ -56,8 +57,9 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
     }
 
     $scope.addUser = function() {
-
+        
     }
+
 
     /**
      * @param {*} elId : Id of the element to set visibility to

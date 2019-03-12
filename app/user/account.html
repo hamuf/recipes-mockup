@@ -1,4 +1,4 @@
-<form id="loginForm">
+<form id="accountForm">
         <div id="err" class="alert alert-danger">{{loginMsg}}</div>
         <div class="form-group">
             <!-- validation: at least 3 characters -->
@@ -7,18 +7,18 @@
         </div>
         <div class="form-group">            
             <!-- validation: valid email -->
-            <label for="email">אי-מייל</label>
-            <input type="email" class="form-control" id="email" ng-model="newemail" placeholder="כתובת מייל תקינה">
+            <label for="newemail">אי-מייל</label>
+            <input type="email" class="form-control" id="newemail" ng-model="newemail" placeholder="כתובת מייל תקינה">
         </div>        
         <div class="form-group">
             <!-- validation pwd is equal to pwd2 -->
-            <label for="pwd">סיסמה</label>
-            <input type="password" class="form-control" id="pwd"  ng-model="newpwd">
+            <label for="newpwd">סיסמה</label>
+            <input type="password" class="form-control" id="newpwd"  ng-model="newpwd">
             <small id="emailHelp" class="form-text text-muted">דרישות מינימום לסיסמא תקינה: לפחות ספרה, אות קטנה ואות גדולה (באנגלית). ולא פחות מ-8 תווים </small>
         </div>
         <div class="form-group">
-            <label for="pwd2">אימות סיסמה</label>
-            <input type="password" class="form-control" id="pwd2"  ng-model="newpwd2">
+            <label for="newpwd2">אימות סיסמה</label>
+            <input type="password" class="form-control" id="newpwd2"  ng-model="newpwd2">
         </div>
         <label>מתכונים שאני רוצה לראות</label>
         <checkbox-list></checkbox-list>

@@ -1,5 +1,8 @@
 app.controller("recipesCtrl", function ($scope, $location,recipesSrv) {
-    $scope.hamu="recipesCtrl";
+  
+  $scope.dietType = recipesSrv.dietType;
+  $scope.dishType = recipesSrv.dishType;
+
     $scope.recipes = [];
     
     // fetch existing pre defined recipes from the model

@@ -5,8 +5,9 @@ app.factory("userSrv", function ($http, $q, $log) {
 
     function User(parseUser) {
         this.id = parseUser.get("id");
-        this.fname = parseUser.get("username");
+        this.username = parseUser.get("username");
         this.email = parseUser.get("email");
+        this.dietTypes = parseUser.get("diettypes");
     }
 
     function login(email, pwd) {
