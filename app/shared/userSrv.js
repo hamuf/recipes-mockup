@@ -17,7 +17,7 @@ app.factory("userSrv", function ($http, $q, $log) {
         // Pass the username and password to logIn function
         Parse.User.logIn(email, pwd).then(function(user) {
             // Do stuff after successful login
-            $log.info('Logged in user', user);
+            // $log.info('Logged in user', user);
             activeUser = new User(user);
             async.resolve(activeUser);
         }).catch(function(error) {
@@ -38,12 +38,9 @@ app.factory("userSrv", function ($http, $q, $log) {
         user.set('password', newUser.newpwd);
         
         user.signUp().then((user) => {
-        //   if (typeof document !== 'undefined') document.write(`User signed up: ${JSON.stringify(user)}`);
-          console.log('User signed up', user);
           newUser = new User(user);
           async.resolve(newUser);          
         }).catch(error => {
-        //   if (typeof document !== 'undefined') document.write(`Error while signing up user: ${JSON.stringify(error)}`);
           console.error('Error while signing up user', error);
         });
         return async.promise;

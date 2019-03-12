@@ -9,6 +9,6 @@ app.controller("recipesCtrl", function ($scope, $location,recipesSrv) {
     recipesSrv.getRecipes().then(function (recipes) {
         $scope.recipes = recipes;
       }, function (err) {
-        $log.error(err);
+        console.log(err);
       })
 });
