@@ -7,6 +7,9 @@ app.config(function($routeProvider) {
     }).when("/signup", {
       templateUrl: "app/user/account.html",
       controller: "loginCtrl"
+    }).when("/my-profile", {
+      templateUrl: "app/user/account.html",
+      controller: "loginCtrl"
     // }).when("/:userId", {
     //   templateUrl: "app/recipes/recipes.html",
     //   controller: "recipesCtrl"

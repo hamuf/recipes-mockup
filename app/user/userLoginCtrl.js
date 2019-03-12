@@ -3,11 +3,28 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
     $scope.dietTypes = recipesSrv.dietType;
 
     $scope.invalidLogin = false;
+    $scope.connected = false;
+    $scope.activeUser = userSrv.getActiveUser();
+    
+    // TEMP for easy login on development phase
     $scope.email = "hamu@hamuf.com";
     $scope.pwd = "myRecipes19";
 
-    $scope.connected = false;
 
+    // is there is a logged-in user and the referrer was my profile menu item
+    var isEditProfile =($location.url().indexOf("my-profile") > 0 && $scope.activeUser !== null); 
+    $scope.initForm = function() {
+        if (isEditProfile) {
+            $scope.user = {};
+            $scope.user.nickname = $scope.activeUser.username;
+            $scope.user.newemail = $scope.activeUser.email;
+            // TODO: if user exsists show **** but save only if password was modified
+            // solution? I comapare to second password any way, so I can leave it like this
+            $scope.user.newpwd = "12345678"; 
+        }
+    }
+
+    // Called on submit of signup form
     $scope.addUser = function() {
         $scope.user.dietType = setDietTypesToArr($scope.user.dietType);
         console.log($scope.user);        
@@ -43,6 +60,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
             $scope.connected = disconnected;    
             $scope.email = "";
             $scope.pwd = "";
+            $location.path("/");
             // setElementVisibility("err","hidden"); // hide previous errors        
         }            
     }
@@ -74,11 +92,10 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
      * @param {*} elId : Id of the element to set visibility to
      * @param {*} visibilityStr : "visible" or "hidden"
      */
-
     function setElementVisibility(elId,visibilityStr) {
         // var errorMsg = document.getElementsById('err').parentNode;
         var errorMsg = document.getElementById(elId);
         errorMsg.style.visibility = visibilityStr;                
     }
-
+    
 })

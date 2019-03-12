@@ -54,16 +54,16 @@ app.factory("userSrv", function ($http, $q, $log) {
     //     activeUser = null;
     // }
 
-    // function getActiveUser() {
-    //     return activeUser;
-    // }
+    function getActiveUser() {
+        return activeUser;
+    }
 
     return {
         login: login,
-        signup: signup
+        signup: signup,
         // isLoggedIn: isLoggedIn,
         // logout: logout,
-        // getActiveUser: getActiveUser
+        getActiveUser: getActiveUser
     }
 
 });
