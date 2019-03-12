@@ -1,26 +1,35 @@
+<h1>רישום למחברת המתכונים</h1>
 <form id="accountForm">
-        <div id="err" class="alert alert-danger">{{loginMsg}}</div>
-        <div class="form-group">
-            <!-- validation: at least 3 characters -->
-            <label for="nickname">שם משתמש</label>
-            <input type="input" class="form-control" id="nickname" ng-model="nickname" placeholder="שם משתמש">
+    <!-- TODO change message div so the class will according to message (error or success). change id fro "err" to "msg" -->
+    <div id="err" class="alert alert-danger">{{loginMsg}}</div>
+    <!-- TODO: validation -->
+    <div class="form-group form-row">
+        <!-- validation: at least 3 characters -->
+        <label for="nickname" class="col-md-2">שם משתמש</label>
+        <input type="input" class="form-control col-md-10" id="nickname" ng-model="user.nickname" placeholder="שם משתמש">
+    </div>
+    <div class="form-group form-row">
+        <!-- validation: valid email -->
+        <label for="newemail" class="col-md-2">אי-מייל</label>
+        <input type="email" class="form-control col-md-10" id="newemail" ng-model="user.newemail"
+            placeholder="כתובת מייל שנמצאת בשימוש">
+    </div>
+    <div class="form-group form-row">
+        <!-- validation pwd is equal to pwd2 -->
+        <label for="newpwd" class="col-md-2">סיסמה</label>
+        <div class=" col-md-10">
+            <input type="password" class="form-control" id="newpwd" ng-model="user.newpwd">
+            <small id="emailHelp" class="form-text text-muted">דרישות מינימום לסיסמא תקינה: לפחות ספרה, אות קטנה ואות 
+                גדולה (באנגלית). ולא פחות מ-8 תווים </small>
         </div>
-        <div class="form-group">            
-            <!-- validation: valid email -->
-            <label for="newemail">אי-מייל</label>
-            <input type="email" class="form-control" id="newemail" ng-model="newemail" placeholder="כתובת מייל תקינה">
-        </div>        
-        <div class="form-group">
-            <!-- validation pwd is equal to pwd2 -->
-            <label for="newpwd">סיסמה</label>
-            <input type="password" class="form-control" id="newpwd"  ng-model="newpwd">
-            <small id="emailHelp" class="form-text text-muted">דרישות מינימום לסיסמא תקינה: לפחות ספרה, אות קטנה ואות גדולה (באנגלית). ולא פחות מ-8 תווים </small>
-        </div>
-        <div class="form-group">
-            <label for="newpwd2">אימות סיסמה</label>
-            <input type="password" class="form-control" id="newpwd2"  ng-model="newpwd2">
-        </div>
-        <label>מתכונים שאני רוצה לראות</label>
+    </div>
+    <div class="form-group form-row">
+        <label for="newpwd2" class="col-md-2">אימות סיסמה</label>
+        <input type="password" class="form-control col-md-10" id="newpwd2" ng-model="newpwd2">
+    </div>
+    <div class="form-group form-row">
+        <label class="col-md-2">מתכונים שאני רוצה לראות</label>
         <checkbox-list></checkbox-list>
-        <button type="button" ng-click="addUser()" class="btn btn-primary">רישום</button>
-    </form>
+    </div>
+    <button type="button" ng-click="addUser()" class="btn btn-primary">רישום</button>
+</form>

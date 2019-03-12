@@ -1,6 +1,6 @@
 app.controller("recipesCtrl", function ($scope, $location,recipesSrv) {
   
-  $scope.dietType = recipesSrv.dietType;
+  $scope.dietTypes = recipesSrv.dietType;
   $scope.dishType = recipesSrv.dishType;
 
     $scope.recipes = [];

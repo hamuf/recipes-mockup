@@ -4,15 +4,15 @@ app.factory("userSrv", function ($http, $q, $log) {
     var activeUser = null;
 
     function User(parseUser) {
-        this.id = parseUser.get("id");
+        this.id = parseUser.id;
         this.username = parseUser.get("username");
+        this.password = parseUser.get("password");
         this.email = parseUser.get("email");
         this.dietTypes = parseUser.get("diettypes");
     }
 
     function login(email, pwd) {
         var async = $q.defer();
-
 
         // Pass the username and password to logIn function
         Parse.User.logIn(email, pwd).then(function(user) {
@@ -28,23 +28,45 @@ app.factory("userSrv", function ($http, $q, $log) {
         return async.promise;
     }
 
-    function isLoggedIn() {
-        return activeUser ? true : false;
+    function signup(newUser) {
+        var async = $q.defer();
+
+        var user = new Parse.User()
+        user.set('username', newUser.nickname);
+        user.set('email', newUser.newemail);
+        user.set('diettypes', newUser.dietType);
+        user.set('password', newUser.newpwd);
+        
+        user.signUp().then((user) => {
+        //   if (typeof document !== 'undefined') document.write(`User signed up: ${JSON.stringify(user)}`);
+          console.log('User signed up', user);
+          newUser = new User(user);
+          async.resolve(newUser);          
+        }).catch(error => {
+        //   if (typeof document !== 'undefined') document.write(`Error while signing up user: ${JSON.stringify(error)}`);
+          console.error('Error while signing up user', error);
+        });
+        return async.promise;
     }
 
-    function logout() {
-        activeUser = null;
-    }
+    // function isLoggedIn() {
+    //     return activeUser ? true : false;
+    // }
 
-    function getActiveUser() {
-        return activeUser;
-    }
+    // function logout() {
+    //     activeUser = null;
+    // }
+
+    // function getActiveUser() {
+    //     return activeUser;
+    // }
 
     return {
         login: login,
-        isLoggedIn: isLoggedIn,
-        logout: logout,
-        getActiveUser: getActiveUser
+        signup: signup
+        // isLoggedIn: isLoggedIn,
+        // logout: logout,
+        // getActiveUser: getActiveUser
     }
 
 });

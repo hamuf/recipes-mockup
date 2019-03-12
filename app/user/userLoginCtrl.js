@@ -1,18 +1,18 @@
 app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
 
     // DUPLICATED CODE !!! (also in recipeFormCtrl) move to shared location
-    $scope.dietType = recipesSrv.dietType;
+    $scope.dietTypes = recipesSrv.dietType;
     // Add filter on ng repeat to create columns    
-    $scope.oddColumns = function(a_type,$index) {
-        console.log("type="+a_type+", idx="+$index);
-        if ($index%2 == 0)
-            return true;
-        }
-        $scope.evenColumns = function(a_type,$index) {
-        console.log("type="+a_type+", idx="+$index);
-        if ($index%2 == 1)
-            return true;
-        }
+    // $scope.oddColumns = function(a_type,$index) {
+    //     console.log("type="+a_type+", idx="+$index);
+    //     if ($index%2 == 0)
+    //         return true;
+    //     }
+    //     $scope.evenColumns = function(a_type,$index) {
+    //     console.log("type="+a_type+", idx="+$index);
+    //     if ($index%2 == 1)
+    //         return true;
+    //     }
     // DUPLICATED CODE END
 
     $scope.invalidLogin = false;
@@ -20,10 +20,34 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
     $scope.pwd = "myRecipes19";
 
     $scope.connected = false;
-    $scope.login = function(disconnected) {
-        console.log('enter login function');
-        // alert(typeof disconnect);
-        // document.getElementById("email").focus();
+
+    $scope.addUser = function() {
+        $scope.user.dietType = setDietTypesToArr($scope.user.dietType);
+        console.log($scope.user);        
+
+        userSrv.signup($scope.user).then(function(newUser) {
+            console.log(newUser);
+        }, function(error) {
+            console.log(error);
+            // if (error.code === 101) {
+            //     // set error message:
+            //     $scope.loginMsg = "שם או סיסמא שגויים";
+            //     // display error message:
+            //     setElementVisibility("err","visible");
+            // }
+        });
+    }
+
+    function setDietTypesToArr(dietTypesObject) {
+        var dietTypesIdxArray = [];
+        for (var dietTypeIdx in dietTypesObject) {
+            dietTypesIdxArray.push(dietTypeIdx);
+        }
+        return dietTypesIdxArray;
+    }
+
+    // handle actions when login/logout menu linked are activated
+    $scope.toggleLogin = function(disconnected) {
         if (disconnected) {
             $('#loginWin').collapse('show');
             document.getElementById("email").focus();
@@ -32,18 +56,15 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
             $scope.connected = disconnected;    
             $scope.email = "";
             $scope.pwd = "";
-        
-        }
-            
+            // setElementVisibility("err","hidden"); // hide previous errors        
+        }            
     }
 
-    $scope.closeWin = function() {
-        setElementVisibility("err","hidden"); // hide previous errors
+    $scope.login = function() {        
         userSrv.login($scope.email, $scope.pwd).then(function(activeUser) {
-            $('#loginWin').collapse('hide');
-            $scope.connected = true; // imitate successfull login
+            $scope.closeWin();
+            $scope.connected = true;
             $location.path("/");
-            console.log(activeUser.dietTypes);
         }, function(error) {
             if (error.code === 101) {
                 // set error message:
@@ -56,10 +77,10 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
 
     }
 
-    $scope.addUser = function() {
-        
+    $scope.closeWin = function() {
+        setElementVisibility("err","hidden"); // hide previous errors
+        $('#loginWin').collapse('hide');
     }
-
 
     /**
      * @param {*} elId : Id of the element to set visibility to
