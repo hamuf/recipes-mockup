@@ -12,15 +12,15 @@ app.factory("recipesSrv", function ($q, $http) {
      */
     
     var dietType = [
-        {0: "טבעוני"},
-        {1:"ללא גלוטן"},
-        {2:"כשר"},
-        {3:"ללא לקטוז"},
-        {4:"פרווה"},
-        {5:"פליאו"},
-        {6:"קטגוני"},
-        {7:"צמחוני"},
-        {8:"רואו"}
+        {"0": "טבעוני"},
+        {"1":"ללא גלוטן"},
+        {"2":"כשר"},
+        {"3":"ללא לקטוז"},
+        {"4":"פרווה"},
+        {"5":"פליאו"},
+        {"6":"קטגוני"},
+        {"7":"צמחוני"},
+        {"8":"רואו"}
     ];
 
     var dishType = [
@@ -33,6 +33,18 @@ app.factory("recipesSrv", function ($q, $http) {
         "מרקים",
         "עוגות ועוגיות"
     ];       
+
+    var units = [
+      {"0": "גרם"},
+      {"1": "מיליליטר"}, //TODO: one working - change to מ"ל
+      {"2":"כפית"},
+      {"3":"כפיות"},
+      {"4":"כוס"},
+      {"5":"כוסות"},
+      {"6":"כפיות"},
+      {"7":"יחידה"}, // for eggs, apples, atc. TODO: find a better name
+      {"8":"יחידות"}, // for eggs, apples, atc.
+    ];
     
 
     function getRecipes() {
@@ -81,6 +93,7 @@ app.factory("recipesSrv", function ($q, $http) {
         getRecipes: getRecipes,
         dietType: dietType,
         dishType: dishType,
+        units: units,
         deleteRecipe: deleteRecipe
     }
 

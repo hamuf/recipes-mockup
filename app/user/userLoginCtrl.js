@@ -92,14 +92,19 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
     // $scope.repeatPassErr = $scope.accountForm.newpwd.$modelValue === $scope.accountForm.newpwd2.$modelValue ? "הסיסמאות לא זהות" : "";
     // $scope.repeatPassErr = (($scope.newpwd2 === $scope.user.newpwd) && !$scope.isEditProfile) ? "הסיסמאות לא זהות" : "";
 
-    function isValid() {
-        console.log("nickname invalid="+$scope.accountForm.nickname.$invalid);
-        console.log($scope.accountForm.newpwd.$modelValue);
-        console.log($scope.accountForm.newpwd2.$modelValue);
-        (($scope.newpwd2 === $scope.user.newpwd) && !$scope.isEditProfile) ? "הסיסמאות לא זהות" : "";
+    function isValid() {        
+        // console.log("nickname invalid="+$scope.accountForm.nickname.$invalid);
+        // console.log("pwd2 invalid="+$scope.accountForm.newpwd2.$invalid);
+        if ($scope.newpwd2 == "") {
+            $scope.repeatPassErr = "שדה חובה";            
+            $scope.accountForm.newpwd2.$invalid = false;
+        } else if ($scope.newpwd2 != $scope.newpwd) {
+            $scope.repeatPassErr = "הסיסמאות לא זהות";   
+            $scope.accountForm.newpwd2.$invalid = false;
+            
+        }
         
-        // if user error                
-        // validate passwords are equal
+
     }
 
     // example structure of input: ["2","5"]

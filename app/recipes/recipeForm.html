@@ -5,10 +5,25 @@
             <label for="recipeName">שם המתכון</label>
             <input type="input" class="form-control" id="recipeName" placeholder="שם המתכון">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-3">
             <div class="form-group">
                 <label for="recipeImgUpload">תמונה ראשית</label>
                 <input type="file" class="form-control-file" id="recipeImgUpload">
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label>מי יוכל לצפות במתכון</label>
+            <div class="form-group">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="isPublic" value="true">כולם
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="isPublic" value="false" checked>רק אני
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -22,33 +37,6 @@
         <div class="form-group col-md-6">
             <label for="sourceLink">קישור למקור</label>
             <input type="input" class="form-control" id="sourceLink" placeholder="קישור למתכון אם קיים">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-md-6">
-            <label>מתאים לתזונה מסוג:</label>
-            <checkbox-list></checkbox-list>
-            <!-- <div class="form-check">
-                <div class="form-row container">
-                    <div class="col-md-6" ng-repeat="diet in dietType | filter:oddColumns">
-                        <input class="form-check-input" type="checkbox" value="" id="{{'diet'+$index}}">
-                        <label class="form-check-label" for="{{'diet'+$index}}">{{diet}}
-                        </label>
-                    </div>
-                    <div class="col-md-6" ng-repeat="diet in dietType | filter:evenColumns">
-                        <input class="form-check-input" type="checkbox" value="" id="{{'diet'+$index}}">
-                        <label class="form-check-label" for="{{'diet'+$index}}">{{diet}}
-                        </label>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <div class="form-group col-md-6">
-            <!-- <label for="exampleFormControlSelect1"></label> -->
-            <select class="form-control mt-2" id="exampleFormControlSelect1">
-                <option>-- סוג מנה --</option>
-                <option value="{{$index}}" ng-repeat="dish in dishType">{{dish}}</option>
-            </select>
         </div>
     </div>
     <!-- Accordion -->
@@ -65,8 +53,23 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <label for="desc">תיאור רקע של המתכון. יוצג מתחת לכותרת</label>
-                        <textarea class="form-control" id="desc" rows="3"></textarea>
+                            <label for="desc">תיאור רקע של המתכון. יוצג מתחת לכותרת</label>
+                            <textarea class="form-control" id="desc" rows="3"></textarea>
+    
+                            <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label>מתאים לתזונה מסוג:</label>
+                                        <checkbox-list></checkbox-list>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="dishType">סוג מנה</label>
+                                        <select class="form-control" id="dishType">
+                                            <option>-- לשנות לבחירה מרובה --</option>
+                                            <option value="{{$index}}" ng-repeat="dish in dishType">{{dish}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            
                     </div>
                 </div>
             </div>
@@ -81,16 +84,16 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-lg-2">
                                 <label for="seq">מס' סידורי</label>
                                 <input type="input" class="form-control" id="seq" placeholder="">
                             </div>
-                            <div class="form-group col-md-10">
+                            <div class="form-group col-lg-8">
                                 <label for="instruction">הוראה</label>
                                 <input type="input" class="form-control" id="instruction" placeholder="מה יבוצע בשלב זה">
                             </div>
-                            <div class="form-group col-md-1">
-                                <label>&nbsp;</label>
+                            <div class="form-group col-lg-2">
+                                <label>&nbsp;</label><br/>
                                 <input class="btn btn-primary" type="button" value="שמור שלב">
                             </div>
                         </div>
@@ -108,34 +111,37 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-lg-1">
                                 <label for="quantity">כמות</label>
-                                <input type="input" class="form-control" id="quantity" placeholder="">
+                                <input type="input" class="form-control" id="quantity">
                             </div>
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-lg-2">
                                 <label for="unit">יח' מידה</label>
-                                <input type="input" class="form-control" id="unit" placeholder="">
+                                <!-- <input type="input" class="form-control" id="unit" placeholder=""> -->
+                                <select class="form-control" id="units">
+                                    <option value="{{idx}}" ng-repeat="(idx, unit) in units">{{unit[idx]}}</option>
+                                </select>
                             </div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-lg-3">
                                 <label for="ingredient">רכיב</label>
                                 <input type="input" class="form-control" id="ingredient" placeholder="מרשימה סגורה">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-lg-4">
                                 <label for="ingredientComm">הערה</label>
                                 <input type="input" class="form-control" id="ingredientComm" placeholder="למשל: קצוץ, שהושרה 12 שעות וכד'">
                             </div>
-                            <div class="form-group col-md-1">
-                                <label>&nbsp;</label>
+                            <div class="form-group col-lg-2">
+                                <label>&nbsp;</label><br/>
                                 <input class="btn btn-primary" type="button" value="שמור רכיב">
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-1">&nbsp;
+                            <div class="form-group col-lg-1">&nbsp;
                             </div>
-                            <div class="form-group col-md-9">
+                            <div class="form-group col-lg-9">
                                 <div class="help">למשל: כוס, גרם וכו' (לבחור מרשימה סגורה כדי שאפשר יהיה לעשות המרות)</div>
                             </div>
-                            <div class="form-group col-md-2">&nbsp;
+                            <div class="form-group col-lg-2">&nbsp;
                             </div>
                         </div>
 

@@ -2,6 +2,7 @@ app.controller("recipesCtrl", function ($scope, $location,recipesSrv) {
   
   $scope.dietTypes = recipesSrv.dietType;
   $scope.dishType = recipesSrv.dishType;
+  $scope.units = recipesSrv.units;
 
     $scope.recipes = [];
     
