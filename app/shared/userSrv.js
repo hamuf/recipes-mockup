@@ -8,19 +8,20 @@ app.factory("userSrv", function ($http, $q, $log) {
         this.username = parseUser.get("username");
         this.password = parseUser.get("password");
         this.email = parseUser.get("email");
-        this.dietTypes = parseUser.get("diettypes");
+        this.dietTypes = parseUser.get("diettypes"); // db format ["2","5"]
     }
 
     function login(email, pwd) {
         var async = $q.defer();
 
         // Pass the username and password to logIn function
-        Parse.User.logIn(email, pwd).then(function(user) {
+        Parse.User.logIn(email, pwd).then(function (user) {
             // Do stuff after successful login
             // $log.info('Logged in user', user);
             activeUser = new User(user);
+            // activeUser.dietTypes = setDietTypesFromDB(activeUser.dietTypes);
             async.resolve(activeUser);
-        }).catch(function(error) {
+        }).catch(function (error) {
             $log.error('Error while logging in user', error);
             async.reject(error);
         });
@@ -36,13 +37,41 @@ app.factory("userSrv", function ($http, $q, $log) {
         user.set('email', newUser.newemail);
         user.set('diettypes', newUser.dietType);
         user.set('password', newUser.newpwd);
-        
+
         user.signUp().then((user) => {
-          newUser = new User(user);
-          async.resolve(newUser);          
+            newUser = new User(user);
+            async.resolve(newUser);
         }).catch(error => {
-          console.error('Error while signing up user', error);
+            console.error('Error while signing up user', error);
         });
+        return async.promise;
+    }
+
+    function updateUser(aUser) {
+        var async = $q.defer();
+
+        const User = new Parse.User();
+        const query = new Parse.Query(User);
+
+        // Finds the user by its ID (use id of the logged-in user)
+        query.get(activeUser.id).then((user) => {
+            // Updates the data we want
+            user.set('username', aUser.nickname);
+            user.set('email', aUser.newemail);
+            user.set('diettypes', aUser.dietType);
+            // user.set('password', aUser.newpwd);
+
+            // Saves the user with the updated data
+            user.save().then((response) => {
+                console.log('Updated user', response);
+                console.log('user', aUser);
+                async.resolve(aUser);
+            }).catch((error) => {
+                // if (typeof document !== 'undefined') document.write(`Error while updating user: ${JSON.stringify(error)}`);
+                console.error('Error while updating user', error);
+            });
+        });
+
         return async.promise;
     }
 
@@ -61,6 +90,7 @@ app.factory("userSrv", function ($http, $q, $log) {
     return {
         login: login,
         signup: signup,
+        updateUser: updateUser,
         // isLoggedIn: isLoggedIn,
         // logout: logout,
         getActiveUser: getActiveUser

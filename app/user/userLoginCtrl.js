@@ -11,43 +11,49 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
     $scope.pwd = "myRecipes19";
 
 
+
     // is there is a logged-in user and the referrer was my profile menu item
-    var isEditProfile =($location.url().indexOf("my-profile") > 0 && $scope.activeUser !== null); 
+    $scope.isEditProfile =($location.url().indexOf("my-profile") > 0 && $scope.activeUser !== null); 
     $scope.initForm = function() {
-        if (isEditProfile) {
+        if ($scope.isEditProfile) {
             $scope.user = {};
             $scope.user.nickname = $scope.activeUser.username;
             $scope.user.newemail = $scope.activeUser.email;
+            $scope.user.dietType = setDietTypesFromDB($scope.activeUser.dietTypes);
             // TODO: if user exsists show **** but save only if password was modified
             // solution? I comapare to second password any way, so I can leave it like this
             $scope.user.newpwd = "12345678"; 
         }
     }
+    $scope.initForm();
 
     // Called on submit of signup form
     $scope.addUser = function() {
-        $scope.user.dietType = setDietTypesToArr($scope.user.dietType);
-        console.log($scope.user);        
+        if (isValid()) {
+            $scope.user.dietType = setDietTypesForDB($scope.user.dietType);
+            console.log($scope.user);        
 
-        userSrv.signup($scope.user).then(function(newUser) {
-            console.log(newUser);
-        }, function(error) {
-            console.log(error);
-            // if (error.code === 101) {
-            //     // set error message:
-            //     $scope.loginMsg = "שם או סיסמא שגויים";
-            //     // display error message:
-            //     setElementVisibility("err","visible");
-            // }
-        });
+            userSrv.signup($scope.user).then(function(newUser) {
+                console.log(newUser);
+                $scope.user.dietType = setDietTypesFromDB($scope.user.dietType);
+            }, function(error) {
+                console.log(error);
+            });
+        }
     }
 
-    function setDietTypesToArr(dietTypesObject) {
-        var dietTypesIdxArray = [];
-        for (var dietTypeIdx in dietTypesObject) {
-            dietTypesIdxArray.push(dietTypeIdx);
-        }
-        return dietTypesIdxArray;
+    // Called on submit of signup form
+    $scope.updateUser = function () {
+        $scope.user.dietType = setDietTypesForDB($scope.user.dietType);
+        // console.log($scope.user);
+
+        userSrv.updateUser($scope.user).then(function (aUser) {
+            // console.log(aUser);
+            // $scope.user = aUser;
+            $scope.user.dietType = setDietTypesFromDB(aUser.dietType);
+        }, function (error) {
+            console.log(error);
+        });
     }
 
     // handle actions when login/logout menu linked are activated
@@ -81,6 +87,41 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
             $scope.invalidLogin = true;
         });
 
+    }
+
+    // $scope.repeatPassErr = $scope.accountForm.newpwd.$modelValue === $scope.accountForm.newpwd2.$modelValue ? "הסיסמאות לא זהות" : "";
+    // $scope.repeatPassErr = (($scope.newpwd2 === $scope.user.newpwd) && !$scope.isEditProfile) ? "הסיסמאות לא זהות" : "";
+
+    function isValid() {
+        console.log("nickname invalid="+$scope.accountForm.nickname.$invalid);
+        console.log($scope.accountForm.newpwd.$modelValue);
+        console.log($scope.accountForm.newpwd2.$modelValue);
+        (($scope.newpwd2 === $scope.user.newpwd) && !$scope.isEditProfile) ? "הסיסמאות לא זהות" : "";
+        
+        // if user error                
+        // validate passwords are equal
+    }
+
+    // example structure of input: ["2","5"]
+    // example structure of output {"2": true, "5": true}
+    function setDietTypesForDB(dietTypesObject) {
+        var dietTypesIdxArray = [];
+        // dietTypeIdx is the Key in a key=>value pair
+        for (var dietTypeIdx in dietTypesObject) {
+            if (dietTypesObject[dietTypeIdx]) {
+                dietTypesIdxArray.push(dietTypeIdx);
+            }
+        }
+        return dietTypesIdxArray;
+    }
+
+    function setDietTypesFromDB(dietTypesArr) {
+        var dietTypesObject = {};
+        for (var idx = 0; idx < dietTypesArr.length; idx++) {
+            var element = dietTypesArr[idx];
+            dietTypesObject[element] = true;
+        }
+        return dietTypesObject;
     }
 
     $scope.closeWin = function() {

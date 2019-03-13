@@ -46,6 +46,11 @@ h2 {
 #email:invalid{
   background-color: lightpink;
 }
+
+input:invalid ~ .errMsg {
+  color: var(--red);
+  font-weight: bold;  
+}
 /**
 * Search field: shows only the bottom border of the search box, with selected color
 * Source: https://mdbootstrap.com/docs/jquery/forms/search/
