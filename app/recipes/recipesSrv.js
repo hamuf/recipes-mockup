@@ -85,21 +85,23 @@ app.factory("recipesSrv", function ($q, $http) {
 
 
     function createRecipe(aRecipe,imgSrc) {
+      var async = $q.defer();
+
         const Recipe = Parse.Object.extend('Recipe');
         const myNewObject = new Recipe();
         
         myNewObject.set('recipeName', aRecipe.name);
         // myNewObject.set('recipeImg',  new Parse.File(aRecipe.name+".jpg", { base64: img })); // TODO: get uploaded file name
-        myNewObject.set('recipeImg',  new Parse.File(+"cake.jpg", { base64: imgSrc })); // TODO: get uploaded file name
+        myNewObject.set('recipeImg',  new Parse.File(+"muffins.jpg", { base64: imgSrc })); // TODO: get uploaded file name
         myNewObject.set('source', aRecipe.source);
         myNewObject.set('sourceUrl', aRecipe.sourceUrl);
         myNewObject.set('description', aRecipe.description);
         myNewObject.set('dishTypes', aRecipe.dietTyps);
         myNewObject.set('dietTyps', aRecipe.dietTyps);
         myNewObject.set('views', aRecipe.views);
-        myNewObject.set('isPublic', aRecipe.isPublic);
-        // myNewObject.set('owner', Parse.User.current());
-        myNewObject.set('owner', aRecipe.owner);
+        myNewObject.set('isPublic', JSON.parse(aRecipe.isPublic)); // contert true/false string to boolean
+        myNewObject.set('owner', Parse.User.current());
+        // myNewObject.set('owner', aRecipe.owner);
         myNewObject.set('instructions', aRecipe.instructions);
         myNewObject.set('ingredients', aRecipe.ingredients);
         
@@ -107,27 +109,37 @@ app.factory("recipesSrv", function ($q, $http) {
           (result) => {
             // if (typeof document !== 'undefined') document.write(`Recipe created: ${JSON.stringify(result)}`);
             console.log('Recipe created', result);
+            async.resolve(recipes);
           },
           (error) => {
             // if (typeof document !== 'undefined') document.write(`Error while creating Recipe: ${JSON.stringify(error)}`);
-            console.error('Error while creating Recipe: ', error);
+            console.error('Error while creating Recipe: ', error.message);
+            async.reject(error);
           }
-        );        
+        );   
+        
+        return async.promise;
     }
 
     function deleteRecipe(recipeId) {
+      var async = $q.defer();
+
         const Recipe = Parse.Object.extend('Recipe');
         const query = new Parse.Query(Recipe);
         // here you put the objectId that you want to delete
         query.get(recipeId).then((object) => {
           object.destroy().then((response) => {
-            if (typeof document !== 'undefined') document.write(`Deleted Recipe: ${JSON.stringify(response)}`);
+            // if (typeof document !== 'undefined') document.write(`Deleted Recipe: ${JSON.stringify(response)}`);
             console.log('Deleted Recipe', response);
+            async.resolve(response);
           }, (error) => {
-            if (typeof document !== 'undefined') document.write(`Error while deleting Recipe: ${JSON.stringify(error)}`);
+            // if (typeof document !== 'undefined') document.write(`Error while deleting Recipe: ${JSON.stringify(error)}`);
             console.error('Error while deleting Recipe', error);
+            async.reject(error);
           });
         });
+
+        return async.promise;
     }
     
     return {

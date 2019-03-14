@@ -36,16 +36,10 @@ app.controller("recipesCtrl", function ($scope, $location,recipesSrv,userSrv) {
       // recipesSrv.deleteRecipe("t4sH2LjUNk");
 
       $scope.addRecipe =  function() {
-
-        // TODO replace with directive to avoid changing the DOM
-        var file = document.querySelector('#recipeImgUpload > input[type="file"]').files[0];
-        getBase64(file).then(
-          data => console.log(data)
-        );
-      //   recipesSrv.createRecipe(newRecipe,$scope.recipeImg.src).then(function() {
-      //   }, function (err) {
-      //     console.log(err);
-      //   })       
+        recipesSrv.createRecipe(newRecipe,$scope.recipeImg.src).then(function() {
+        }, function (err) {
+          console.log(err);
+        })       
       }
 
 });
