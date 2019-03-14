@@ -1,4 +1,4 @@
-var app = angular.module("recipeMockup",["ngRoute"]);
+var app = angular.module("recipeMockup",["ngRoute","ngImageInputWithPreview"]);
 
 app.config(function($routeProvider) {  
     $routeProvider.when("/", {

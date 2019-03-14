@@ -93,7 +93,8 @@ app.factory("userSrv", function ($http, $q, $log) {
         updateUser: updateUser,
         // isLoggedIn: isLoggedIn,
         // logout: logout,
-        getActiveUser: getActiveUser
+        getActiveUser: getActiveUser,
+        activeUser, activeUser
     }
 
 });
