@@ -6,13 +6,6 @@
             <input type="input" class="form-control" id="recipeName" placeholder="שם המתכון" ng-model="recipe.recipeName">
         </div>
         <div class="form-group col-md-3">
-            <div class="form-group">
-                <label for="recipeImgUpload">תמונה ראשית</label>
-                <!-- <input type="file" class="form-control-file" id="recipeImgUpload" ng-model="recipeImg" accept="image/*">       -->
-                <input type="file" image-with-preview class="form-control-file" id="recipeImgUpload" ng-model="recipe.recipeImg" accept="image/*">
-            </div>
-        </div>
-        <div class="form-group col-md-3">
             <label>מי יוכל לצפות במתכון</label>
             <div class="form-group">
                 <div class="form-check-inline">
@@ -27,18 +20,28 @@
                 </div>
             </div>
         </div>
-
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label for="recipeImgUpload">תמונה ראשית</label>
+                <!-- <input type="file" class="form-control-file" id="recipeImgUpload" ng-model="recipeImg" accept="image/*">       -->
+                <input type="file" image-with-preview class="form-control-file" id="recipeImgUpload" ng-model="recipe.recipeImg" accept="image/*">
+            </div>
+        </div>                
     </div>
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-9">
             <!-- 2 -->
             <label for="sourceName">מקור</label>
             <input type="input" class="form-control" id="sourceName" ng-model="recipe.source" placeholder="מקור המתכון">
-        </div>
-        <div class="form-group col-md-6">
+
             <label for="sourceLink">קישור למקור</label>
             <input type="input" class="form-control" id="sourceLink" ng-model="recipe.sourceUrl" placeholder="קישור למתכון אם קיים">
         </div>
+
+        <div class="form-group col-md-3">
+            <img class="img-fluid" ng-src="{{recipe.recipeImg.src}}" alt="{{recipe.recipeName ? recipe.recipeName+' photo' : ''}}" srcset="">
+        </div>
+       
     </div>
     <!-- Accordion -->
     <div class="form-row">
@@ -151,7 +154,7 @@
             </div>
         </div>
     </div>
-    <img class="img-fluid" ng-src="{{recipeImg.src}}" alt="" srcset="">
+    
     <!-- Accordion -->
     <div class="form-row mt-2">
         <div class="col-md-1 col-6">
