@@ -84,15 +84,15 @@ app.factory("recipesSrv", function ($q, $http) {
     }
 
 
-    function createRecipe(aRecipe,imgSrc) {
+    function createRecipe(aRecipe) {
       var async = $q.defer();
 
         const Recipe = Parse.Object.extend('Recipe');
         const myNewObject = new Recipe();
         
-        myNewObject.set('recipeName', aRecipe.name);
+        myNewObject.set('recipeName', aRecipe.recipeName);
         // myNewObject.set('recipeImg',  new Parse.File(aRecipe.name+".jpg", { base64: img })); // TODO: get uploaded file name
-        myNewObject.set('recipeImg',  new Parse.File(+"muffins.jpg", { base64: imgSrc })); // TODO: get uploaded file name
+        myNewObject.set('recipeImg',  new Parse.File(+"muffins.jpg", { base64: aRecipe.recipeImg.src })); // TODO: get uploaded file name
         myNewObject.set('source', aRecipe.source);
         myNewObject.set('sourceUrl', aRecipe.sourceUrl);
         myNewObject.set('description', aRecipe.description);
@@ -109,7 +109,7 @@ app.factory("recipesSrv", function ($q, $http) {
           (result) => {
             // if (typeof document !== 'undefined') document.write(`Recipe created: ${JSON.stringify(result)}`);
             console.log('Recipe created', result);
-            async.resolve(recipes);
+            async.resolve(result);
           },
           (error) => {
             // if (typeof document !== 'undefined') document.write(`Error while creating Recipe: ${JSON.stringify(error)}`);

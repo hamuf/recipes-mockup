@@ -19,7 +19,7 @@ app.controller("recipesCtrl", function ($scope, $location,recipesSrv,userSrv) {
         owner: userSrv.getActiveUser().id
       }
 
-      console.log(newRecipe);      
+      // console.log(newRecipe);      
       // recipesSrv.createRecipe(newRecipe).then(function() {
       // }, function (err) {
       //   console.log(err);
@@ -33,10 +33,10 @@ app.controller("recipesCtrl", function ($scope, $location,recipesSrv,userSrv) {
       }, function (err) {
         console.log(err);
       })
-      // recipesSrv.deleteRecipe("t4sH2LjUNk");
+      // recipesSrv.deleteRecipe("g6sKwsFB94");
 
       $scope.addRecipe =  function() {
-        recipesSrv.createRecipe(newRecipe,$scope.recipeImg.src).then(function() {
+        recipesSrv.createRecipe($scope.recipe).then(function() {
         }, function (err) {
           console.log(err);
         })       

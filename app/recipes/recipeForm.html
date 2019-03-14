@@ -3,13 +3,13 @@
         <div class="form-group col-md-6">
             <!-- 1 -->
             <label for="recipeName">שם המתכון</label>
-            <input type="input" class="form-control" id="recipeName" placeholder="שם המתכון" ng-model="recipeName">
+            <input type="input" class="form-control" id="recipeName" placeholder="שם המתכון" ng-model="recipe.recipeName">
         </div>
         <div class="form-group col-md-3">
             <div class="form-group">
                 <label for="recipeImgUpload">תמונה ראשית</label>
                 <!-- <input type="file" class="form-control-file" id="recipeImgUpload" ng-model="recipeImg" accept="image/*">       -->
-                <input type="file" image-with-preview class="form-control-file" id="recipeImgUpload" ng-model="recipeImg" accept="image/*">
+                <input type="file" image-with-preview class="form-control-file" id="recipeImgUpload" ng-model="recipe.recipeImg" accept="image/*">
             </div>
         </div>
         <div class="form-group col-md-3">
@@ -17,12 +17,12 @@
             <div class="form-group">
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="isPublic" value="true">כולם
+                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="true">כולם
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="isPublic" value="false" checked>רק אני
+                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="false" checked>רק אני
                     </label>
                 </div>
             </div>
@@ -33,11 +33,11 @@
         <div class="form-group col-md-6">
             <!-- 2 -->
             <label for="sourceName">מקור</label>
-            <input type="input" class="form-control" id="sourceName" placeholder="מקור המתכון">
+            <input type="input" class="form-control" id="sourceName" ng-model="recipe.source" placeholder="מקור המתכון">
         </div>
         <div class="form-group col-md-6">
             <label for="sourceLink">קישור למקור</label>
-            <input type="input" class="form-control" id="sourceLink" placeholder="קישור למתכון אם קיים">
+            <input type="input" class="form-control" id="sourceLink" ng-model="recipe.sourceUrl" placeholder="קישור למתכון אם קיים">
         </div>
     </div>
     <!-- Accordion -->
@@ -55,7 +55,7 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                             <label for="desc">תיאור רקע של המתכון. יוצג מתחת לכותרת</label>
-                            <textarea class="form-control" id="desc" rows="3"></textarea>
+                            <textarea class="form-control" id="desc" rows="3" ng-model="recipe.description"></textarea>
     
                             <div class="form-row">
                                     <div class="col-md-6">
@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="dishType">סוג מנה</label>
-                                        <select class="form-control" id="dishType">
+                                        <select class="form-control" id="dishType" ng-model="recipe.sourceUrl"> 
                                             <option>-- לשנות לבחירה מרובה --</option>
                                             <option value="{{$index}}" ng-repeat="dish in dishType">{{dish}}</option>
                                         </select>
