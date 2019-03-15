@@ -10,6 +10,9 @@ app.config(function($routeProvider) {
     }).when("/my-profile", {
       templateUrl: "app/user/account.html",
       controller: "loginCtrl"
+    }).when("/my-recipes", {
+      templateUrl: "app/recipes/recipes.html",
+      controller: "recipesCtrl"
     // }).when("/:userId", {
     //   templateUrl: "app/recipes/recipes.html",
     //   controller: "recipesCtrl"

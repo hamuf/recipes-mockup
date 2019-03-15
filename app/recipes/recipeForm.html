@@ -10,12 +10,12 @@
             <div class="form-group">
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="true">כולם
+                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="true" checked>כולם
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="false" checked>רק אני
+                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="false">רק אני
                     </label>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group col-md-3">
-            <img class="img-fluid" ng-src="{{recipe.recipeImg.src}}" alt="{{recipe.recipeName ? recipe.recipeName+' photo' : ''}}" srcset="">
+            <img class="img-fluid" ng-src="{{recipe.recipeImg.src}}" alt="'תמונה של'+{{recipe.recipeName ? recipe.recipeName : ''}}" srcset="">
         </div>
        
     </div>
@@ -88,19 +88,23 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group col-lg-2">
-                                <label for="seq">מס' סידורי</label>
-                                <input type="input" class="form-control" id="seq" placeholder="">
+                            <div class="form-group col-lg-2 col-sm-1">
+                                <label for="seq">#</label>
+                                <input type="input" class="form-control" id="seq" ng-model="seq" placeholder="">
                             </div>
-                            <div class="form-group col-lg-8">
+                            <div class="form-group col-lg-8 col-sm-11">
                                 <label for="instruction">הוראה</label>
-                                <input type="input" class="form-control" id="instruction" placeholder="מה יבוצע בשלב זה">
+                                <input type="input" class="form-control" id="instruction" ng-model="instruction" placeholder="מה יבוצע בשלב זה">
                             </div>
                             <div class="form-group col-lg-2">
                                 <label>&nbsp;</label><br/>
-                                <input class="btn btn-primary" type="button" value="שמור שלב">
+                                <input class="btn btn-primary" type="button" value="שמור שלב" ng-click="saveStepLocally()">
                             </div>
                         </div>
+                        <div class="row" ng-repeat="instruction in recipe.instructions">
+                                <div class="col-1">{{instruction.seq}}</div>
+                                <div class="col-11">{{instruction.instruction}}</div>
+                            </div>                        
                     </div>
                 </div>
             </div>

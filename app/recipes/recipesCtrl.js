@@ -5,41 +5,42 @@ app.controller("recipesCtrl", function ($scope, $location,recipesSrv,userSrv) {
   $scope.units = recipesSrv.units;
 
     $scope.recipes = [];
+    $scope.recipe = {}; // an array of instruction objects
+    $scope.recipe.instructions = []; // an array of instruction objects
 
-    // if (userSrv.getActiveUser()) {
-    //   $scope.recipeOwnerId = userSrv.getActiveUser().id;
-    //   console.log($scope.recipeOwnerId);
+    var isUserRecipePage =($location.url().indexOf("my-recipes") > 0 && $scope.activeUser !== null); 
 
-    //   var newRecipe = {
-    //     name: "עוגת דבש תמרים טבעונית",
-    //     source: " לומדים לבשל טבעוני | סיו-פוד",
-    //     sourceUrl: "http://www.sivfood.com/2012/09/datehoneyvegancake.html",
-    //     description: "המתכון המלא בקישור למעלה, כאן מתכון לחצי כמות, שמתאים לתבנית של 12 מאפינס בינוניים, או תבנית אינגליש קייק         עשיתי שינויים קלים. יש הרבה רעיונות ועצות בהערות של המתכון המקורי",
-    //     isPublic: "true",
-    //     owner: userSrv.getActiveUser().id
-    //   }
 
-      // console.log(newRecipe);      
-      // recipesSrv.createRecipe(newRecipe).then(function() {
-      // }, function (err) {
-      //   console.log(err);
-      // })       
-    // }
+    $scope.seq = 1;
+    $scope.saveStepLocally = function() {
+      var newStepObj = {};
+      newStepObj["seq"] = $scope.seq;
+      newStepObj["instruction"] = $scope.instruction;
+      console.log(newStepObj);
+      $scope.recipe.instructions.push(newStepObj);
+      $scope.seq = "";
+      $scope.instruction = "";
+    }
 
-    
     // fetch existing pre defined recipes from the model
-    recipesSrv.getRecipes().then(function (recipes) {
+    recipesSrv.getRecipes(isUserRecipePage).then(function (recipes) {
         $scope.recipes = recipes;
       }, function (err) {
         console.log(err);
       })
-      // recipesSrv.deleteRecipe("g6sKwsFB94");
+      // recipesSrv.deleteRecipe("k69DeoIjkW");
 
-      $scope.addRecipe =  function() {
-        recipesSrv.createRecipe($scope.recipe).then(function() {
-        }, function (err) {
-          console.log(err);
-        })       
-      }
+  $scope.addRecipe = function () {
+    if (userSrv.getActiveUser()) {
+      var imgFileName = document.getElementById('recipeImgUpload').files[0].name;
+      // $scope.recipe.instructions = $scope.instructions;
+      recipesSrv.createRecipe($scope.recipe, imgFileName).then(function () {
+      }, function (err) {
+        console.log(err);
+      })
+    } else {
+      console.log("There is No cative user");
+    }
+  }
 
 });

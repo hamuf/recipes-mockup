@@ -76,7 +76,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
             $scope.activeUser = activeUser;
             $scope.closeWin();
             $scope.connected = true;
-            $location.path("/");
+            $location.path("/my-recipes");
         }, function(error) {
             if (error.code === 101) {
                 // set error message:

@@ -57,7 +57,7 @@ app.factory("recipesSrv", function ($q, $http) {
     ];
     
 
-    function getRecipes() {
+    function getRecipes(isUserRecipes) {
         var async = $q.defer();
         // var activeUserId = userSrv.getActiveUser().id;
 
@@ -65,7 +65,9 @@ app.factory("recipesSrv", function ($q, $http) {
 
         const RecipeParse = Parse.Object.extend('Recipe');
         const query = new Parse.Query(RecipeParse);
-        // query.equalTo("userId",  Parse.User.current());
+        if (isUserRecipes) {
+          query.equalTo("owner", Parse.User.current());
+        }
         query.find().then(function(results) {
 
           for (var i = 0; i < results.length; i++) {
@@ -84,7 +86,7 @@ app.factory("recipesSrv", function ($q, $http) {
     }
 
 
-    function createRecipe(aRecipe) {
+    function createRecipe(aRecipe,imgFileName) {
       var async = $q.defer();
 
         const Recipe = Parse.Object.extend('Recipe');
@@ -92,7 +94,7 @@ app.factory("recipesSrv", function ($q, $http) {
         
         myNewObject.set('recipeName', aRecipe.recipeName);
         // myNewObject.set('recipeImg',  new Parse.File(aRecipe.name+".jpg", { base64: img })); // TODO: get uploaded file name
-        myNewObject.set('recipeImg',  new Parse.File(+"muffins.jpg", { base64: aRecipe.recipeImg.src })); // TODO: get uploaded file name
+        myNewObject.set('recipeImg',  new Parse.File(+imgFileName, { base64: aRecipe.recipeImg.src })); // TODO: get uploaded file name
         myNewObject.set('source', aRecipe.source);
         myNewObject.set('sourceUrl', aRecipe.sourceUrl);
         myNewObject.set('description', aRecipe.description);
