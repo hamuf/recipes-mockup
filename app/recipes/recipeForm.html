@@ -10,12 +10,12 @@
             <div class="form-group">
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="true" checked>כולם
+                        <input type="radio" name="isPublic" class="form-check-input" ng-value="true" ng-model="recipe.isPublic" ng-checked="recipe.isPublic">כולם
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="isPublic" ng-model="recipe.isPublic" value="false">רק אני
+                        <input type="radio" name="isPublic" class="form-check-input" ng-value="false" ng-model="recipe.isPublic" ng-checked="!recipe.isPublic" checked>רק אני
                     </label>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group col-md-3">
-            <img class="img-fluid" ng-src="{{recipe.recipeImg.src}}" alt="'תמונה של'+{{recipe.recipeName ? recipe.recipeName : ''}}" srcset="">
+            <img class="img-fluid" ng-src="{{recipe.recipeImg.src}}" alt="{{recipe.recipeName ? ' תמונה של'+recipe.recipeName : ''}}" srcset="">
         </div>
        
     </div>
@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="dishType">סוג מנה</label>
-                                        <select class="form-control" id="dishType" ng-model="recipe.sourceUrl"> 
+                                        <select class="form-control" id="dishType" ng-model="recipe.dishType"> 
                                             <option>-- לשנות לבחירה מרובה --</option>
                                             <option value="{{$index}}" ng-repeat="dish in dishType">{{dish}}</option>
                                         </select>
@@ -119,30 +119,36 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group col-lg-1">
+                            <div class="form-group col-md-1 col-6">
                                 <label for="quantity">כמות</label>
-                                <input type="input" class="form-control" id="quantity">
+                                <input type="input" class="form-control" id="quantity" ng-model="quantity">
                             </div>
-                            <div class="form-group col-lg-2">
+                            <div class="form-group col-md-2 col-6">
                                 <label for="unit">יח' מידה</label>
                                 <!-- <input type="input" class="form-control" id="unit" placeholder=""> -->
-                                <select class="form-control" id="units">
+                                <select class="form-control" id="units" ng-model="unit">
                                     <option value="{{idx}}" ng-repeat="(idx, unit) in units">{{unit[idx]}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-lg-3">
+                            <div class="form-group col-md-3 col-4">
                                 <label for="ingredient">רכיב</label>
-                                <input type="input" class="form-control" id="ingredient" placeholder="מרשימה סגורה">
+                                <input type="input" class="form-control" id="ingredient" ng-model="ingredient" placeholder="מרשימה סגורה">
                             </div>
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-md-4 col-4">
                                 <label for="ingredientComm">הערה</label>
-                                <input type="input" class="form-control" id="ingredientComm" placeholder="למשל: קצוץ, שהושרה 12 שעות וכד'">
+                                <input type="input" class="form-control" id="ingredientComm" ng-model="ingredientComm" placeholder="למשל: קצוץ, שהושרה 12 שעות וכד'">
                             </div>
-                            <div class="form-group col-lg-2">
+                            <div class="form-group col-md-2 col-4">
                                 <label>&nbsp;</label><br/>
-                                <input class="btn btn-primary" type="button" value="שמור רכיב">
+                                <input class="btn btn-primary" type="button" value="שמור רכיב" ng-click="saveIngredientLocally()">
                             </div>
                         </div>
+                        <div class="row" ng-repeat="an_ingredient in recipe.ingredients">
+                            <div class="col-md-1">{{an_ingredient.quantity}}</div>
+                            <div class="ccol-md-2">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
+                            <div class="col-md-3">{{an_ingredient.ingredient}}</div>
+                            <div class="col-md-6">{{an_ingredient.ingredientComm}}</div>
+                        </div>                               
                         <div class="form-row">
                             <div class="form-group col-lg-1">&nbsp;
                             </div>

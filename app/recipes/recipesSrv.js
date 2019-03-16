@@ -3,7 +3,8 @@ app.factory("recipesSrv", function ($q, $http) {
     function Recipe(parseRecipe) {
         this.id = parseRecipe.id;
         this.name = parseRecipe.get("recipeName");
-        this.imageUrl = parseRecipe.get("recipeImg").url();
+        if (parseRecipe.get("recipeImg"))
+          this.imageUrl = parseRecipe.get("recipeImg").url();
         this.source = parseRecipe.get("source");
         this.sourceUrl = parseRecipe.get("sourceUrl");
         this.description = parseRecipe.get("description");
@@ -49,11 +50,12 @@ app.factory("recipesSrv", function ($q, $http) {
       {"1": "מיליליטר"}, //TODO: one working - change to מ"ל
       {"2":"כפית"},
       {"3":"כפיות"},
-      {"4":"כוס"},
-      {"5":"כוסות"},
-      {"6":"כפיות"},
-      {"7":"יחידה"}, // for eggs, apples, atc. TODO: find a better name
-      {"8":"יחידות"}, // for eggs, apples, atc.
+      {"4":"כף"},
+      {"5":"כפות"},
+      {"6":"כוס"},
+      {"7":"כוסות"},
+      {"8":"יחידה"}, // for eggs, apples, atc. TODO: find a better name
+      {"9":"יחידות"}, // for eggs, apples, atc.
     ];
     
 
@@ -78,7 +80,7 @@ app.factory("recipesSrv", function ($q, $http) {
           async.resolve(recipes);
 
         }, function(error) {
-            $log.error('Error while fetching Recipe', error);
+            console.error('Error while fetching Recipe', error);
             async.reject(error);
         });
 
@@ -94,19 +96,23 @@ app.factory("recipesSrv", function ($q, $http) {
         
         myNewObject.set('recipeName', aRecipe.recipeName);
         // myNewObject.set('recipeImg',  new Parse.File(aRecipe.name+".jpg", { base64: img })); // TODO: get uploaded file name
-        myNewObject.set('recipeImg',  new Parse.File(+imgFileName, { base64: aRecipe.recipeImg.src })); // TODO: get uploaded file name
+        if (imgFileName) {
+          myNewObject.set('recipeImg',  new Parse.File(+imgFileName, { base64: aRecipe.recipeImg.src })); // TODO: get uploaded file name
+        }
         myNewObject.set('source', aRecipe.source);
         myNewObject.set('sourceUrl', aRecipe.sourceUrl);
         myNewObject.set('description', aRecipe.description);
         myNewObject.set('dishTypes', aRecipe.dietTyps);
         myNewObject.set('dietTyps', aRecipe.dietTyps);
         myNewObject.set('views', aRecipe.views);
-        myNewObject.set('isPublic', JSON.parse(aRecipe.isPublic)); // contert true/false string to boolean
+        // myNewObject.set('isPublic', aRecipe.isPublic ? JSON.parse(aRecipe.isPublic) : false); // contert true/false string to boolean
+        myNewObject.set('isPublic', aRecipe.isPublic ? true : false); // contert true/false string to boolean
         myNewObject.set('owner', Parse.User.current());
         // myNewObject.set('owner', aRecipe.owner);
-        myNewObject.set('instructions', aRecipe.instructions);
-        myNewObject.set('ingredients', aRecipe.ingredients);
-        
+        myNewObject.set('instructions', angular.copy(aRecipe.instructions)); // Removes $$hashKey added by Angular and Rejected by Parse         
+        myNewObject.set('ingredients', angular.copy(aRecipe.ingredients));    // Removes $$hashKey added by Angular and Rejected by Parse
+
+
         myNewObject.save().then(
           (result) => {
             // if (typeof document !== 'undefined') document.write(`Recipe created: ${JSON.stringify(result)}`);
