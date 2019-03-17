@@ -207,7 +207,6 @@ app.factory("recipesSrv", function ($q, $http) {
   function getRecipeById(recipeId) {
     var theRecipe = null
     if (recipes.length > 0) {
-
       for (var recipe in recipes) {
         // console.log(recipes[recipe].id);
         if (recipes[recipe].id === recipeId) {
