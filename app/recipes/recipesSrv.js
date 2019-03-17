@@ -2,9 +2,9 @@ app.factory("recipesSrv", function ($q, $http) {
 
     function Recipe(parseRecipe) {
         this.id = parseRecipe.id;
-        this.name = parseRecipe.get("recipeName");
+        this.recipeName = parseRecipe.get("recipeName");
         if (parseRecipe.get("recipeImg"))
-          this.imageUrl = parseRecipe.get("recipeImg").url();
+          this.recipeImg = parseRecipe.get("recipeImg").url();
         this.source = parseRecipe.get("source");
         this.sourceUrl = parseRecipe.get("sourceUrl");
         this.description = parseRecipe.get("description");
@@ -58,12 +58,12 @@ app.factory("recipesSrv", function ($q, $http) {
       {"9":"יחידות"}, // for eggs, apples, atc.
     ];
     
-
+    var recipes = [];
     function getRecipes(isUserRecipes) {
         var async = $q.defer();
         // var activeUserId = userSrv.getActiveUser().id;
 
-        var recipes = [];
+        recipes = [];
 
         const RecipeParse = Parse.Object.extend('Recipe');
         const query = new Parse.Query(RecipeParse);
@@ -87,6 +87,35 @@ app.factory("recipesSrv", function ($q, $http) {
         return async.promise;
     }
 
+
+    function getRecipeById(recipeId) {
+      var async = $q.defer();
+      // var activeUserId = userSrv.getActiveUser().id;
+
+      var recipes = [];
+
+      const RecipeParse = Parse.Object.extend('Recipe');
+      const query = new Parse.Query(RecipeParse);
+      if (isUserRecipes) {
+        query.equalTo("owner", Parse.User.current());
+      }
+      query.find().then(function(results) {
+
+        for (var i = 0; i < results.length; i++) {
+          // console.log(results[i]);
+          recipes.push(new Recipe(results[i]));
+        }
+
+        async.resolve(recipes);
+
+      }, function(error) {
+          console.error('Error while fetching Recipe', error);
+          async.reject(error);
+      });
+
+      return async.promise;
+  }
+  
 
     function createRecipe(aRecipe,imgFileName) {
       var async = $q.defer();
@@ -150,12 +179,29 @@ app.factory("recipesSrv", function ($q, $http) {
         return async.promise;
     }
     
+  function getRecipeById(recipeId) {
+    var theRecipe = null
+    if (recipes.length > 0) {
+
+      for (var recipe in recipes) {
+        // console.log(recipes[recipe].id);
+        if (recipes[recipe].id === recipeId) {
+          theRecipe = recipes[recipe];
+          break;
+        }
+      }
+    }
+
+    return theRecipe;
+  }
+
     return {
         getRecipes: getRecipes,
         dietType: dietType,
         dishType: dishType,
         units: units,
         createRecipe: createRecipe,
+        getRecipeById: getRecipeById,
         deleteRecipe: deleteRecipe
     }
 

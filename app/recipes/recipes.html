@@ -87,11 +87,13 @@
             <!--Move to a directive?-->
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->
-                <img class="card-img-top" ng-src="{{recipe.imageUrl}}" alt="{{recipe.name}}">
+                <img class="card-img-top" ng-src="{{recipe.recipeImg}}" alt="{{recipe.recipeName}}">
                 <div class="card-body">
-                    <h4 class="card-title">
-                        {{recipe.name}}
-                    </h4>
+                    <h5 class="card-title">
+                        <a href="#">{{recipe.recipeName}}</a>
+                    </h5>
+                    <a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary" ng-show="{{isUserRecipePage}}">עריכה</a>
+
                 </div>
 
             </div>
