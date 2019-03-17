@@ -1,4 +1,4 @@
-app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
+app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv,utilitySrv) {
 
     $scope.dietTypes = recipesSrv.dietType;
 
@@ -19,7 +19,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
             $scope.user = {};
             $scope.user.nickname = $scope.activeUser.username;
             $scope.user.newemail = $scope.activeUser.email;
-            $scope.user.dietType = setDietTypesFromDB($scope.activeUser.dietTypes);
+            $scope.user.dietType = utilitySrv.setDietTypesFromDB($scope.activeUser.dietTypes);
             // TODO: if user exsists show **** but save only if password was modified
             // solution? I comapare to second password any way, so I can leave it like this
             $scope.user.newpwd = "12345678"; 
@@ -30,12 +30,12 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
     // Called on submit of signup form
     $scope.addUser = function() {
         if (isValid()) {
-            $scope.user.dietType = setDietTypesForDB($scope.user.dietType);
+            $scope.user.dietType = utilitySrv.setDietTypesForDB($scope.user.dietType);
             console.log($scope.user);        
 
             userSrv.signup($scope.user).then(function(newUser) {
                 console.log(newUser);
-                $scope.user.dietType = setDietTypesFromDB($scope.user.dietType);
+                $scope.user.dietType = utilitySrv.setDietTypesFromDB($scope.user.dietType);
             }, function(error) {
                 console.log(error);
             });
@@ -44,13 +44,13 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
 
     // Called on submit of signup form
     $scope.updateUser = function () {
-        $scope.user.dietType = setDietTypesForDB($scope.user.dietType);
+        $scope.user.dietType = utilitySrv.setDietTypesForDB($scope.user.dietType);
         // console.log($scope.user);
 
         userSrv.updateUser($scope.user).then(function (aUser) {
             // console.log(aUser);
             // $scope.user = aUser;
-            $scope.user.dietType = setDietTypesFromDB(aUser.dietType);
+            $scope.user.dietType = utilitySrv.setDietTypesFromDB(aUser.dietType);
         }, function (error) {
             console.log(error);
         });
@@ -105,28 +105,6 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv) {
         }
         
 
-    }
-
-    // example structure of input: ["2","5"]
-    // example structure of output {"2": true, "5": true}
-    function setDietTypesForDB(dietTypesObject) {
-        var dietTypesIdxArray = [];
-        // dietTypeIdx is the Key in a key=>value pair
-        for (var dietTypeIdx in dietTypesObject) {
-            if (dietTypesObject[dietTypeIdx]) {
-                dietTypesIdxArray.push(dietTypeIdx);
-            }
-        }
-        return dietTypesIdxArray;
-    }
-
-    function setDietTypesFromDB(dietTypesArr) {
-        var dietTypesObject = {};
-        for (var idx = 0; idx < dietTypesArr.length; idx++) {
-            var element = dietTypesArr[idx];
-            dietTypesObject[element] = true;
-        }
-        return dietTypesObject;
     }
 
     $scope.closeWin = function() {
