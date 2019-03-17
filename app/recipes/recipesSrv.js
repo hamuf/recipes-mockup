@@ -116,6 +116,25 @@ app.factory("recipesSrv", function ($q, $http) {
       return async.promise;
   }
   
+    function setRecipeParseObj(scopeRecipe,parseObj,imgFileName) {
+      parseObj.set('recipeName', scopeRecipe.recipeName);
+      // parseObj.set('recipeImg',  new Parse.File(scopeRecipe.name+".jpg", { base64: img })); // TODO: get uploaded file name
+      if (imgFileName) {
+        parseObj.set('recipeImg',  new Parse.File(+imgFileName, { base64: scopeRecipe.recipeImg.src })); // TODO: get uploaded file name
+      }
+      parseObj.set('source', scopeRecipe.source);
+      parseObj.set('sourceUrl', scopeRecipe.sourceUrl);
+      parseObj.set('description', scopeRecipe.description);
+      parseObj.set('dishTypes', scopeRecipe.dietTyps);
+      parseObj.set('dietTyps', scopeRecipe.dietTyps);
+      parseObj.set('views', scopeRecipe.views);
+      // parseObj.set('isPublic', scopeRecipe.isPublic ? JSON.parse(scopeRecipe.isPublic) : false); // contert true/false string to boolean
+      parseObj.set('isPublic', scopeRecipe.isPublic ? true : false); // contert true/false string to boolean
+      parseObj.set('owner', Parse.User.current());
+      // parseObj.set('owner', scopeRecipe.owner);
+      parseObj.set('instructions', angular.copy(scopeRecipe.instructions)); // Removes $$hashKey added by Angular and Rejected by Parse         
+      parseObj.set('ingredients', angular.copy(scopeRecipe.ingredients));    // Removes $$hashKey added by Angular and Rejected by Parse
+    }
 
     function createRecipe(aRecipe,imgFileName) {
       var async = $q.defer();
@@ -123,27 +142,10 @@ app.factory("recipesSrv", function ($q, $http) {
         const Recipe = Parse.Object.extend('Recipe');
         const myNewObject = new Recipe();
         
-        myNewObject.set('recipeName', aRecipe.recipeName);
-        // myNewObject.set('recipeImg',  new Parse.File(aRecipe.name+".jpg", { base64: img })); // TODO: get uploaded file name
-        if (imgFileName) {
-          myNewObject.set('recipeImg',  new Parse.File(+imgFileName, { base64: aRecipe.recipeImg.src })); // TODO: get uploaded file name
-        }
-        myNewObject.set('source', aRecipe.source);
-        myNewObject.set('sourceUrl', aRecipe.sourceUrl);
-        myNewObject.set('description', aRecipe.description);
-        myNewObject.set('dishTypes', aRecipe.dietTyps);
-        myNewObject.set('dietTyps', aRecipe.dietTyps);
-        myNewObject.set('views', aRecipe.views);
-        // myNewObject.set('isPublic', aRecipe.isPublic ? JSON.parse(aRecipe.isPublic) : false); // contert true/false string to boolean
-        myNewObject.set('isPublic', aRecipe.isPublic ? true : false); // contert true/false string to boolean
-        myNewObject.set('owner', Parse.User.current());
-        // myNewObject.set('owner', aRecipe.owner);
-        myNewObject.set('instructions', angular.copy(aRecipe.instructions)); // Removes $$hashKey added by Angular and Rejected by Parse         
-        myNewObject.set('ingredients', angular.copy(aRecipe.ingredients));    // Removes $$hashKey added by Angular and Rejected by Parse
-
+        setRecipeParseObj(aRecipe,myNewObject,imgFileName);
 
         myNewObject.save().then(
-          (result) => {
+          (result) => { 
             // if (typeof document !== 'undefined') document.write(`Recipe created: ${JSON.stringify(result)}`);
             console.log('Recipe created', result);
             async.resolve(result);
@@ -156,6 +158,29 @@ app.factory("recipesSrv", function ($q, $http) {
         );   
         
         return async.promise;
+    }
+
+    function updateRecipe(aRecipe,imgFileName) {
+      var async = $q.defer();
+
+      const Recipe = Parse.Object.extend('Recipe');
+      const query = new Parse.Query(Recipe);
+      // here you put the objectId that you want to update
+      console.log(aRecipe.id);
+      query.get(aRecipe.id).then((parseObj) => {
+        setRecipeParseObj(aRecipe,parseObj,imgFileName);
+        parseObj.save().then((response) => {
+          // You can use the "get" method to get the value of an attribute
+          // Ex: response.get("<ATTRIBUTE_NAME>")         
+          console.log('Updated Recipe', response);
+          async.resolve(aRecipe);
+        }, (error) => {
+          console.error('Error while updating Recipe', error);
+          async.reject(error);
+        });
+      });
+      
+      return async.promise;
     }
 
     function deleteRecipe(recipeId) {
@@ -201,6 +226,7 @@ app.factory("recipesSrv", function ($q, $http) {
         dishType: dishType,
         units: units,
         createRecipe: createRecipe,
+        updateRecipe: updateRecipe,
         getRecipeById: getRecipeById,
         deleteRecipe: deleteRecipe
     }

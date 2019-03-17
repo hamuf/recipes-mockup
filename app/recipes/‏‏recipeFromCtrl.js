@@ -73,5 +73,19 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       console.log("There is No acative user");
     }
   }
+  $scope.editRecipe = function () {
+    if (userSrv.getActiveUser()) {
+
+      var imgFileName = (document.getElementById('recipeImgUpload').files[0]) ? document.getElementById('recipeImgUpload').files[0].name : null;
+      // console.log(angular.copy($scope.recipe.ingredients)); // Removes $$hashkey added by Angular and Rejected by Parse
+      console.log($scope.recipe);
+      recipesSrv.updateRecipe($scope.recipe, imgFileName).then(function () {
+      }, function (err) {
+        console.log(err);
+      })
+    } else {
+      console.log("There is No acative user");
+    }
+  }
 
 });

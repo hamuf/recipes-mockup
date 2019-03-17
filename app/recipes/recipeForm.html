@@ -169,10 +169,13 @@
     <div class="form-row mt-2">
         <div class="col-md-1 col-6">
             <!-- Show only on edit page -->
-            <input class="btn btn-danger" type="button" value="מחק מתכון" ng-show="false">
+            <input class="btn btn-danger" type="button" value="מחק מתכון" ng-show="{{isEditRecipe}}" ng-click="alert('Are you sure?')">
         </div>
         <div class="col-md-11 col-6 align-left">
-            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-click="addRecipe()">
+            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-show="{{!isEditRecipe}}" ng-click="addRecipe()">
+        </div>
+        <div class="col-md-11 col-6 align-left">
+            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-show="{{isEditRecipe}}" ng-click="editRecipe()">
         </div>
     </div>
 </form>
