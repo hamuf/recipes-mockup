@@ -88,33 +88,33 @@ app.factory("recipesSrv", function ($q, $http) {
     }
 
 
-    function getRecipeById(recipeId) {
-      var async = $q.defer();
-      // var activeUserId = userSrv.getActiveUser().id;
+  //   function getRecipeById(recipeId) {
+  //     var async = $q.defer();
+  //     // var activeUserId = userSrv.getActiveUser().id;
 
-      var recipes = [];
+  //     var recipes = [];
 
-      const RecipeParse = Parse.Object.extend('Recipe');
-      const query = new Parse.Query(RecipeParse);
-      if (isUserRecipes) {
-        query.equalTo("owner", Parse.User.current());
-      }
-      query.find().then(function(results) {
+  //     const RecipeParse = Parse.Object.extend('Recipe');
+  //     const query = new Parse.Query(RecipeParse);
+  //     if (isUserRecipes) {
+  //       query.equalTo("owner", Parse.User.current());
+  //     }
+  //     query.find().then(function(results) {
 
-        for (var i = 0; i < results.length; i++) {
-          // console.log(results[i]);
-          recipes.push(new Recipe(results[i]));
-        }
+  //       for (var i = 0; i < results.length; i++) {
+  //         // console.log(results[i]);
+  //         recipes.push(new Recipe(results[i]));
+  //       }
 
-        async.resolve(recipes);
+  //       async.resolve(recipes);
 
-      }, function(error) {
-          console.error('Error while fetching Recipe', error);
-          async.reject(error);
-      });
+  //     }, function(error) {
+  //         console.error('Error while fetching Recipe', error);
+  //         async.reject(error);
+  //     });
 
-      return async.promise;
-  }
+  //     return async.promise;
+  // }
   
     function setRecipeParseObj(scopeRecipe,parseObj,imgFileName) {
       parseObj.set('recipeName', scopeRecipe.recipeName);
@@ -125,7 +125,7 @@ app.factory("recipesSrv", function ($q, $http) {
       parseObj.set('source', scopeRecipe.source);
       parseObj.set('sourceUrl', scopeRecipe.sourceUrl);
       parseObj.set('description', scopeRecipe.description);
-      parseObj.set('dishTypes', scopeRecipe.dietTyps);
+      parseObj.set('dishTypes', scopeRecipe.dishTypes);
       parseObj.set('dietTyps', scopeRecipe.dietTyps);
       parseObj.set('views', scopeRecipe.views);
       // parseObj.set('isPublic', scopeRecipe.isPublic ? JSON.parse(scopeRecipe.isPublic) : false); // contert true/false string to boolean
