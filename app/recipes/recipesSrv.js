@@ -66,13 +66,15 @@ app.factory("recipesSrv", function ($q) {
 
     // back4App api
     const RecipeParse = Parse.Object.extend('Recipe');
-    const query = new Parse.Query(RecipeParse);
+    const query = new Parse.Query(RecipeParse);    
     if (isUserRecipes) {
       query.equalTo("owner", Parse.User.current());
     } else {
       // if anonymous user, get only public recipes
       query.equalTo("isPublic", true);
     }
+    // order by date - newest recipes first
+    query.descending("updatedAt");
     query.find().then(function (results) {
       for (var i = 0; i < results.length; i++) {
         recipes.push(new Recipe(results[i]));

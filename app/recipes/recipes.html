@@ -7,19 +7,19 @@
     <div class="col-lg-9 col-6">
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio" checked>הכי פופולאריים
+                <input type="radio" class="form-check-input" value="popular" name="show-first">הכי פופולאריים
             </label>
         </div>
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio">הכי חדשים
+                <input type="radio" class="form-check-input" value="new" name="show-first" checked>הכי חדשים
             </label>
         </div>
     </div>
 </div>
 <!-- sort by  END -->
 <!-- Dietary restrictions -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-3">
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <strong>טבעוני</strong>
@@ -45,7 +45,7 @@
             </select>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Dietary restrictions END -->
 <!-- free search -->
 <div class="row">
@@ -89,7 +89,7 @@
                 <!-- make cards the same height as the tallest -->
                 <img class="card-img-top" ng-src="{{recipe.recipeImg}}" alt="{{recipe.recipeName}}">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title font-italic text-center">
                         <a href="#">{{recipe.recipeName}}</a>
                     </h5>
                     <a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary" ng-show="{{isUserRecipePage}}">עריכה</a>
