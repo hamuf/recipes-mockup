@@ -1,7 +1,7 @@
 app.factory("utilitySrv", function ($http, $q, $log) {
 // example structure of input: ["2","5"]
     // example structure of output {"2": true, "5": true}
-    function setDietTypesForDB(dietTypesObject) {
+    function setTypeListForDB(dietTypesObject) {
         var dietTypesIdxArray = [];
         // dietTypeIdx is the Key in a key=>value pair
         for (var dietTypeIdx in dietTypesObject) {
@@ -12,17 +12,19 @@ app.factory("utilitySrv", function ($http, $q, $log) {
         return dietTypesIdxArray;
     }
 
-    function setDietTypesFromDB(dietTypesArr) {
+    function setTypeListFromDB(dietTypesArr) {
         var dietTypesObject = {};
-        for (var idx = 0; idx < dietTypesArr.length; idx++) {
-            var element = dietTypesArr[idx];
-            dietTypesObject[element] = true;
+        if (dietTypesArr) {
+            for (var idx = 0; idx < dietTypesArr.length; idx++) {
+                var element = dietTypesArr[idx];
+                dietTypesObject[element] = true;
+            }
         }
         return dietTypesObject;
     }
 
     return {
-        setDietTypesFromDB: setDietTypesFromDB,
-        setDietTypesForDB: setDietTypesForDB
+        setTypeListFromDB: setTypeListFromDB,
+        setTypeListForDB: setTypeListForDB
     }    
 });

@@ -23,8 +23,8 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   if ($scope.isEditRecipe) {
     var currRecipeId = $routeParams.recipeId; // sets the page's breed from the URL param
     $scope.recipe =  recipesSrv.getRecipeById(currRecipeId);
-    $scope.dietType = utilitySrv.setDietTypesFromDB($scope.recipe.dietTypes);
-    $scope.dishTypes = utilitySrv.setDietTypesFromDB($scope.recipe.dishTypes);
+    $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.recipe.dietTypes);
+    $scope.dishTypes = utilitySrv.setTypeListFromDB($scope.recipe.dishTypes);
     console.log($scope.recipe.instructions);
     console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
@@ -81,8 +81,8 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       // console.log(angular.copy($scope.recipe.ingredients)); // Removes $$hashkey added by Angular and Rejected by Parse
       console.log($scope.recipe);
       prepareRecipeObjForDB();
-
       recipesSrv.createRecipe($scope.recipe, imgFileName).then(function () {
+        $location.path("/my-recipes");
       }, function (err) {
         console.log(err);
       })
@@ -98,8 +98,9 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       prepareRecipeObjForDB();
       console.log($scope.recipe);
       recipesSrv.updateRecipe($scope.recipe, imgFileName).then(function () {
-        $scope.dietType = utilitySrv.setDietTypesFromDB($scope.recipe.dietType);
-        $scope.dishTypes = utilitySrv.setDietTypesFromDB($scope.recipe.dishTypes);
+        $location.path("/my-recipes");
+        // $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.recipe.dietTypes);
+        // $scope.dishTypes = utilitySrv.setTypeListFromDB($scope.recipe.dishTypes);
       }, function (err) {
         console.log(err);
       })
@@ -119,17 +120,19 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
 
   function getMaxSeq(dietTypesArr) {
     maxSeq = 0;
-    for (var idx = 0; idx < dietTypesArr.length; idx++) {
+    if (dietTypesArr) {
+      for (var idx = 0; idx < dietTypesArr.length; idx++) {
         var seq = dietTypesArr[idx].seq;
         maxSeq = maxSeq > seq ? maxSeq : seq;
+      }
     }
-    console.log("maxSeq="+maxSeq);
-    return Number(maxSeq)+1;
-}  
+    console.log("maxSeq=" + maxSeq);
+    return Number(maxSeq) + 1;
+  }  
 
 function prepareRecipeObjForDB() {
-  $scope.recipe.dietType = utilitySrv.setDietTypesForDB($scope.dietType);
-  $scope.recipe.dishTypes = utilitySrv.setDietTypesForDB($scope.dishTypes);
+  $scope.recipe.dietTypes = utilitySrv.setTypeListForDB($scope.dietTypes);
+  $scope.recipe.dishTypes = utilitySrv.setTypeListForDB($scope.dishTypes);
   // $scope.recipe.dishTypeArr = [];
   // $scope.recipe.dishTypeArr.push($scope.recipe.dishTypes);
 }
