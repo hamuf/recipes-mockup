@@ -3,10 +3,12 @@
 }
 
 body {
+    /* font-family: 'M PLUS 1p', sans-serif; */
+    font-family: 'Varela Round', sans-serif;
     text-align: right;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, .h4, h5, .h5 {
     text-align: right;
 }
 

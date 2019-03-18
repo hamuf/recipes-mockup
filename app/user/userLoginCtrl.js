@@ -1,6 +1,6 @@
 app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv,utilitySrv) {
 
-    $scope.dietTypes = recipesSrv.dietType;
+    $scope.dietTypeList = recipesSrv.dietTypeList;
 
     $scope.invalidLogin = false;
     $scope.connected = false;
@@ -19,7 +19,7 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv,util
             $scope.user = {};
             $scope.user.nickname = $scope.activeUser.username;
             $scope.user.newemail = $scope.activeUser.email;
-            $scope.user.dietType = utilitySrv.setDietTypesFromDB($scope.activeUser.dietTypes);
+            $scope.dietType = utilitySrv.setDietTypesFromDB($scope.activeUser.dietTypes);
             // TODO: if user exsists show **** but save only if password was modified
             // solution? I comapare to second password any way, so I can leave it like this
             $scope.user.newpwd = "12345678"; 
@@ -30,12 +30,12 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv,util
     // Called on submit of signup form
     $scope.addUser = function() {
         if (isValid()) {
-            $scope.user.dietType = utilitySrv.setDietTypesForDB($scope.user.dietType);
+            $scope.user.dietType = utilitySrv.setDietTypesForDB($scope.dietType);
             console.log($scope.user);        
 
             userSrv.signup($scope.user).then(function(newUser) {
                 console.log(newUser);
-                $scope.user.dietType = utilitySrv.setDietTypesFromDB($scope.user.dietType);
+                $scope.dietType = utilitySrv.setDietTypesFromDB($scope.user.dietType); // TODO: still required?
             }, function(error) {
                 console.log(error);
             });
@@ -44,13 +44,13 @@ app.controller("loginCtrl", function($scope, $location, userSrv, recipesSrv,util
 
     // Called on submit of signup form
     $scope.updateUser = function () {
-        $scope.user.dietType = utilitySrv.setDietTypesForDB($scope.user.dietType);
+        $scope.user.dietType = utilitySrv.setDietTypesForDB($scope.dietType);
         // console.log($scope.user);
 
         userSrv.updateUser($scope.user).then(function (aUser) {
             // console.log(aUser);
             // $scope.user = aUser;
-            $scope.user.dietType = utilitySrv.setDietTypesFromDB(aUser.dietType);
+            $scope.dietType = utilitySrv.setDietTypesFromDB(aUser.dietType);
         }, function (error) {
             console.log(error);
         });

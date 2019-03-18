@@ -68,11 +68,16 @@
                                 <checkbox-list></checkbox-list>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="dishType">סוג מנה</label>
-                                <select class="form-control" id="dishType" ng-model="recipe.dishType">
-                                    <option>-- לשנות לבחירה מרובה --</option>
-                                    <option value="{{$index}}" ng-repeat="dish in dishType">{{dish}}</option>
-                                </select>
+                                    <label>סוג מנה:</label>
+                                <div class="form-check">
+                                    <div class="form-row container">
+                                        <div class="col-lg-3 col-md-4 col-6" ng-repeat="(key, dishType) in dishTypeList">
+                                            <input class="form-check-input" type="checkbox" value="" id="{{'dish'+key}}" ng-model="dishTypes[key]">
+                                            <label class="form-check-label" for="{{'dish'+key}}">{{dishType[key]}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -177,7 +182,7 @@
     <div class="form-row mt-2">
         <div class="col-md-1 col-6">
             <!-- Show only on edit page -->
-            <input class="btn btn-danger" type="button" value="מחק מתכון" ng-show="{{isEditRecipe}}" ng-click="alert('Are you sure?')">
+            <input class="btn btn-danger align-right" type="button" value="מחק מתכון" ng-show="{{isEditRecipe}}" ng-click="alert('Are you sure?')">
         </div>
         <div class="col-md-11 col-6 align-left">
             <input class="btn btn-primary" type="button" value="שמור מתכון" ng-show="{{!isEditRecipe}}" ng-click="addRecipe()">

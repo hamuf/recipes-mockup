@@ -9,7 +9,7 @@ app.factory("recipesSrv", function ($q, $http) {
         this.sourceUrl = parseRecipe.get("sourceUrl");
         this.description = parseRecipe.get("description");
         this.dishTypes = parseRecipe.get("dishTypes"); // Array of indexes
-        this.dietTyps = parseRecipe.get("dietTyps"); // Array of indexes
+        this.dietTypes = parseRecipe.get("dietTyps"); // Array of indexes
         this.views = parseRecipe.get("views"); // number
         this.isPublic = parseRecipe.get("isPublic"); // boolean - public or private
         this.owner = parseRecipe.get("owner"); // pointer to the user that created the recipe
@@ -22,7 +22,7 @@ app.factory("recipesSrv", function ($q, $http) {
      * TODO: read from server 
      */
     
-    var dietType = [
+    var dietTypeList = [
         {"0": "טבעוני"},
         {"1":"ללא גלוטן"},
         {"2":"כשר"},
@@ -34,15 +34,15 @@ app.factory("recipesSrv", function ($q, $http) {
         {"8":"רואו"}
     ];
 
-    var dishType = [
-        "מאפים מתוקים", 
-        "פשטידות",
-        "מנות עיקריות",
-        "קינוחים",
-        "פנקייקים",
-        "קציצות ולביבות",
-        "מרקים",
-        "עוגות ועוגיות"
+    var dishTypeList = [
+        {"0":"מאפים מתוקים"}, 
+        {"1":"פשטידות"},
+        {"2":"מנות עיקריות"},
+        {"3":"קינוחים"},
+        {"4":"פנקייקים"},
+        {"5":"קציצות ולביבות"},
+        {"6":"מרקים"},
+        {"7":"עוגות ועוגיות"}
     ];       
 
     var units = [
@@ -126,7 +126,7 @@ app.factory("recipesSrv", function ($q, $http) {
       parseObj.set('sourceUrl', scopeRecipe.sourceUrl);
       parseObj.set('description', scopeRecipe.description);
       parseObj.set('dishTypes', scopeRecipe.dishTypes);
-      parseObj.set('dietTyps', scopeRecipe.dietTyps);
+      parseObj.set('dietTyps', scopeRecipe.dietType);
       parseObj.set('views', scopeRecipe.views);
       // parseObj.set('isPublic', scopeRecipe.isPublic ? JSON.parse(scopeRecipe.isPublic) : false); // contert true/false string to boolean
       parseObj.set('isPublic', scopeRecipe.isPublic ? true : false); // contert true/false string to boolean
@@ -221,8 +221,8 @@ app.factory("recipesSrv", function ($q, $http) {
 
     return {
         getRecipes: getRecipes,
-        dietType: dietType,
-        dishType: dishType,
+        dietTypeList: dietTypeList,
+        dishTypeList: dishTypeList,
         units: units,
         createRecipe: createRecipe,
         updateRecipe: updateRecipe,

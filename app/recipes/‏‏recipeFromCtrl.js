@@ -1,12 +1,12 @@
-app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, recipesSrv, userSrv) {
+app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, recipesSrv, userSrv, utilitySrv) {
 
   // navigate to public recipes page, if no active user
   if (!userSrv.getActiveUser()) { 
     $location.path("/");
   }
 
-  $scope.dietTypes = recipesSrv.dietType;
-  $scope.dishType = recipesSrv.dishType;
+  $scope.dietTypeList = recipesSrv.dietTypeList;
+  $scope.dishTypeList = recipesSrv.dishTypeList;
   $scope.units = recipesSrv.units;
   
   // recipes list
@@ -23,6 +23,8 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   if ($scope.isEditRecipe) {
     var currRecipeId = $routeParams.recipeId; // sets the page's breed from the URL param
     $scope.recipe =  recipesSrv.getRecipeById(currRecipeId);
+    $scope.dietType = utilitySrv.setDietTypesFromDB($scope.recipe.dietTypes);
+    $scope.dishTypes = utilitySrv.setDietTypesFromDB($scope.recipe.dishTypes);
     console.log($scope.recipe.instructions);
     console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
@@ -61,16 +63,29 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   })
   // recipesSrv.deleteRecipe("5Z1aUuUg9A");
 
+  $scope.deleteRecipe = function () {
+    if (userSrv.getActiveUser()) {
+      console.log("recipeId="+recipeId);
+      recipesSrv.deleteRecipe(recipeId).then(function () {
+      }, function (err) {
+        console.log(err);
+      })
+    } else {
+      console.log("There is no acative user");
+    }
+  }
   $scope.addRecipe = function () {
     if (userSrv.getActiveUser()) {
 
       var imgFileName = getUploadFileName();
       // console.log(angular.copy($scope.recipe.ingredients)); // Removes $$hashkey added by Angular and Rejected by Parse
       console.log($scope.recipe);
-      // recipesSrv.createRecipe($scope.recipe, imgFileName).then(function () {
-      // }, function (err) {
-      //   console.log(err);
-      // })
+      prepareRecipeObjForDB();
+
+      recipesSrv.createRecipe($scope.recipe, imgFileName).then(function () {
+      }, function (err) {
+        console.log(err);
+      })
     } else {
       console.log("There is no acative user");
     }
@@ -80,8 +95,11 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
 
       var imgFileName = getUploadFileName();
       // console.log(angular.copy($scope.recipe.ingredients)); // Removes $$hashkey added by Angular and Rejected by Parse
+      prepareRecipeObjForDB();
       console.log($scope.recipe);
       recipesSrv.updateRecipe($scope.recipe, imgFileName).then(function () {
+        $scope.dietType = utilitySrv.setDietTypesFromDB($scope.recipe.dietType);
+        $scope.dishTypes = utilitySrv.setDietTypesFromDB($scope.recipe.dishTypes);
       }, function (err) {
         console.log(err);
       })
@@ -108,5 +126,12 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     console.log("maxSeq="+maxSeq);
     return Number(maxSeq)+1;
 }  
+
+function prepareRecipeObjForDB() {
+  $scope.recipe.dietType = utilitySrv.setDietTypesForDB($scope.dietType);
+  $scope.recipe.dishTypes = utilitySrv.setDietTypesForDB($scope.dishTypes);
+  // $scope.recipe.dishTypeArr = [];
+  // $scope.recipe.dishTypeArr.push($scope.recipe.dishTypes);
+}
 
 });
