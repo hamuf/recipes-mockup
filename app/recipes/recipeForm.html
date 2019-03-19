@@ -131,47 +131,55 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form-group col-md-1 col-6">
+                            <div class="form-group-mb-0 col-md-1 col-6">
                                 <label for="quantity">כמות</label>
                                 <input type="input" class="form-control" id="quantity" ng-model="quantity">
                             </div>
-                            <div class="form-group col-md-2 col-6">
+                            <div class="form-group-mb-0 col-md-2 col-6">
                                 <label for="unit">יח' מידה</label>
                                 <!-- <input type="input" class="form-control" id="unit" placeholder=""> -->
                                 <select class="form-control" id="units" ng-model="unit">
                                     <option value="{{idx}}" ng-repeat="(idx, unit) in units">{{unit[idx]}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3 col-4">
+                            <div class="form-group-mb-0 col-md-3 col-4">
                                 <label for="ingredient">רכיב</label>
-                                <input type="input" class="form-control" id="ingredient" ng-model="ingredient" placeholder="מרשימה סגורה">
+                                <!-- <input type="input" class="form-control" id="ingredient" ng-model="ingredient" placeholder="מרשימה סגורה"> -->
+                                <select  class="form-control" name="repeatSelect" id="ingredient" ng-model="ing"
+                                ng-options="option.id as option.name for option in ingredientsList">
+                                >
+                                <option>-- בחר אחד --</option>
+                                </select>  
                             </div>
-                            <div class="form-group col-md-4 col-4">
+                            <div class="form-group-mb-0 col-md-4 col-4">
                                 <label for="ingredientComm">הערה</label>
                                 <input type="input" class="form-control" id="ingredientComm" ng-model="ingredientComm" placeholder="למשל: קצוץ, שהושרה 12 שעות וכד'">
                             </div>
-                            <div class="form-group col-md-2 col-4">
+                            <div class="form-group-mb-0 col-md-2 col-4">
                                 <label>&nbsp;</label>
                                 <br/>
                                 <input class="btn btn-primary" type="button" value="שמור רכיב" ng-click="saveIngredientLocally()">
                             </div>
                         </div>
-                        <div class="row" ng-repeat="an_ingredient in recipe.ingredients">
-                            <div class="col-md-1">{{an_ingredient.quantity}}</div>
-                            <div class="ccol-md-2">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
-                            <div class="col-md-3">{{an_ingredient.ingredient}}</div>
-                            <div class="col-md-6">{{an_ingredient.ingredientComm}}</div>
-                        </div>
                         <div class="form-row">
                             <div class="form-group col-lg-1">&nbsp;
                             </div>
                             <div class="form-group col-lg-9">
-                                <div class="help">למשל: כוס, גרם וכו' (לבחור מרשימה סגורה כדי שאפשר יהיה לעשות המרות)</div>
+                                <small class="form-text text-muted">למשל: כוס, גרם וכו' (לבחור מרשימה סגורה כדי שאפשר יהיה לעשות המרות)</small>
                             </div>
                             <div class="form-group col-lg-2">&nbsp;
                             </div>
+                        </div>                        
+                        <div class="row" ng-repeat="an_ingredient in recipe.ingredients">
+                            <div class="mr-2 float-left">{{an_ingredient.quantity}}</div>
+                            <div class="mr-2 float-left">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
+                            <div class="mr-2 float-left">{{an_ingredient.ingredient}}</div>
+                            <div class="mr-2 float-left">{{an_ingredient.ingredientComm}}</div>
+                            <!-- <div class="col-md-1">{{an_ingredient.quantity}}</div>
+                            <div class="col-md-2">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
+                            <div class="col-md-3">{{an_ingredient.ingredient}}</div>
+                            <div class="col-md-6">{{an_ingredient.ingredientComm}}</div> -->
                         </div>
-
                     </div>
                 </div>
             </div>

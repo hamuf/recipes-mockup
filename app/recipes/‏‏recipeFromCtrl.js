@@ -28,6 +28,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     console.log($scope.recipe.instructions);
     console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
+    $scope.ingredientsList = recipesSrv.ingredientsList;
   }
 
 

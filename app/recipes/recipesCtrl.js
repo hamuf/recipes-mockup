@@ -20,6 +20,7 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv) 
   // fetch existing pre defined recipes from the model
   recipesSrv.getRecipes($scope.isUserRecipePage).then(function (recipes) {
     $scope.recipes = recipes;
+    console.log($scope.ingredientsList);
   }, function (err) {
     console.log(err);
   })

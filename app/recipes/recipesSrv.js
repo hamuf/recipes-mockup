@@ -61,9 +61,11 @@ app.factory("recipesSrv", function ($q) {
 
   // This array of recipes is used for displaying a single recipe (edit/view)
   var recipes = [];
+  var ingredientsList = []; console.log('ingredientsList cleared');
   function getRecipes(isUserRecipes,orderByPopularity) {
     var async = $q.defer();
     recipes = []; // on each fetch we start with an empty array
+    // ingredientsList = []; console.log('ingredientsList cleared inside get()');
 
     // back4App api
     const RecipeParse = Parse.Object.extend('Recipe');
@@ -78,12 +80,20 @@ app.factory("recipesSrv", function ($q) {
     // if (orderByPopularity) {
     //   query.descending("views");
     // } else {
-    //   query.descending("createdAt");
+      // query.descending("createdAt");
     // }
+    
+    // important! I always read the recipes in the same order so my ingredients id will always be the same
+    query.ascending("createdAt"); 
     query.find().then(function (results) {
       for (var i = 0; i < results.length; i++) {
-        recipes.push(new Recipe(results[i]));
+        var recipe = new Recipe(results[i]);
+        recipes.push(recipe);
+        // getIngredientsFromRecipe(recipe.ingredients);
       }
+      // if (ingredientsList.length === 0) {
+        ingredientsList = getIngredientsFromRecipe(recipes); console.log('ingredientsList loaded');      
+      // }
 
       async.resolve(recipes);
 
@@ -91,9 +101,37 @@ app.factory("recipesSrv", function ($q) {
       console.error('Error while fetching Recipe', error);
       async.reject(error);
     });
-
     return async.promise;
   }
+
+  function getIngredientsFromRecipe(recipes) {
+    // console.log(recipeIngredients);
+    for (var recipeIdx = 0; recipeIdx < recipes.length; recipeIdx++) {
+      var listIdx = ingredientsList.length;
+      var recipeIngredients = recipes[recipeIdx].ingredients;
+      if (recipeIngredients) {
+        for (var i = 0; i < recipeIngredients.length; i++) {
+          // console.log(recipeIngredients[i].ingredient);
+          var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient };
+          if (!ingredientExists(an_ingredient.name,ingredientsList)) {
+            ingredientsList.push(an_ingredient);
+          }
+        }        
+      }
+    }
+    // console.log(ingredientsList);
+    return ingredientsList;
+  }
+
+  function ingredientExists(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) {
+            // return myArray[i];
+            return true;
+        }
+    }
+    return false;
+}
 
   /**
    * Set parse db object with scope data for saving in parse db
@@ -237,6 +275,7 @@ app.factory("recipesSrv", function ($q) {
     getRecipes: getRecipes,
     dietTypeList: dietTypeList,
     dishTypeList: dishTypeList,
+    ingredientsList, ingredientsList,
     units: units,
     createRecipe: createRecipe,
     updateRecipe: updateRecipe,
