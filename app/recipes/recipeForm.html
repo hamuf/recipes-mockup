@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="row" ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'">
-                            <div class="col-1">
+                            <div class="col-1 text-nowrap">
                                 <i class="fa fa-trash" aria-hidden="true" ng-click="deleteInstruction()"></i>
                                 <i class="fa fa-edit" aria-hidden="true"></i>
                             </div>
@@ -170,15 +170,23 @@
                             <div class="form-group col-lg-2">&nbsp;
                             </div>
                         </div>                        
-                        <div class="row" ng-repeat="an_ingredient in recipe.ingredients">
-                            <div class="mr-2 float-left">{{an_ingredient.quantity}}</div>
-                            <div class="mr-2 float-left">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
-                            <div class="mr-2 float-left">{{an_ingredient.ingredient}}</div>
-                            <div class="mr-2 float-left">{{an_ingredient.ingredientComm}}</div>
-                            <!-- <div class="col-md-1">{{an_ingredient.quantity}}</div>
-                            <div class="col-md-2">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
-                            <div class="col-md-3">{{an_ingredient.ingredient}}</div>
-                            <div class="col-md-6">{{an_ingredient.ingredientComm}}</div> -->
+                        <div class="row" ng-repeat="an_ingredient in recipe.ingredients" ng-class-odd="'striped'">
+                            <!-- <div class="row"> -->
+                                <div class="col-sm-1 text-nowrap">
+                                    <i class="fa fa-trash" aria-hidden="true" ng-click="deleteIngredient()"></i>
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </div>
+                                <!-- <div class="col-11">
+                                    <div class=" float-left">{{an_ingredient.quantity}}</div>
+                                    <div class=" float-left">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
+                                    <div class=" float-left">{{an_ingredient.ingredient}}</div>
+                                    <div class=" float-left">{{an_ingredient.ingredientComm}}</div>
+                                </div> -->
+                            <!-- </div> -->
+                            <div class="col-sm-1 text-nowrap">{{an_ingredient.quantity}}</div>
+                            <div class="col-sm-2">{{units[an_ingredient.unit][an_ingredient.unit]}}</div>
+                            <div class="col-sm-2">{{an_ingredient.ingredient}}</div>
+                            <div class="col-sm-6">{{an_ingredient.ingredientComm}}</div>
                         </div>
                     </div>
                 </div>

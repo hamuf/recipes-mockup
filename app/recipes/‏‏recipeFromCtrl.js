@@ -114,6 +114,10 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     confirm('Are you sure?');
   }
 
+  $scope.deleteIngredient = function() {
+    confirm('Are you sure?');
+  }
+
   function getUploadFileName() {
     return (document.getElementById('recipeImgUpload').files[0]) ? document.getElementById('recipeImgUpload').files[0].name : null;
   }
