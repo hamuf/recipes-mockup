@@ -3,6 +3,7 @@ app.factory("recipesSrv", function ($q) {
   function Recipe(parseRecipe) {
     this.id = parseRecipe.id;
     this.recipeName = parseRecipe.get("recipeName");
+    this.createdAt = parseRecipe.get("createdAt");
     if (parseRecipe.get("recipeImg"))
       this.recipeImg = parseRecipe.get("recipeImg").url();
     this.source = parseRecipe.get("source");
@@ -60,7 +61,7 @@ app.factory("recipesSrv", function ($q) {
 
   // This array of recipes is used for displaying a single recipe (edit/view)
   var recipes = [];
-  function getRecipes(isUserRecipes) {
+  function getRecipes(isUserRecipes,orderByPopularity) {
     var async = $q.defer();
     recipes = []; // on each fetch we start with an empty array
 
@@ -74,7 +75,11 @@ app.factory("recipesSrv", function ($q) {
       query.equalTo("isPublic", true);
     }
     // order by date - newest recipes first
-    query.descending("updatedAt");
+    // if (orderByPopularity) {
+    //   query.descending("views");
+    // } else {
+    //   query.descending("createdAt");
+    // }
     query.find().then(function (results) {
       for (var i = 0; i < results.length; i++) {
         recipes.push(new Recipe(results[i]));
@@ -107,7 +112,7 @@ app.factory("recipesSrv", function ($q) {
     parseObj.set('description', scopeRecipe.description);
     parseObj.set('dishTypes', scopeRecipe.dishTypes);
     parseObj.set('dietTyps', scopeRecipe.dietTypes);
-    parseObj.set('views', scopeRecipe.views);
+    parseObj.set('views', scopeRecipe.views ? scopeRecipe.views : 0); // on create: set views to 0
     parseObj.set('isPublic', scopeRecipe.isPublic ? true : false); // convert true/false string to boolean
     parseObj.set('owner', Parse.User.current());
     parseObj.set('instructions', angular.copy(scopeRecipe.instructions)); // angular.copy removes $$hashKey added by Angular and Rejected by Parse         
@@ -158,6 +163,28 @@ app.factory("recipesSrv", function ($q) {
 
     return async.promise;
   }
+  function updateRecipeViews(aRecipe) {
+    var async = $q.defer();
+
+    const Recipe = Parse.Object.extend('Recipe');
+    const query = new Parse.Query(Recipe);
+
+    // Upate is done based on the recipe ID
+    query.get(aRecipe.id).then((parseObj) => {
+      // Prepare local data for saving on parse DB
+      parseObj.set('views', ++aRecipe.views); // on create: set views to 0
+      // console.log(aRecipe.views);
+      parseObj.save().then((response) => {
+        // console.log('Updated Recipe', response);
+        async.resolve(aRecipe);
+      }, (error) => {
+        console.error('Error while updating Recipe', error);
+        async.reject(error);
+      });
+    });
+
+    return async.promise;
+  }
 
   // Delete recipe by its ID, from parse DB
   function deleteRecipe(recipeId) {
@@ -182,6 +209,16 @@ app.factory("recipesSrv", function ($q) {
   // Used to get a single recipe for edit/view    
   function getRecipeById(recipeId) {
     var theRecipe = null
+    if (recipes.length === 0) {
+      //TODO: re-think this! -- NOT WORKING --
+      getRecipes(true).then(function (dbRecipes) {
+        recipes = dbRecipes;
+      }, function (err) {
+        console.log(err);
+      })      
+
+    }
+    // lenght will always be > 0 because we just read the recipes from the DB
     if (recipes.length > 0) {
       for (var recipe in recipes) {
         // console.log(recipes[recipe].id);
@@ -190,7 +227,7 @@ app.factory("recipesSrv", function ($q) {
           break;
         }
       }
-    }
+    } 
 
     return theRecipe;
   }
@@ -204,6 +241,7 @@ app.factory("recipesSrv", function ($q) {
     createRecipe: createRecipe,
     updateRecipe: updateRecipe,
     getRecipeById: getRecipeById,
+    updateRecipeViews: updateRecipeViews,
     deleteRecipe: deleteRecipe
   }
 

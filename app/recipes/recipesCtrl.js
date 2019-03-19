@@ -10,12 +10,15 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv) 
     $location.path("/");
 
   }
-    // fetch existing pre defined recipes from the model
-    recipesSrv.getRecipes($scope.isUserRecipePage).then(function (recipes) {
-      $scope.recipes = recipes;
-    }, function (err) {
-      console.log(err);
-    })
-    
 
-  });
+  $scope.byPropName = "views";
+
+  // fetch existing pre defined recipes from the model
+  recipesSrv.getRecipes($scope.isUserRecipePage).then(function (recipes) {
+    $scope.recipes = recipes;
+  }, function (err) {
+    console.log(err);
+  })
+
+
+});
