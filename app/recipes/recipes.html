@@ -16,18 +16,6 @@
             </label>
         </div>
     </div>    
-    <!-- <div class="col-lg-9 col-6">
-        <div class="form-check-inline">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" value="popular" name="show-first">הכי פופולאריים
-            </label>
-        </div>
-        <div class="form-check-inline">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" value="new" name="show-first" checked>הכי חדשים
-            </label>
-        </div>
-    </div> -->
 </div>
 <!-- sort by  END -->
 <!-- Dietary restrictions -->
@@ -100,14 +88,17 @@
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->
                 <img class="card-img-top" ng-src="{{recipe.recipeImg}}" alt="{{recipe.recipeName}}">
-                <div class="card-body">
-                    <h5 class="card-title font-italic text-center">
-                        <a href="#!/view-recipe/{{recipe.id}}">{{recipe.recipeName}}</a><div>{{recipe.createdAt |  date:'shortDate'}}</div><div>צפיות: {{recipe.views}}</div>
+                <div class="card-body text-center">
+                    <h5 class="card-title font-italic">
+                        <a href="#!/view-recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
+                        <div>{{recipe.createdAt |  date:'d/M/yy'}}</div><div>צפיות: {{recipe.views}}</div>
+<!-- <div>{{ownerId}} {{recipe.owner.id}}</div> -->
                     </h5>
-                    <a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary" ng-show="{{isUserRecipePage}}">עריכה</a>
+                    <!-- <a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary" ng-show="{{isUserRecipePage}}">עריכה</a> -->
+                    
 
                 </div>
-
+                <div class="card-footer text-center" ng-show="{{ownerId === recipe.owner.id}}"><a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary">עריכה</a></div>
             </div>
             <!--Move to a directive?-->
         </div>
