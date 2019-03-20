@@ -84,43 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" id="headingTwo">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            פירוט שלבי ההכנה
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                            <div class="row" ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'">
-                                    <div class="col-1 text-nowrap">
-                                        <i class="fa fa-trash" aria-hidden="true" ng-click="deleteInstruction(instruction)"></i>
-                                        <i class="fa fa-edit" aria-hidden="true" ng-click="setInstructionForEdit(instruction)"></i>
-                                    </div>
-                                    <div class="col-1">{{instruction.seq}}</div>
-                                    <div class="col-10">{{instruction.instruction}}</div>
-                                </div>                        
-                        <div class="form-row">
-                            <div class="form-group col-lg-2 col-sm-1">
-                                <label for="seq">#</label>
-                                <input type="input" class="form-control" id="seq" ng-model="seq" placeholder="">
-                            </div>
-                            <div class="form-group col-lg-8 col-sm-11">
-                                <label for="instruction">הוראה</label>
-                                <input type="input" class="form-control" id="instruction" ng-model="instruction" placeholder="מה יבוצע בשלב זה">
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <label>&nbsp;</label>
-                                <br/>
-                                <input class="btn btn-primary" type="button" value="שמור שלב" ng-click="saveStepLocally()">
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
             <div class="card">
                 <div class="card-header" id="headingThree">
                     <h5 class="mb-0">
@@ -192,6 +156,47 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            פירוט שלבי ההכנה
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                            <div class="row" ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'">
+                                    <div class="col-1 text-nowrap">
+                                        <i class="fa fa-trash" aria-hidden="true" ng-click="deleteInstruction(instruction)"></i>
+                                        <i class="fa fa-edit" aria-hidden="true" ng-click="setInstructionForEdit(instruction)"></i>
+                                    </div>
+                                    <div class="col-1">{{instruction.seq}}</div>
+                                    <div class="col-10">{{instruction.instruction}}</div>
+                                </div>                        
+                        <div class="form-row">
+                            <div class="form-group-mb-0 col-lg-2 col-sm-1">
+                                <label for="seq">#</label>
+                                <input type="input" class="form-control" id="seq" ng-model="seq" placeholder="">
+                            </div>
+                            <div class="form-group-mb-0 col-lg-8 col-sm-11">
+                                <label for="instruction">הוראה</label>
+                                <input type="input" class="form-control" id="instruction" ng-model="instruction" placeholder="מה יבוצע בשלב זה">
+                            </div>
+                            <div class="form-group-mb-0 col-lg-2">
+                                <label>&nbsp;</label>
+                                <br/>
+                                <input class="btn btn-primary" type="button" value="שמור שלב" ng-click="saveStepLocally()">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <small class="form-text text-muted">טיפ: אין צורך לשמור על רציפות מספור. לדוגמא: הוראות 0,6,9 יוצגו כ-1,2,3</small>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 
