@@ -71,7 +71,7 @@
             <!--Move to a directive?-->
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->
-                <img class="card-img-top" ng-src="{{recipe.recipeImg}}" alt="{{recipe.recipeName}}">
+                <img class="card-img-top" ng-src="{{recipe.recipeImg ? recipe.recipeImg : placeHolderImg }}" alt="{{recipe.recipeName}}">
                 <div class="card-body text-center">
                     <h5 class="card-title font-italic">
                         <a href="#!/view-recipe/{{recipe.id}}">{{recipe.recipeName}}</a>

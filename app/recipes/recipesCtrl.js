@@ -1,9 +1,10 @@
-app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv) {
+app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, utilitySrv) {
 
 
   // recipes list
   $scope.recipes = [];
   $scope.ownerId = "";
+  $scope.placeHolderImg = utilitySrv.PLACEHORDER_IMG;
 
   $scope.isUserRecipePage = ($location.url().indexOf("my-recipes") > 0 && $scope.activeUser !== null);
   // navigate to public recipes page, if no active user

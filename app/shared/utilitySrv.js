@@ -1,5 +1,7 @@
 app.factory("utilitySrv", function ($http, $q, $log) {
-// example structure of input: ["2","5"]
+
+    const PLACEHORDER_IMG = "../assets/imgs/recipe-imge-ph.jpg";
+    // example structure of input: ["2","5"]
     // example structure of output {"2": true, "5": true}
     function setTypeListForDB(dietTypesObject) {
         var dietTypesIdxArray = [];
@@ -25,6 +27,7 @@ app.factory("utilitySrv", function ($http, $q, $log) {
 
     return {
         setTypeListFromDB: setTypeListFromDB,
-        setTypeListForDB: setTypeListForDB
-    }    
+        setTypeListForDB: setTypeListForDB,
+        PLACEHORDER_IMG: PLACEHORDER_IMG
+    }
 });

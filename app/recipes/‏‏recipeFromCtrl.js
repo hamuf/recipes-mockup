@@ -31,6 +31,11 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     $scope.seq = getMaxSeq($scope.recipe.instructions);
     orderInstructions($scope.recipe.instructions);
     $scope.ingredientsList = recipesSrv.ingredientsList;
+    if (!$scope.recipe.recipeImg) {
+      // $scope.recipe.recipeImg = "../assets/imgs/recipe-imge-ph.jpg";
+      $scope.recipe.recipeImg = utilitySrv.PLACEHORDER_IMG;
+    }
+
   }
 
 
