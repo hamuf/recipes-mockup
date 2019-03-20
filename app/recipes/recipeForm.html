@@ -94,6 +94,14 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
+                            <div class="row" ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'">
+                                    <div class="col-1 text-nowrap">
+                                        <i class="fa fa-trash" aria-hidden="true" ng-click="deleteInstruction(instruction)"></i>
+                                        <i class="fa fa-edit" aria-hidden="true" ng-click="setInstructionForEdit(instruction)"></i>
+                                    </div>
+                                    <div class="col-1">{{instruction.seq}}</div>
+                                    <div class="col-10">{{instruction.instruction}}</div>
+                                </div>                        
                         <div class="form-row">
                             <div class="form-group col-lg-2 col-sm-1">
                                 <label for="seq">#</label>
@@ -109,14 +117,7 @@
                                 <input class="btn btn-primary" type="button" value="שמור שלב" ng-click="saveStepLocally()">
                             </div>
                         </div>
-                        <div class="row" ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'">
-                            <div class="col-1 text-nowrap">
-                                <i class="fa fa-trash" aria-hidden="true" ng-click="deleteInstruction()"></i>
-                                <i class="fa fa-edit" aria-hidden="true"></i>
-                            </div>
-                            <div class="col-1">{{instruction.seq}}</div>
-                            <div class="col-10">{{instruction.instruction}}</div>
-                        </div>
+
                     </div>
                 </div>
             </div>

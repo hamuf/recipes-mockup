@@ -11,6 +11,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   
   // recipes list
   $scope.recipes = [];
+  $scope.hashToEdit = null;
   
   // add/edit recipe
   $scope.recipe = {}; // init scope recipe
@@ -47,13 +48,18 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   }
 
   $scope.saveStepLocally = function () {
-    var newStepObj = {};
-    newStepObj["seq"] = $scope.seq;
-    newStepObj["instruction"] = $scope.instruction;
-    console.log(newStepObj);
+    if ($scope.hashToEdit != null) {
+        $scope.saveEditedInstruction();
+    } else {
+      var newStepObj = {};
+      newStepObj["seq"] = $scope.seq;
+      newStepObj["instruction"] = $scope.instruction;
+      console.log(newStepObj);
+    }
     $scope.recipe.instructions.push(newStepObj);
     $scope.seq++;
     $scope.instruction = "";
+
   }
 
   // fetch existing pre defined recipes from the model
@@ -110,8 +116,34 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     }
   }
 
-  $scope.deleteInstruction = function() {
-    confirm('Are you sure?');
+  $scope.setInstructionForEdit = function(instruction) {
+    console.log(instruction);
+    $scope.instruction = instruction.instruction;
+    $scope.seq = instruction.seq;
+    $scope.hashToEdit = instruction.$$hashKey;
+    console.log($scope.hashToEdit);
+  }
+
+  $scope.saveEditedInstruction = function() {
+      for (var i=0; i < $scope.recipe.instructions.length; i++) {
+          if ($scope.recipe.instructions[i].$$hashKey === $scope.hashToEdit) {
+              $scope.recipe.instructions[i].seq = $scope.seq;
+              $scope.recipe.instructions[i].instruction = $scope.instruction;
+          }
+      }
+      $scope.hashToEdit = null;
+  }
+
+  $scope.deleteInstruction = function (instruction) {
+    if (confirm('Are you sure?')) {
+      for (var i = 0; i < $scope.recipe.instructions.length; i++) {
+        if ($scope.recipe.instructions[i].$$hashKey === instruction.$$hashKey) {
+          // $scope.recipe.instructions[i].pop(instruction);
+          console.log(typeof $scope.recipe.instructions);
+          $scope.recipe.instructions.splice(i, 1);
+        }
+      }
+    }
   }
 
   $scope.deleteIngredient = function() {
