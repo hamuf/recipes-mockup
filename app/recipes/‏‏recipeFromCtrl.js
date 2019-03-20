@@ -69,7 +69,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   }, function (err) {
     console.log(err);
   })
-  // recipesSrv.deleteRecipe("5Z1aUuUg9A");
+  // recipesSrv.deleteRecipe("0HVYW7UeUi");
 
   $scope.deleteRecipe = function () {
     if (userSrv.getActiveUser()) {
@@ -121,6 +121,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     console.log(instruction);
     $scope.instruction = instruction.instruction;
     $scope.seq = instruction.seq;
+    // $scope.hashToEdit = instruction.id;
     $scope.hashToEdit = instruction.$$hashKey;
     console.log($scope.hashToEdit);
   }
@@ -159,15 +160,18 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   // order the instructions by seq (sequential number)
   function orderInstructions() {
     let myArr = $scope.recipe.instructions;
-    myArr.sort((a, b) => a.seq - b.seq);
+    if (myArr)
+      myArr.sort((a, b) => a.seq - b.seq);
   }
 
   function getMaxSeq(dietTypesArr) {
     maxSeq = 0;
     if (dietTypesArr) {
       for (var idx = 0; idx < dietTypesArr.length; idx++) {
-        var seq = dietTypesArr[idx].seq;
-        maxSeq = maxSeq > seq ? maxSeq : seq;
+        if (dietTypesArr[idx]) {
+          var seq = dietTypesArr[idx].seq;
+          maxSeq = maxSeq > seq ? maxSeq : seq;
+        }
       }
     }
     console.log("maxSeq=" + maxSeq);

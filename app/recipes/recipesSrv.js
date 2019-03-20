@@ -267,6 +267,10 @@ app.factory("recipesSrv", function ($q) {
       }
     } 
 
+    for (let i=0; i < theRecipe.instructions.length; i++) {
+      console.log(theRecipe.instructions[i]);
+    }
+
     return theRecipe;
   }
 
