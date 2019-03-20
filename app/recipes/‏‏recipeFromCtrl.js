@@ -29,6 +29,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     console.log($scope.recipe.instructions);
     console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
+    orderInstructions($scope.recipe.instructions);
     $scope.ingredientsList = recipesSrv.ingredientsList;
   }
 
@@ -131,6 +132,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
               $scope.recipe.instructions[i].instruction = $scope.instruction;
           }
       }
+      orderInstructions();
       $scope.hashToEdit = null;
   }
 
@@ -154,6 +156,11 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     return (document.getElementById('recipeImgUpload').files[0]) ? document.getElementById('recipeImgUpload').files[0].name : null;
   }
 
+  // order the instructions by seq (sequential number)
+  function orderInstructions() {
+    let myArr = $scope.recipe.instructions;
+    myArr.sort((a, b) => a.seq - b.seq);
+  }
 
   function getMaxSeq(dietTypesArr) {
     maxSeq = 0;

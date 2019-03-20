@@ -25,5 +25,14 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv) 
     console.log(err);
   })
 
+  $scope.findRecipe = function () {
+    $scope.results = [];
+    // loop over recipes and find the ones that match the searchText
+    for (let i=0; i< $scope.recipes.length;i++) {
+      if ($scope.recipes[i].recipeName.indexOf($scope.searchText) >= 0)
+        $scope.results.push($scope.recipes[i]);
+    }
+
+  }
 
 });

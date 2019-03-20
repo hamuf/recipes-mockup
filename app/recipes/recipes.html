@@ -18,65 +18,49 @@
     </div>    
 </div>
 <!-- sort by  END -->
-<!-- Dietary restrictions -->
-<!-- <div class="row">
-    <div class="col-lg-3">
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>טבעוני</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>ללא גלוטן</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="form-group form-row">
-            <select class="form-control" id="restrict">
-                <option>-- סוגי תזונה --</option>
-                <option>ללא לקטוז</option>
-                <option>כשר</option>
-            </select>
-        </div>
-    </div>
-</div> -->
-<!-- Dietary restrictions END -->
 <!-- free search -->
+<div class="row">
+        <!-- <form class="search-box"> -->
+                <div class="col-lg-6">
+                        <!-- Search form -->
+                        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+                                <input type="text" class="form-control" placeholder="חיפוש מתכון" ng-model="searchText" aria-label="Search"
+                                ng-change="findRecipe()">
+                        </div>
+                        <div class="search-results list-group">
+                                <a href="#!/view-recipe/{{recipe.id}}" class="list-group-item list-group-item-action" ng-repeat="recipe in results | limitTo : 10"
+                                  >{{recipe.recipeName}}</a>
+                              </div>                        
+                    </div> 
+                
+
+            <!-- </form>     -->
+    <!-- <div class="col-lg-6">
+        Search form
+        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+            <input class="form-control" type="text" placeholder="חיפוש מתכון" aria-label="Search">
+        </div>
+    </div>    
+    <div class="col-lg-6"></div> -->
+</div>
 <div class="row">
     <div class="col-lg-6">
         <!-- Search form -->
         <div class="md-form active-pink active-pink-2 mb-3 mt-0">
-            <input class="form-control" type="text" placeholder="חיפוש חופשי" aria-label="Search">
+            <input class="form-control" type="text" placeholder="חיפוש לפי רכיב" aria-label="Search">
         </div>
-    </div>
-    
+    </div>    
     <div class="col-lg-6">
             <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio" checked>כל המילים
+                        <input type="radio" class="form-check-input" name="optradio" checked>כולם
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio">לפחות מילה אחת
+                        <input type="radio" class="form-check-input" name="optradio">לפחות אחד
                     </label>
                 </div>        
-        <!-- <div class="form-group form-row">
-            <select class="form-control" id="restrict">
-                <option>-- קטגוריות --</option>
-                <option>מנות עיקריות</option>
-                <option>מרקים</option>
-                <option>פשטידות</option>
-                <option>עוגות ועוגיות</option>
-                <option>קינוחים</option>
-            </select>
-        </div> -->
     </div>
 </div>
 <!-- free search END -->
