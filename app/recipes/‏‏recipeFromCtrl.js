@@ -141,17 +141,31 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       orderInstructions();
       $scope.hashToEdit = null;
   }
-
-  $scope.deleteInstruction = function (instruction) {
-    if (confirm('Are you sure?')) {
+  
+  // $scope.closePopup = false;
+  $scope.onAccept = function() {
+    if ($scope.deleteTypeId = utilitySrv.INSTRUCTION) {
       for (var i = 0; i < $scope.recipe.instructions.length; i++) {
-        if ($scope.recipe.instructions[i].$$hashKey === instruction.$$hashKey) {
+        if ($scope.recipe.instructions[i].$$hashKey === $scope.objectToDelete.$$hashKey) {
           // $scope.recipe.instructions[i].pop(instruction);
           console.log(typeof $scope.recipe.instructions);
           $scope.recipe.instructions.splice(i, 1);
         }
       }
     }
+    // $scope.closePopup = true;
+    // TODO: Make it more elegant
+    $('#modalPopup').modal('hide');
+  }
+
+  // TODO: add 'dirty' to remind the user to save the recipe
+  /**
+  * input: instruction to delete after user confirmation
+  */
+  $scope.deleteInstruction = function (instruction) {
+    $scope.popupWinText = "זהירות! לחיצה על אישור תמחק את ההוראה מהמתכון";
+    $scope.deleteTypeId = utilitySrv.INSTRUCTION;
+    $scope.objectToDelete = instruction;
   }
 
   $scope.deleteIngredient = function() {

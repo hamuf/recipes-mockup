@@ -168,7 +168,8 @@
                     <div class="card-body">
                             <div class="row" ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'">
                                     <div class="col-1 text-nowrap">
-                                        <i class="fa fa-trash" aria-hidden="true" ng-click="deleteInstruction(instruction)"></i>
+                                        <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#modalPopup"
+                                            ng-click="deleteInstruction(instruction)"></i>
                                         <i class="fa fa-edit" aria-hidden="true" ng-click="setInstructionForEdit(instruction)"></i>
                                     </div>
                                     <div class="col-1">{{instruction.seq}}</div>
@@ -214,3 +215,4 @@
         </div>
     </div>
 </form>
+<popup-window></popup-window>
