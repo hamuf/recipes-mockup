@@ -138,7 +138,8 @@
                         <div class="row" ng-repeat="an_ingredient in recipe.ingredients" ng-class-odd="'striped'">
                             <!-- <div class="row"> -->
                                 <div class="col-sm-1 text-nowrap">
-                                    <i class="fa fa-trash" aria-hidden="true" ng-click="deleteIngredient()"></i>
+                                    <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#modalPopup" 
+                                        ng-click="deleteIngredient(an_ingredient)"></i>
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </div>
                                 <!-- <div class="col-11">

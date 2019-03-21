@@ -27,11 +27,13 @@ app.factory("utilitySrv", function ($http, $q, $log) {
     // CONSTANTS
     const PLACEHORDER_IMG = "../assets/imgs/recipe-imge-ph.jpg";
     const INSTRUCTION = "instruction";
+    const INGREDIENT = "ingredient";
 
     return {
         setTypeListFromDB: setTypeListFromDB,
         setTypeListForDB: setTypeListForDB,
         PLACEHORDER_IMG: PLACEHORDER_IMG,
-        INSTRUCTION: INSTRUCTION
+        INSTRUCTION: INSTRUCTION,
+        INGREDIENT: INGREDIENT
     }
 });

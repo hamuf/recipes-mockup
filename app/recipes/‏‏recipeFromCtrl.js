@@ -144,18 +144,22 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   
   // $scope.closePopup = false;
   $scope.onAccept = function() {
-    if ($scope.deleteTypeId = utilitySrv.INSTRUCTION) {
+    if ($scope.deleteTypeId == utilitySrv.INSTRUCTION) {
       for (var i = 0; i < $scope.recipe.instructions.length; i++) {
         if ($scope.recipe.instructions[i].$$hashKey === $scope.objectToDelete.$$hashKey) {
-          // $scope.recipe.instructions[i].pop(instruction);
-          console.log(typeof $scope.recipe.instructions);
           $scope.recipe.instructions.splice(i, 1);
+        }
+      }
+    } else if ($scope.deleteTypeId == utilitySrv.INGREDIENT) {
+      for (var i = 0; i < $scope.recipe.ingredients.length; i++) {
+        if ($scope.recipe.ingredients[i].$$hashKey === $scope.objectToDelete.$$hashKey) {
+          console.log($scope.recipe.ingredients[i].$$hashKey);
+          $scope.recipe.ingredients.splice(i, 1);
         }
       }
     }
     // $scope.closePopup = true;
-    // TODO: Make it more elegant
-    $('#modalPopup').modal('hide');
+    $('#modalPopup').modal('hide');     // TODO: Convert JS to angularJS code
   }
 
   // TODO: add 'dirty' to remind the user to save the recipe
@@ -168,8 +172,11 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     $scope.objectToDelete = instruction;
   }
 
-  $scope.deleteIngredient = function() {
-    confirm('Are you sure?');
+  $scope.deleteIngredient = function(ingredient) {
+    // confirm('Are you sure?');
+    $scope.popupWinText = "זהירות! לחיצה על אישור תמחק את הרכיב מהמתכון";
+    $scope.deleteTypeId = utilitySrv.INGREDIENT;
+    $scope.objectToDelete = ingredient;    
   }
 
   function getUploadFileName() {
