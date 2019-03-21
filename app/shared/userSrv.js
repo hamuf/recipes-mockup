@@ -35,7 +35,7 @@ app.factory("userSrv", function ($http, $q, $log) {
         var user = new Parse.User()
         user.set('username', newUser.nickname);
         user.set('email', newUser.newemail);
-        user.set('diettypes', newUser.dietType);
+        user.set('diettypes', newUser.dietTypes);
         user.set('password', newUser.newpwd);
 
         user.signUp().then((user) => {
@@ -58,7 +58,8 @@ app.factory("userSrv", function ($http, $q, $log) {
             // Updates the data we want
             user.set('username', aUser.nickname);
             user.set('email', aUser.newemail);
-            user.set('diettypes', aUser.dietType);
+            user.set('diettypes', aUser.dietTypes);
+            // TODO: handle pasword change requests
             // user.set('password', aUser.newpwd);
 
             // Saves the user with the updated data
