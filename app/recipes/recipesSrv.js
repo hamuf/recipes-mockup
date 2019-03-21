@@ -61,15 +61,36 @@ app.factory("recipesSrv", function ($q) {
 
   // This array of recipes is used for displaying a single recipe (edit/view)
   var recipes = [];
-  var ingredientsList = []; console.log('ingredientsList cleared');
-  function getRecipes(isUserRecipes,orderByPopularity) {
-    var async = $q.defer();
-    recipes = []; // on each fetch we start with an empty array
-    // ingredientsList = []; console.log('ingredientsList cleared inside get()');
 
+  function getFromRecipesTable(a_query) {
+    var async = $q.defer();
+    query_res = []; // on each fetch we start with an empty array 
+
+    a_query.find().then(function (results) {
+      // The select in the query is currently ignored, and the entire recipe is set
+      // console.log(a_query._select);
+
+      for (var i = 0; i < results.length; i++) {
+        var recipe = new Recipe(results[i]);
+        query_res.push(recipe);
+      }
+
+      async.resolve(query_res);
+
+    }, function (error) {
+      console.error('Error while fetching Recipe', error);
+      async.reject(error);
+    });
+    return async.promise;
+  }  
+
+  function getRecipeList(isUserRecipes) {
+    var async = $q.defer();
+    
     // back4App api
     const RecipeParse = Parse.Object.extend('Recipe');
-    const query = new Parse.Query(RecipeParse);    
+    const query = new Parse.Query(RecipeParse);   
+
     if (isUserRecipes) {
       query.equalTo("owner", Parse.User.current());
     } else {
@@ -81,34 +102,53 @@ app.factory("recipesSrv", function ($q) {
     //   query.descending("views");
     // } else {
       // query.descending("createdAt");
-    // }
-    
-    // important! I always read the recipes in the same order so my ingredients id will always be the same
-    query.ascending("createdAt"); 
-    query.find().then(function (results) {
-      for (var i = 0; i < results.length; i++) {
-        var recipe = new Recipe(results[i]);
-        recipes.push(recipe);
-        // getIngredientsFromRecipe(recipe.ingredients);
-      }
-      // if (ingredientsList.length === 0) {
-        ingredientsList = getIngredientsFromRecipe(recipes); console.log('ingredientsList loaded');      
-      // }
+    // }   
 
+    getFromRecipesTable(query).then(function (parseRecipes) {  
+      recipes =  parseRecipes;   
       async.resolve(recipes);
-
-    }, function (error) {
-      console.error('Error while fetching Recipe', error);
+    }, function (err) {
+      console.log(err);
       async.reject(error);
-    });
+    })    
+    
     return async.promise;
   }
 
-  function getIngredientsFromRecipe(recipes) {
+  var wasIngredientsLoaded = false;
+  function getIngredients() {
+    if (wasIngredientsLoaded) {
+      return ingredientsList;
+    } else {
+      var async = $q.defer();
+
+      // back4App api
+      const RecipeParse = Parse.Object.extend('Recipe');
+      const query = new Parse.Query(RecipeParse);
+
+      // important! I always read the recipes in the same order so my ingredients id will always be the same
+      query.ascending("createdAt");
+      query.select("ingredients");
+      getFromRecipesTable(query).then(function (ing) {
+        ingredientsList = getIngredientsFromRecipe(ing);
+        wasIngredientsLoaded = true;
+        async.resolve(ingredientsList);
+      }, function (err) {
+        console.log(err);
+        async.reject(error);
+      })
+
+      return async.promise;
+    }
+  }
+  
+  var ingredientsList = []; console.log('ingredientsList cleared');
+  function getIngredientsFromRecipe(ing) {
     // console.log(recipeIngredients);
-    for (var recipeIdx = 0; recipeIdx < recipes.length; recipeIdx++) {
+    for (var recipeIdx = 0; recipeIdx < ing.length; recipeIdx++) {
+      // console.log(ing[recipeIdx].ingredients);
       var listIdx = ingredientsList.length;
-      var recipeIngredients = recipes[recipeIdx].ingredients;
+      var recipeIngredients = ing[recipeIdx].ingredients;
       if (recipeIngredients) {
         for (var i = 0; i < recipeIngredients.length; i++) {
           // console.log(recipeIngredients[i].ingredient);
@@ -119,7 +159,7 @@ app.factory("recipesSrv", function ($q) {
         }        
       }
     }
-    // console.log(ingredientsList);
+    console.log(ingredientsList);
     return ingredientsList;
   }
 
@@ -169,6 +209,7 @@ app.factory("recipesSrv", function ($q) {
     myNewObject.save().then(
       (result) => {
         console.log('Recipe created', result);
+        wasIngredientsLoaded = false;
         async.resolve(result);
       },
       (error) => {
@@ -192,6 +233,7 @@ app.factory("recipesSrv", function ($q) {
       setRecipeParseObj(aRecipe, parseObj, imgFileName);
       parseObj.save().then((response) => {
         console.log('Updated Recipe', response);
+        wasIngredientsLoaded = false;
         async.resolve(aRecipe);
       }, (error) => {
         console.error('Error while updating Recipe', error);
@@ -249,7 +291,7 @@ app.factory("recipesSrv", function ($q) {
     var theRecipe = null
     if (recipes.length === 0) {
       //TODO: re-think this! -- NOT WORKING --
-      getRecipes(true).then(function (dbRecipes) {
+      getRecipeList(true).then(function (dbRecipes) {
         recipes = dbRecipes;
       }, function (err) {
         console.log(err);
@@ -267,19 +309,20 @@ app.factory("recipesSrv", function ($q) {
       }
     } 
 
-    for (let i=0; i < theRecipe.instructions.length; i++) {
-      console.log(theRecipe.instructions[i]);
-    }
+    // for (let i=0; i < theRecipe.instructions.length; i++) {
+    //   console.log(theRecipe.instructions[i]);
+    // }
 
     return theRecipe;
   }
 
 
   return {
-    getRecipes: getRecipes,
+    getRecipeList: getRecipeList,
+    getIngredients: getIngredients,
     dietTypeList: dietTypeList,
     dishTypeList: dishTypeList,
-    ingredientsList, ingredientsList,
+    getIngredients, getIngredients,
     units: units,
     createRecipe: createRecipe,
     updateRecipe: updateRecipe,

@@ -30,7 +30,13 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
     orderInstructions($scope.recipe.instructions);
-    $scope.ingredientsList = recipesSrv.ingredientsList;
+    // $scope.ingredientsList = recipesSrv.getIngredients();
+    recipesSrv.getIngredients().then(function (allIngredients) {
+      $scope.ingredientsList = allIngredients;
+    }, function (err) {
+      console.log(err);
+    });
+
     if (!$scope.recipe.recipeImg) {
       // $scope.recipe.recipeImg = "../assets/imgs/recipe-imge-ph.jpg";
       $scope.recipe.recipeImg = utilitySrv.PLACEHORDER_IMG;
@@ -69,7 +75,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   }
 
   // fetch existing pre defined recipes from the model
-  recipesSrv.getRecipes($scope.isUserRecipePage).then(function (recipes) {
+  recipesSrv.getRecipeList($scope.isUserRecipePage).then(function (recipes) {
     $scope.recipes = recipes;
   }, function (err) {
     console.log(err);
