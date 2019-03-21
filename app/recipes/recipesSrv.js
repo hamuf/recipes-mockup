@@ -152,14 +152,16 @@ app.factory("recipesSrv", function ($q) {
       if (recipeIngredients) {
         for (var i = 0; i < recipeIngredients.length; i++) {
           // console.log(recipeIngredients[i].ingredient);
-          var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient };
+          var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient, "type": "מהרשימה:" };
           if (!ingredientExists(an_ingredient.name,ingredientsList)) {
             ingredientsList.push(an_ingredient);
           }
         }        
       }
     }
-    console.log(ingredientsList);
+    var add_missing_ingredient = { "id": -1, "name": "הוסף", "type": "רכיב לא נמצא" };
+    ingredientsList.push(add_missing_ingredient);
+    // console.log(ingredientsList);
     return ingredientsList;
   }
 
@@ -319,7 +321,6 @@ app.factory("recipesSrv", function ($q) {
 
   return {
     getRecipeList: getRecipeList,
-    getIngredients: getIngredients,
     dietTypeList: dietTypeList,
     dishTypeList: dishTypeList,
     getIngredients, getIngredients,

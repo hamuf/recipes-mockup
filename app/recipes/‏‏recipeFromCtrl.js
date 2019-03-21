@@ -26,8 +26,8 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     $scope.recipe =  recipesSrv.getRecipeById(currRecipeId);
     $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.recipe.dietTypes);
     $scope.dishTypes = utilitySrv.setTypeListFromDB($scope.recipe.dishTypes);
-    console.log($scope.recipe.instructions);
-    console.log($scope.recipe);
+    // console.log($scope.recipe.instructions);
+    // console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
     orderInstructions($scope.recipe.instructions);
     // $scope.ingredientsList = recipesSrv.getIngredients();
@@ -38,12 +38,29 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     });
 
     if (!$scope.recipe.recipeImg) {
-      // $scope.recipe.recipeImg = "../assets/imgs/recipe-imge-ph.jpg";
       $scope.recipe.recipeImg = utilitySrv.PLACEHORDER_IMG;
     }
 
   }
 
+  $scope.ingExists = true;
+  // if the user selected the 'add ingrediet' option, we show an input field, 
+  // else we set the selected value to the recipe ingredients list.
+  $scope.addMissingIngredient = function() {
+    console.log($scope.ingredientOpt);
+    // ingredient does not exist yet
+    if ($scope.ingredientOpt < 0) {
+      // display input field for new ingredient
+      $scope.ingExists = false;
+    } else {
+      // set the selected ingrediet to the recipe
+      var ing = $scope.ingredientsList.find( ing => ing.id === $scope.ingredientOpt);
+      $scope.ingredient = ing.name;
+      // console.log(ing.name);
+    }
+    
+    
+  }
 
   $scope.saveIngredientLocally = function () {
     var newSIngredientObj = {};
@@ -51,7 +68,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     newSIngredientObj["unit"] = $scope.unit;
     newSIngredientObj["ingredient"] = $scope.ingredient;
     newSIngredientObj["ingredientComm"] = $scope.ingredientComm;
-    console.log(newSIngredientObj);
+    // console.log(newSIngredientObj);
     $scope.recipe.ingredients.push(newSIngredientObj);
     $scope.quantity = "";
     $scope.unit = "";
@@ -66,7 +83,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       var newStepObj = {};
       newStepObj["seq"] = $scope.seq;
       newStepObj["instruction"] = $scope.instruction;
-      console.log(newStepObj);
+      // console.log(newStepObj);
     }
     $scope.recipe.instructions.push(newStepObj);
     $scope.seq++;
@@ -98,7 +115,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
 
       var imgFileName = getUploadFileName();
       // console.log(angular.copy($scope.recipe.ingredients)); // Removes $$hashkey added by Angular and Rejected by Parse
-      console.log($scope.recipe);
+      // console.log($scope.recipe);
       prepareRecipeObjForDB();
       recipesSrv.createRecipe($scope.recipe, imgFileName).then(function () {
         $location.path("/my-recipes");
@@ -115,7 +132,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       var imgFileName = getUploadFileName();
       // console.log(angular.copy($scope.recipe.ingredients)); // Removes $$hashkey added by Angular and Rejected by Parse
       prepareRecipeObjForDB();
-      console.log($scope.recipe);
+      // console.log($scope.recipe);
       recipesSrv.updateRecipe($scope.recipe, imgFileName).then(function () {
         $location.path("/my-recipes");
         // $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.recipe.dietTypes);
@@ -129,7 +146,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   }
 
   $scope.setInstructionForEdit = function(instruction) {
-    console.log(instruction);
+    // console.log(instruction);
     $scope.instruction = instruction.instruction;
     $scope.seq = instruction.seq;
     // $scope.hashToEdit = instruction.id;
@@ -159,7 +176,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     } else if ($scope.deleteTypeId == utilitySrv.INGREDIENT) {
       for (var i = 0; i < $scope.recipe.ingredients.length; i++) {
         if ($scope.recipe.ingredients[i].$$hashKey === $scope.objectToDelete.$$hashKey) {
-          console.log($scope.recipe.ingredients[i].$$hashKey);
+          // console.log($scope.recipe.ingredients[i].$$hashKey);
           $scope.recipe.ingredients.splice(i, 1);
         }
       }
@@ -193,8 +210,13 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
   function orderInstructions() {
     let myArr = $scope.recipe.instructions;
     if (myArr)
-      myArr.sort((a, b) => a.seq - b.seq);
+      myArr.sort((a, b) => parseInt(a.seq) - parseInt(b.seq));
   }
+  // function orderIngredients() {
+  //   let myArr = $scope.recipe.instructions;
+  //   if (myArr)
+  //     myArr.sort((a, b) => parseInt(a.seq) - parseInt(b.seq));
+  // }
 
   function getMaxSeq(dietTypesArr) {
     maxSeq = 0;
@@ -206,7 +228,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
         }
       }
     }
-    console.log("maxSeq=" + maxSeq);
+    // console.log("maxSeq=" + maxSeq);
     return Number(maxSeq) + 1;
   }  
 
