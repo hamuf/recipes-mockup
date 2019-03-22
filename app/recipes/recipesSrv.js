@@ -57,6 +57,11 @@ app.factory("recipesSrv", function ($q) {
     { id:"7", name: "כוסות" },
     { id:"8", name: "יחידה" }, // for eggs, apples, atc. TODO: find a better name
     { id:"9", name: "יחידות" }, // for eggs, apples, atc.
+    { id:"10", name: "קורט" }, 
+    { id:"10", name: "אריזה" }, 
+    { id:"10", name: "אריזות" },
+    { id:"10", name: "גביע" },
+    { id:"10", name: "גביעים" }
   ];
   // var units = [
   //   { "0": "גרם" },
@@ -333,6 +338,7 @@ app.factory("recipesSrv", function ($q) {
     dietTypeList: dietTypeList,
     dishTypeList: dishTypeList,
     getIngredients: getIngredients,
+    ingredientExists: ingredientExists,
     units: units,
     createRecipe: createRecipe,
     updateRecipe: updateRecipe,

@@ -1,4 +1,4 @@
-app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, recipesSrv, userSrv, utilitySrv) {
+app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, $anchorScroll, recipesSrv, userSrv, utilitySrv) {
 
   // navigate to public recipes page, if no active user
   if (!userSrv.getActiveUser()) { 
@@ -17,7 +17,10 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     // add 2 levels to the list (using the property "type"): 
     utilitySrv.addPropToAllArrayObjects(allIngredients,"type","רשימה:");
     var add_missing_ingredient = { "id": -1, "name": "הוסף", "type": "רכיב לא נמצא" };
-    allIngredients.push(add_missing_ingredient);      
+    if (!recipesSrv.ingredientExists(add_missing_ingredient.name,allIngredients)) {
+      allIngredients.push(add_missing_ingredient);
+    }    
+    // allIngredients.push(add_missing_ingredient);      
     // list is ready for form select element:
     $scope.ingredientsList = allIngredients;
   }, function (err) {
@@ -62,6 +65,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     if ($scope.ingredientOpt < 0) {
       // display input field for new ingredient
       $scope.ingredientExists = false;
+      $scope.ingredient = "";
     } else {
       // set the selected ingrediet to the recipe
       var ing = $scope.ingredientsList.find( ing => ing.id === $scope.ingredientOpt);
@@ -80,9 +84,9 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     // console.log(newSIngredientObj);
     $scope.recipe.ingredients.push(newSIngredientObj);
     $scope.quantity = "";
-    $scope.unit = "";
+    $scope.unit = $scope.units[0][""];
     $scope.ingredient = ""; // TODO: clear value according to field type (select list?)
-    $scope.ingredientOpt = 0; // TODO: clear value according to field type (select list?)
+    $scope.ingredientOpt = $scope.ingredientsList[0][""]; // TODO: clear value according to field type (select list?)
     $scope.ingredientComm = "";
     $scope.ingredientExists = true;
   }
@@ -94,9 +98,10 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       var newStepObj = {};
       newStepObj["seq"] = $scope.seq;
       newStepObj["instruction"] = $scope.instruction;
-      // console.log(newStepObj);
+      $scope.recipe.instructions.push(newStepObj);
+      console.log(newStepObj);
     }
-    $scope.recipe.instructions.push(newStepObj);
+
     $scope.seq++;
     $scope.instruction = "";
 
@@ -155,14 +160,28 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
       console.log("There is No acative user");
     }
   }
-
-  $scope.setInstructionForEdit = function(instruction) {
+  $scope.setIngredientForEdit = function(ingredient) {
+    // console.log(instruction);
+    $scope.quantity = ingredient.quantity;
+    $scope.unit = ingredient.unit;
+    $scope.ingredientOpt = utilitySrv.getValueByKey($scope.ingredientsList,"name",ingredient.ingredient,"id");
+    $scope.ingredientComm = ingredient.ingredientComm;
+    // $scope.hashToEdit = ingredient.id;
+    $scope.hashToEdit = ingredient.$$hashKey;
+    console.log($scope.hashToEdit);
+  }  
+  $scope.setInstructionForEdit = function(instruction,anchor) {
     // console.log(instruction);
     $scope.instruction = instruction.instruction;
     $scope.seq = instruction.seq;
     // $scope.hashToEdit = instruction.id;
     $scope.hashToEdit = instruction.$$hashKey;
-    console.log($scope.hashToEdit);
+    
+    // need some ajsutments to work with the accordion
+    // $location.hash(anchor);    
+    //scroll to the new anchor point (ngRoute workaround)
+    // $anchorScroll();
+    // console.log($scope.hashToEdit);
   }
 
   $scope.saveEditedInstruction = function() {

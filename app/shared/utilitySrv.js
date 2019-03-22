@@ -24,11 +24,24 @@ app.factory("utilitySrv", function ($http, $q, $log) {
         return dietTypesObject;
     }
 
+    // add property to all the array objects (is does not exist)
     function addPropToAllArrayObjects(an_array, field_name, field_value) {
         an_array.forEach(function (obj) {
-            obj[field_name] = field_value;
+            if (!obj[field_name])
+                obj[field_name] = field_value;
         });
         //   console.log(an_array);
+    }
+
+    // returns outValue
+    function getValueByKey(objectArr, inKey, inValue, outKey) {
+        var outValue = null;
+        objectArr.forEach(function (obj) {
+            if (obj[inKey] == inValue) {
+                outValue = obj[outKey];
+            }
+        });
+        return outValue;
     }
 
     function sortArrayByStrKey(an_array) {
@@ -47,6 +60,7 @@ app.factory("utilitySrv", function ($http, $q, $log) {
         setTypeListForDB: setTypeListForDB,
         addPropToAllArrayObjects: addPropToAllArrayObjects,
         sortArrayByStrKey: sortArrayByStrKey,
+        getValueByKey: getValueByKey,
         PLACEHORDER_IMG: PLACEHORDER_IMG,
         INSTRUCTION: INSTRUCTION,
         INGREDIENT: INGREDIENT

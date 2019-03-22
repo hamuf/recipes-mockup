@@ -100,7 +100,7 @@
                                 <div class="col-sm-1 text-nowrap">
                                     <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#modalPopup" 
                                         ng-click="deleteIngredient(an_ingredient)"></i>
-                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                    <!-- <i class="fa fa-edit" aria-hidden="true" ng-click="setIngredientForEdit(an_ingredient)"></i> -->
                                 </div>
                                 <!-- <div class="col-11">
                                     <div class=" float-left">{{an_ingredient.quantity}}</div>
@@ -145,7 +145,8 @@
                             <div class="form-group-mb-0 col-md-2 col-4">
                                 <label>&nbsp;</label>
                                 <br/>
-                                <input class="btn btn-primary" type="button" value="שמור רכיב" ng-click="saveIngredientLocally()">
+                                <input class="btn btn-primary mx-1" type="button" value="שמור רכיב" ng-click="saveIngredientLocally()">
+                                <input class="btn btn-primary" type="reset" ng-click="ingredientExists=true" value="נקה שדות">
                             </div>
                         </div>
                         <div class="form-row">
@@ -174,13 +175,13 @@
                                     <div class="col-1 text-nowrap">
                                         <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#modalPopup"
                                             ng-click="deleteInstruction(instruction)"></i>
-                                        <i class="fa fa-edit" aria-hidden="true" ng-click="setInstructionForEdit(instruction)"></i>
+                                        <i class="fa fa-edit" aria-hidden="true" ng-click="setInstructionForEdit(instruction,'instructionForm')"></i>
                                     </div>
                                     <div class="col-1">{{instruction.seq}}</div>
                                     <div class="col-10">{{instruction.instruction}}</div>
                                 </div>                        
                         <div class="form-row"><hr></div>
-                        <div class="form-row">
+                        <div class="form-row" id="instructionForm">
                             <div class="form-group-mb-0 col-lg-2 col-md-1 col-sm-1">
                                 <label for="seq">#</label>
                                 <input type="input" class="form-control" id="seq" ng-model="seq" placeholder="">
@@ -207,16 +208,18 @@
     </div>
 
     <!-- Accordion -->
-    <div class="form-row mt-2">
+    <div class="form-row mt-2" ng-show="{{isEditRecipe}}">
         <div class="col-md-1 col-6">
             <!-- Show only on edit page -->
-            <input class="btn btn-danger align-right" type="button" value="מחק מתכון" ng-show="{{isEditRecipe}}" ng-click="alert('Are you sure?')">
+            <input class="btn btn-danger align-right" type="button" value="מחק מתכון" ng-click="alert('Are you sure?')">
         </div>
         <div class="col-md-11 col-6 align-left">
-            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-show="{{!isEditRecipe}}" ng-click="addRecipe()">
+            <input class="btn btn-primary" type="button" value="שמור מתכון"  ng-click="editRecipe()">
         </div>
-        <div class="col-md-11 col-6 align-left">
-            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-show="{{isEditRecipe}}" ng-click="editRecipe()">
+    </div>
+    <div class="form-row mt-2" ng-show="{{!isEditRecipe}}">
+        <div class="col align-left">
+            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-click="addRecipe()">
         </div>
     </div>
 </form>
