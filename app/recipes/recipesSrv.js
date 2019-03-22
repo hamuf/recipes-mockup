@@ -47,17 +47,29 @@ app.factory("recipesSrv", function ($q) {
   ];
 
   var units = [
-    { "0": "גרם" },
-    { "1": "מיליליטר" }, //TODO: one working - change to מ"ל
-    { "2": "כפית" },
-    { "3": "כפיות" },
-    { "4": "כף" },
-    { "5": "כפות" },
-    { "6": "כוס" },
-    { "7": "כוסות" },
-    { "8": "יחידה" }, // for eggs, apples, atc. TODO: find a better name
-    { "9": "יחידות" }, // for eggs, apples, atc.
+    { id: "0", name: "גרם" },
+    { id :"1", name:"מיליליטר" }, //TODO: one working - change to מ"ל
+    { id:"2", name: "כפית" },
+    { id:"3", name: "כפיות" },
+    { id:"4", name: "כף" },
+    { id:"5", name: "כפות" },
+    { id:"6", name: "כוס" },
+    { id:"7", name: "כוסות" },
+    { id:"8", name: "יחידה" }, // for eggs, apples, atc. TODO: find a better name
+    { id:"9", name: "יחידות" }, // for eggs, apples, atc.
   ];
+  // var units = [
+  //   { "0": "גרם" },
+  //   { "1": "מיליליטר" }, //TODO: one working - change to מ"ל
+  //   { "2": "כפית" },
+  //   { "3": "כפיות" },
+  //   { "4": "כף" },
+  //   { "5": "כפות" },
+  //   { "6": "כוס" },
+  //   { "7": "כוסות" },
+  //   { "8": "יחידה" }, // for eggs, apples, atc. TODO: find a better name
+  //   { "9": "יחידות" }, // for eggs, apples, atc.
+  // ];
 
   // This array of recipes is used for displaying a single recipe (edit/view)
   var recipes = [];
