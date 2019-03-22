@@ -115,17 +115,6 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, $anc
   })
   // recipesSrv.deleteRecipe("0HVYW7UeUi");
 
-  $scope.deleteRecipe = function () {
-    if (userSrv.getActiveUser()) {
-      console.log("recipeId="+recipeId);
-      recipesSrv.deleteRecipe(recipeId).then(function () {
-      }, function (err) {
-        console.log(err);
-      })
-    } else {
-      console.log("There is no acative user");
-    }
-  }
   $scope.addRecipe = function () {
     if (userSrv.getActiveUser()) {
 
@@ -210,16 +199,33 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, $anc
           $scope.recipe.ingredients.splice(i, 1);
         }
       }
+    } else if ($scope.deleteTypeId == utilitySrv.RECIPE) {
+      if (userSrv.getActiveUser()) {
+        console.log("recipeId=" + $scope.objectToDelete.id);
+        recipesSrv.deleteRecipe($scope.objectToDelete.id).then(function () {
+        }, function (err) {
+          console.log(err);
+        })
+      } else {
+        console.log("There is no acative user");
+      }
+      console.log("a call to deleteRecipe" + $scope.objectToDelete.recipeName);
+      $location.path("/");
     }
     // $scope.closePopup = true;
     $('#modalPopup').modal('hide');     // TODO: Convert JS to angularJS code
   }
 
+  $scope.deleteRecipe = function() {
+    $scope.popupWinText = "זהירות! לחיצה על 'אישור' תמחק את '"+$scope.recipe.recipeName+"' לצמיתות";
+    $scope.deleteTypeId = utilitySrv.RECIPE;
+    $scope.objectToDelete = $scope.recipe;
+  }
   // TODO: add 'dirty' to remind the user to save the recipe
   /**
   * input: instruction to delete after user confirmation
   */
-  $scope.deleteInstruction = function (instruction) {
+  $scope.deleteInstruction = function(instruction) {
     $scope.popupWinText = "זהירות! לחיצה על אישור תמחק את ההוראה מהמתכון";
     $scope.deleteTypeId = utilitySrv.INSTRUCTION;
     $scope.objectToDelete = instruction;

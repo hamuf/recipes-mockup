@@ -52,8 +52,10 @@ app.factory("utilitySrv", function ($http, $q, $log) {
 
     // CONSTANTS
     const PLACEHORDER_IMG = "../assets/imgs/recipe-imge-ph.jpg";
+    const RECIPE = "recipe";
     const INSTRUCTION = "instruction";
     const INGREDIENT = "ingredient";
+
 
     return {
         setTypeListFromDB: setTypeListFromDB,
@@ -62,6 +64,7 @@ app.factory("utilitySrv", function ($http, $q, $log) {
         sortArrayByStrKey: sortArrayByStrKey,
         getValueByKey: getValueByKey,
         PLACEHORDER_IMG: PLACEHORDER_IMG,
+        RECIPE: RECIPE,
         INSTRUCTION: INSTRUCTION,
         INGREDIENT: INGREDIENT
     }

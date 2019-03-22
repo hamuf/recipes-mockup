@@ -208,16 +208,18 @@
     </div>
 
     <!-- Accordion -->
-    <div class="form-row mt-2" ng-show="{{isEditRecipe}}">
+    <div class="form-row m-2" ng-show="{{isEditRecipe}}">
         <div class="col-md-1 col-6">
             <!-- Show only on edit page -->
-            <input class="btn btn-danger align-right" type="button" value="מחק מתכון" ng-click="alert('Are you sure?')">
+            <input class="btn btn-danger align-right" type="button" value="מחק מתכון" 
+            data-toggle="modal" data-target="#modalPopup"  ng-click="deleteRecipe()">
+
         </div>
         <div class="col-md-11 col-6 align-left">
             <input class="btn btn-primary" type="button" value="שמור מתכון"  ng-click="editRecipe()">
         </div>
     </div>
-    <div class="form-row mt-2" ng-show="{{!isEditRecipe}}">
+    <div class="form-row m-2" ng-show="{{!isEditRecipe}}">
         <div class="col align-left">
             <input class="btn btn-primary" type="button" value="שמור מתכון" ng-click="addRecipe()">
         </div>
