@@ -5,24 +5,40 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     $location.path("/");
   }
 
+  // initiate lists
   $scope.dietTypeList = recipesSrv.dietTypeList;
   $scope.dishTypeList = recipesSrv.dishTypeList;
   $scope.units = recipesSrv.units;
-  
+  $scope.ingredientsList = [];
+  // sets a list of all the ingredients in the data base, for form select:
+  recipesSrv.getIngredients().then(function (allIngredients) {;
+    // sort array by ingredient name
+    utilitySrv.sortArrayByStrKey(allIngredients);
+    // add 2 levels to the list (using the property "type"): 
+    utilitySrv.addPropToAllArrayObjects(allIngredients,"type","רשימה:");
+    var add_missing_ingredient = { "id": -1, "name": "הוסף", "type": "רכיב לא נמצא" };
+    allIngredients.push(add_missing_ingredient);      
+    // list is ready for form select element:
+    $scope.ingredientsList = allIngredients;
+  }, function (err) {
+    console.log(err);
+  });   
+
   // recipes list
   $scope.recipes = [];
+  // the id of an array element the user wants to modify
   $scope.hashToEdit = null;
   
-  // add/edit recipe
   $scope.recipe = {}; // init scope recipe
   $scope.recipe.ingredients = []; // an array of ingredients objects
   $scope.recipe.instructions = []; // an array of instruction objects
 
   $scope.isEditRecipe = ($location.url().indexOf("edit-recipe") > 0 && $scope.activeUser !== null);
   
-  $scope.seq = 1; 
+  $scope.seq = 1; // the sequential number of a recipe instruction
+  // If edit - set form fields from recipe object
   if ($scope.isEditRecipe) {
-    var currRecipeId = $routeParams.recipeId; // sets the page's breed from the URL param
+    var currRecipeId = $routeParams.recipeId; // get the recipe id from the url
     $scope.recipe =  recipesSrv.getRecipeById(currRecipeId);
     $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.recipe.dietTypes);
     $scope.dishTypes = utilitySrv.setTypeListFromDB($scope.recipe.dishTypes);
@@ -30,20 +46,14 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     // console.log($scope.recipe);
     $scope.seq = getMaxSeq($scope.recipe.instructions);
     orderInstructions($scope.recipe.instructions);
-    // $scope.ingredientsList = recipesSrv.getIngredients();
-    recipesSrv.getIngredients().then(function (allIngredients) {
-      $scope.ingredientsList = allIngredients;
-    }, function (err) {
-      console.log(err);
-    });
-
+    // if recipe does not have a photo, set a place holder image
     if (!$scope.recipe.recipeImg) {
       $scope.recipe.recipeImg = utilitySrv.PLACEHORDER_IMG;
     }
 
   }
 
-  $scope.ingExists = true;
+  $scope.ingredientExists = true;
   // if the user selected the 'add ingrediet' option, we show an input field, 
   // else we set the selected value to the recipe ingredients list.
   $scope.addMissingIngredient = function() {
@@ -51,14 +61,13 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     // ingredient does not exist yet
     if ($scope.ingredientOpt < 0) {
       // display input field for new ingredient
-      $scope.ingExists = false;
+      $scope.ingredientExists = false;
     } else {
       // set the selected ingrediet to the recipe
       var ing = $scope.ingredientsList.find( ing => ing.id === $scope.ingredientOpt);
       $scope.ingredient = ing.name;
       // console.log(ing.name);
-    }
-    
+    }  
     
   }
 
@@ -73,7 +82,9 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     $scope.quantity = "";
     $scope.unit = "";
     $scope.ingredient = ""; // TODO: clear value according to field type (select list?)
+    $scope.ingredientOpt = 0; // TODO: clear value according to field type (select list?)
     $scope.ingredientComm = "";
+    $scope.ingredientExists = true;
   }
 
   $scope.saveStepLocally = function () {
@@ -212,11 +223,6 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, reci
     if (myArr)
       myArr.sort((a, b) => parseInt(a.seq) - parseInt(b.seq));
   }
-  // function orderIngredients() {
-  //   let myArr = $scope.recipe.instructions;
-  //   if (myArr)
-  //     myArr.sort((a, b) => parseInt(a.seq) - parseInt(b.seq));
-  // }
 
   function getMaxSeq(dietTypesArr) {
     maxSeq = 0;

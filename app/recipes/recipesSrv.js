@@ -117,11 +117,10 @@ app.factory("recipesSrv", function ($q) {
 
   var wasIngredientsLoaded = false;
   function getIngredients() {
+    var async = $q.defer();
     if (wasIngredientsLoaded) {
-      return ingredientsList;
+      async.resolve(ingredientsList);
     } else {
-      var async = $q.defer();
-
       // back4App api
       const RecipeParse = Parse.Object.extend('Recipe');
       const query = new Parse.Query(RecipeParse);
@@ -137,9 +136,8 @@ app.factory("recipesSrv", function ($q) {
         console.log(err);
         async.reject(error);
       })
-
-      return async.promise;
     }
+    return async.promise;
   }
   
   var ingredientsList = []; console.log('ingredientsList cleared');
@@ -152,15 +150,14 @@ app.factory("recipesSrv", function ($q) {
       if (recipeIngredients) {
         for (var i = 0; i < recipeIngredients.length; i++) {
           // console.log(recipeIngredients[i].ingredient);
-          var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient, "type": "מהרשימה:" };
+          // var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient, "type": "מהרשימה:" };
+          var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient };
           if (!ingredientExists(an_ingredient.name,ingredientsList)) {
             ingredientsList.push(an_ingredient);
           }
         }        
       }
     }
-    var add_missing_ingredient = { "id": -1, "name": "הוסף", "type": "רכיב לא נמצא" };
-    ingredientsList.push(add_missing_ingredient);
     // console.log(ingredientsList);
     return ingredientsList;
   }
@@ -323,7 +320,7 @@ app.factory("recipesSrv", function ($q) {
     getRecipeList: getRecipeList,
     dietTypeList: dietTypeList,
     dishTypeList: dishTypeList,
-    getIngredients, getIngredients,
+    getIngredients: getIngredients,
     units: units,
     createRecipe: createRecipe,
     updateRecipe: updateRecipe,

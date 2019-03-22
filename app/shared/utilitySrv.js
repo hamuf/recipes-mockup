@@ -24,6 +24,19 @@ app.factory("utilitySrv", function ($http, $q, $log) {
         return dietTypesObject;
     }
 
+    function addPropToAllArrayObjects(an_array, field_name, field_value) {
+        an_array.forEach(function (obj) {
+            obj[field_name] = field_value;
+        });
+        //   console.log(an_array);
+    }
+
+    function sortArrayByStrKey(an_array) {
+        an_array.sort(function (a, b) {
+            return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+        });
+    }
+
     // CONSTANTS
     const PLACEHORDER_IMG = "../assets/imgs/recipe-imge-ph.jpg";
     const INSTRUCTION = "instruction";
@@ -32,6 +45,8 @@ app.factory("utilitySrv", function ($http, $q, $log) {
     return {
         setTypeListFromDB: setTypeListFromDB,
         setTypeListForDB: setTypeListForDB,
+        addPropToAllArrayObjects: addPropToAllArrayObjects,
+        sortArrayByStrKey: sortArrayByStrKey,
         PLACEHORDER_IMG: PLACEHORDER_IMG,
         INSTRUCTION: INSTRUCTION,
         INGREDIENT: INGREDIENT

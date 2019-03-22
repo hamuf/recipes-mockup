@@ -130,12 +130,12 @@
                             <div class="form-group-mb-0 col-md-4 col-4">
                                 <label for="ingredient">רכיב</label>
                                 <!-- <input type="input" class="form-control" id="ingredient" ng-model="ingredient" placeholder="מרשימה סגורה"> -->
-                                <select  class="form-control" name="repeatSelect" ng-show="ingExists"
+                                <select  class="form-control" name="repeatSelect" ng-show="ingredientExists"
                                 ng-model="ingredientOpt" ng-change="addMissingIngredient()"
                                 ng-options="option.id as option.name group by option.type for option in ingredientsList">
                                 <option value="">-- בחר אחד --</option>
                                 </select>
-                                <input type="input" class="form-control" id="ingredient" ng-model="ingredient"  ng-show="!ingExists" placeholder="שם הרכיב">  
+                                <input type="input" class="form-control" id="ingredient" ng-model="ingredient"  ng-show="!ingredientExists" placeholder="שם הרכיב">  
                               </div>
                             <div class="form-group-mb-0 col-md-3 col-4">
                                 <label for="ingredientComm">הערה</label>
