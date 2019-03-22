@@ -282,6 +282,7 @@ app.factory("recipesSrv", function ($q) {
     return async.promise;
   }
 
+  // TODO: Add validation: The active user is the recipe owner
   // Delete recipe by its ID, from parse DB
   function deleteRecipe(recipeId) {
     var async = $q.defer();

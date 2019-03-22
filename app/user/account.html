@@ -6,9 +6,12 @@
     <div class="form-group form-row">
         <!-- validation: at least 3 characters -->
         <label for="nickname" class="col-md-2">שם משתמש</label>
-        <input type="input" class="form-control col-md-5" name="nickname" ng-model="user.nickname" placeholder="שם משתמש" ng-minlength="3" required>
-        <div class="col-md-5 errMsg" role="alert" ng-show="accountForm.nickname.$invalid">
-            שדה חובה. מינימום 3 תווים
+        <input type="input" class="form-control col-md-5" name="nickname" ng-model="user.nickname"
+            placeholder="שם משתמש" ng-minlength="3" required>
+        <div class="col-md-5" ng-show="accountForm.nickname.$touched && accountForm.nickname.$invalid">
+            <div class="form-control alert alert-danger" role="alert">
+                שדה חובה. מינימום 3 תווים
+            </div>
         </div>
     </div>
     <div class="form-group form-row">
@@ -16,34 +19,44 @@
         <label for="newemail" class="col-md-2">אי-מייל</label>
         <input type="email" class="form-control col-md-5" name="newemail" ng-model="user.newemail" required
             placeholder="כתובת מייל שנמצאת בשימוש">
-        <div class="col-md-5 errMsg" role="alert" ng-show="accountForm.newemail.$invalid">
-            שדה חובה. מייל תקין מכיל @
+
+        <div class="col-md-5" ng-show="accountForm.newemail.$touched && accountForm.newemail.$invalid">
+            <div class="form-control alert alert-danger" role="alert">
+                שדה חובה. מייל תקין מכיל @
+            </div>
         </div>
-                
+
     </div>
     <div class="form-group form-row">
         <!-- validation pwd is equal to pwd2 -->
         <label for="newpwd" class="col-md-2">סיסמה</label>
-        <input type="password" class="col-md-5 form-control" name="newpwd" ng-model="user.newpwd" ng-minlength="8" required>
-        <div class="col-md-5 errMsg" role="alert" ng-show="accountForm.newpwd.$invalid">
-            שדה חובה
-        </div>        
+        <input type="password" class="col-md-5 form-control" name="newpwd" ng-model="user.newpwd" ng-minlength="8"
+            required>
+        <div class="col-md-5" ng-show="accountForm.newpwd.$touched && accountForm.newpwd.$invalid">
+            <div class="form-control alert alert-danger" role="alert">
+                    סיסמה לא תקינה
+            </div>
+        </div>
+
         <div class="col-md-2">&nbsp;</div>
         <div class="col-md-10">
-                <small id="emailHelp" class="form-text text-muted">דרישות מינימום לסיסמא תקינה: לפחות ספרה, אות קטנה ואות 
-                        גדולה (באנגלית). ולא פחות מ-8 תווים </small>            
+            <small id="emailHelp" class="form-text text-muted">דרישות מינימום לסיסמא תקינה: לפחות ספרה, אות קטנה ואות
+                גדולה (באנגלית). ולא פחות מ-8 תווים </small>
         </div>
     </div>
     <div class="form-group form-row">
         <label for="newpwd2" class="col-md-2">אימות סיסמה</label>
-        <input type="password" class="form-control col-md-5" name="newpwd2" ng-model="newpwd2" ng-required="!isEditProfile">
-        <div class="col-md-5 errMsg" role="alert" ng-show="accountForm.newpwd2.$invalid" ng-model="repeatPassErr">
-                {{repeatPassErr}}
-        </div>        
+        <input type="password" class="form-control col-md-5" name="newpwd2" ng-model="newpwd2"
+            ng-required="!isEditProfile">
+        <div class="col-md-5" ng-show="accountForm.newpwd2.$touched && accountForm.newpwd2.$invalid" ng-model="repeatPassErr">
+                <div class="form-control alert alert-danger" role="alert">
+                        {{repeatPassErr}}
+                </div>
+            </div>        
         <div class="col-md-2">&nbsp;</div>
         <div class="col-md-10">
             <small id="emailHelp" class="form-text text-muted">תוכן זהה לתוכן שהוקלד עבור הסיסמה</small>
-        </div>            
+        </div>
     </div>
     <div class="form-group form-row">
         <label class="col-md-2">מתכונים שאני רוצה לראות</label>
