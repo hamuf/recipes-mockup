@@ -1,9 +1,13 @@
-<form>
+<form name="recipeForm" id="recipeForm">
     <div class="form-row">
         <div class="form-group col-md-6">
             <!-- 1 -->
             <label for="recipeName">שם המתכון</label>
-            <input type="input" class="form-control" id="recipeName" placeholder="שם המתכון" ng-model="recipe.recipeName" required>
+            <input type="input" class="form-control" name="recipeName" id="recipeName" placeholder="שם המתכון" ng-model="recipe.recipeName" required>
+            <div ng-show="recipeForm.recipeName.$touched && recipeForm.recipeName.$invalid" 
+                class="mt-2 form-control alert alert-danger" role="alert">
+                "שם המתכון" הוא שדה חובה
+            </div>
         </div>
         <div class="form-group col-md-3">
             <label>מי יוכל לצפות במתכון</label>
@@ -128,7 +132,7 @@
                                     <option value="">-- בחר אחד --</option>
                                 </select>
                             </div>
-                            <div class="form-group-mb-0 col-md-4 col-4">
+                            <div class="form-group-mb-0 col-md-4 col-sm-4">
                                 <label for="ingredient">רכיב</label>
                                 <!-- <input type="input" class="form-control" id="ingredient" ng-model="ingredient" placeholder="מרשימה סגורה"> -->
                                 <select  class="form-control" name="repeatSelect" ng-show="ingredientExists"
@@ -138,15 +142,15 @@
                                 </select>
                                 <input type="input" class="form-control" id="ingredient" ng-model="ingredient"  ng-show="!ingredientExists" placeholder="שם הרכיב">  
                               </div>
-                            <div class="form-group-mb-0 col-md-3 col-4">
+                            <div class="form-group-mb-0 col-md-3 col-sm-4">
                                 <label for="ingredientComm">הערה</label>
                                 <input type="input" class="form-control" id="ingredientComm" ng-model="ingredientComm" placeholder="למשל: קצוץ, שהושרה 12 שעות וכד'">
                             </div>
-                            <div class="form-group-mb-0 col-md-2 col-4">
+                            <div class="form-group-mb-0 col-md-2 col-sm-4">
                                 <label>&nbsp;</label>
                                 <br/>
-                                <input class="btn btn-primary mx-1" type="button" value="שמור רכיב" ng-click="saveIngredientLocally()">
-                                <input class="btn btn-primary" type="reset" ng-click="ingredientExists=true" value="נקה שדות">
+                                <input class="btn btn-primary mx-1" type="button" value="שמור" ng-click="saveIngredientLocally()">
+                                <input class="btn btn-primary" type="reset" ng-click="ingredientExists=true" value="נקה">
                             </div>
                         </div>
                         <div class="form-row">
@@ -216,12 +220,20 @@
 
         </div>
         <div class="col-md-11 col-6 align-left">
-            <input class="btn btn-primary" type="button" value="שמור מתכון"  ng-click="editRecipe()">
+            <input class="btn btn-primary" type="button" value="שמור מתכון"  ng-click="editRecipe()"
+                ng-disabled="recipeForm.$invalid">
         </div>
     </div>
     <div class="form-row m-2" ng-show="{{!isEditRecipe}}">
         <div class="col align-left">
-            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-click="addRecipe()">
+                <div ng-show="!recipeForm.$pristine && recipeForm.$invalid" 
+                class="ml-2 form-control alert alert-danger" role="alert">
+                "שם המתכון" הוא שדה חובה
+            </div>
+        </div>
+        <div class="col align-left">
+            <input class="btn btn-primary" type="button" value="שמור מתכון" ng-click="addRecipe()"
+                ng-disabled="recipeForm.$invalid">
         </div>
     </div>
 </form>
