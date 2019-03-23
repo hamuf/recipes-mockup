@@ -9,10 +9,10 @@ app.config(function($routeProvider) {
       controller: "recipeDetailsCtrl"
     }).when("/signup", {
       templateUrl: "app/user/account.html",
-      controller: "loginCtrl"
+      controller: "userCtrl"
     }).when("/my-profile", {
       templateUrl: "app/user/account.html",
-      controller: "loginCtrl"
+      controller: "userCtrl"
     }).when("/my-recipes", {
       templateUrl: "app/recipes/recipes.html",
       controller: "recipesCtrl"

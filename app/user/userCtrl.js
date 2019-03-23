@@ -1,4 +1,4 @@
-app.controller("loginCtrl", function ($scope, $location, userSrv, recipesSrv, utilitySrv) {
+app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, utilitySrv) {
 
     $scope.dietTypeList = recipesSrv.dietTypeList;
 
