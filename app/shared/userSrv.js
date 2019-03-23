@@ -80,9 +80,9 @@ app.factory("userSrv", function ($http, $q, $log) {
     //     return activeUser ? true : false;
     // }
 
-    // function logout() {
-    //     activeUser = null;
-    // }
+    function logout() {
+        activeUser = null;
+    }
 
     function getActiveUser() {
         return activeUser;
@@ -95,7 +95,8 @@ app.factory("userSrv", function ($http, $q, $log) {
         // isLoggedIn: isLoggedIn,
         // logout: logout,
         getActiveUser: getActiveUser,
-        activeUser, activeUser
+        logout: logout,
+        activeUser: activeUser
     }
 
 });

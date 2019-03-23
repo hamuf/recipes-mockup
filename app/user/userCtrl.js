@@ -75,6 +75,8 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
             document.getElementById("email").focus();
         } else {
             console.log($scope.email + " logged out");
+            userSrv.logout();
+            $scope.activeUser = null;
             $scope.connected = disconnected;
             $scope.email = "";
             $scope.pwd = "";

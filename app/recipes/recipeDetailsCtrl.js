@@ -27,18 +27,19 @@ app.controller("recipeDetailsCtrl", function ($scope, $location, $routeParams, r
     };
 
     $scope.dietTypes = [];
-    $scope.dishTypes = [];
     if ($scope.recipe.dietTypes) {
-      $scope.recipe.dietTypes.forEach(function (obj) {
-        $scope.dietTypes.push(recipesSrv.dietTypeList[obj][obj]);
+      let idx = 0;
+      $scope.recipe.dietTypes.forEach(function(diet) {
+        $scope.dietTypes.push(recipesSrv.dietTypeList[diet][diet]);
       });
     }
+    $scope.dishTypes = [];
     if ($scope.recipe.dishTypes) {
-      $scope.recipe.dishTypes.forEach(function (obj) {
-        $scope.dishTypes.push(recipesSrv.dishTypeList[obj][obj]);
+      let idx = 0;
+      $scope.recipe.dishTypes.forEach(function (dish) {
+        $scope.dishTypes.push(recipesSrv.dishTypeList[dish][dish]);
       });
     }
-
     
     // console.log($scope.recipe);
   }
