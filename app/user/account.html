@@ -67,11 +67,11 @@
         <button type="button" ng-click="addUser()" ng-hide="isEditProfile" ng-disabled="accountForm.$invalid" class="btn btn-primary">רישום</button>
         <button type="button" ng-click="updateUser()" ng-show="isEditProfile" ng-disabled="accountForm.$invalid" class="btn btn-primary">עדכן פרטים</button>
         </div>
-        <!-- <div class="float-left mx-2">
-            <div class="form-control alert alert-danger" role="alert" ng-show="accountForm.$invalid">
-                קיימות שגיאות בטופס
+        <div class="float-left mx-2"  ng-show="accountForm.$invalid">
+            <div class="form-control alert alert-info" role="alert">
+                {{signupMsg}}
             </div>
-        </div> -->
+        </div>
         </div> 
     <div class="form-group form-row">
 </form>

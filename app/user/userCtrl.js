@@ -1,6 +1,7 @@
 app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, utilitySrv) {
 
     $scope.dietTypeList = recipesSrv.dietTypeList;
+    $scope.dietTypes = [];
 
     $scope.invalidLogin = false;
     $scope.connected = false;
@@ -14,6 +15,7 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
     // is there is a logged-in user and the referrer was my profile menu item
     $scope.isEditProfile = ($location.url().indexOf("my-profile") > 0 && $scope.activeUser !== null);
 
+    $scope.signupMsg = "לפני שליחת הטופס יש למלא בצורה תקינה את השדות";
     $scope.initForm = function () {
         if ($scope.isEditProfile) {
             $scope.user = {};
@@ -29,17 +31,27 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
 
     // Called on submit of signup form
     $scope.addUser = function () {
-        if (isValid()) {
-            $scope.user.dietTypes = utilitySrv.setTypeListForDB($scope.dietTypes);
-            console.log($scope.user);
+        $scope.user.dietTypes = utilitySrv.setTypeListForDB($scope.dietTypes);
+        console.log($scope.user);
 
-            userSrv.signup($scope.user).then(function (newUser) {
-                console.log(newUser);
-                $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.user.dietTypes); // TODO: still required?
-            }, function (error) {
-                console.log(error);
-            });
-        }
+        userSrv.signup($scope.user).then(function (newUser) {
+            console.log(newUser);
+            $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.user.dietTypes); // TODO: still required?
+            $scope.accountForm.$invalid = true;
+            $scope.signupMsg = "תודה שנרשמת!";
+        }, function (error) {
+            console.log(error);
+            $scope.accountForm.$invalid = true;
+            $scope.signupMsg = "ההרשמה נכשלה - ";
+            if (error.code === 203) { // Account already exists for this email address.
+                $scope.signupMsg += "משתמש עם כתובת המייל כבר קיים במערכת";
+            } else if (error.code === 202) { // Account already exists for this username.
+                $scope.signupMsg += "שם המשתמש כבר קיים במערכת";
+            } else {
+                $scope.signupMsg += "אנא נסה שנית";
+            }
+            console.log(error);
+        });
     }
 
     // Called on submit of signup form
@@ -87,9 +99,6 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
             $scope.invalidLogin = true;
         });
 
-    }
-    function isValid() {
-        return true;
     }
 
     $scope.closeWin = function () {

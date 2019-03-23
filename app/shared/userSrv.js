@@ -42,7 +42,7 @@ app.factory("userSrv", function ($http, $q, $log) {
             newUser = new User(user);
             async.resolve(newUser);
         }).catch(error => {
-            console.error('Error while signing up user', error);
+            async.reject(error);
         });
         return async.promise;
     }

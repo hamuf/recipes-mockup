@@ -7,34 +7,36 @@
     <div class="form-group">
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" name="orderProp" class="form-check-input" ng-model="byPropName" value="views">הכי פופולאריים
+                <input type="radio" name="orderProp" class="form-check-input" ng-model="byPropName" value="views">הכי
+                פופולאריים
             </label>
         </div>
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" name="orderProp" class="form-check-input" ng-model="byPropName" value="createdAt">הכי חדשים
+                <input type="radio" name="orderProp" class="form-check-input" ng-model="byPropName"
+                    value="createdAt">הכי חדשים
             </label>
         </div>
-    </div>    
+    </div>
 </div>
 <!-- sort by  END -->
 <!-- free search -->
 <div class="row">
-        <!-- <form class="search-box"> -->
-                <div class="col-lg-6">
-                        <!-- Search form -->
-                        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
-                                <input type="text" class="form-control" placeholder="חיפוש מתכון" ng-model="searchText" aria-label="Search"
-                                ng-change="findRecipe()">
-                        </div>
-                        <div class="search-results list-group">
-                                <a href="#!/view-recipe/{{recipe.id}}" class="list-group-item list-group-item-action" ng-repeat="recipe in results | limitTo : 10"
-                                  >{{recipe.recipeName}}</a>
-                              </div>                        
-                    </div> 
-                
+    <!-- <form class="search-box"> -->
+    <div class="col-lg-6">
+        <!-- Search form -->
+        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+            <input type="text" class="form-control" placeholder="חיפוש מתכון" ng-model="searchText" aria-label="Search"
+                ng-change="findRecipe()">
+        </div>
+        <div class="search-results list-group">
+            <a href="#!/view-recipe/{{recipe.id}}" class="list-group-item list-group-item-action"
+                ng-repeat="recipe in results | limitTo : 10">{{recipe.recipeName}}</a>
+        </div>
+    </div>
 
-            <!-- </form>     -->
+
+    <!-- </form>     -->
     <!-- <div class="col-lg-6">
         Search form
         <div class="md-form active-pink active-pink-2 mb-3 mt-0">
@@ -49,40 +51,50 @@
         <div class="md-form active-pink active-pink-2 mb-3 mt-0">
             <input class="form-control" type="text" placeholder="חיפוש לפי רכיב" aria-label="Search">
         </div>
-    </div>    
+    </div>
     <div class="col-lg-6">
-            <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio" checked>כולם
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio">לפחות אחד
-                    </label>
-                </div>        
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio" checked>כולם
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">לפחות אחד
+            </label>
+        </div>
     </div>
 </div>
 <!-- free search END -->
-<div class="card-deck">
+<div class="displ" ng-show="recipes.length == 0">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h3 class="text-center">{{isUserRecipePage ? "עדיין לא הוספת מתכונים" : "לא נמצאו מתכונים להצגה"}}</h3>
+        </div>
+    </div>
+</div>
+<div class="card-deck" ng-show="recipes.length > 0">
     <div class="row flex-grow-1">
 
         <div class="col-xl-3 col-md-4 col-sm-6 my-2" ng-repeat="recipe in recipes | orderBy: byPropName : true">
             <!--Move to a directive?-->
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->
-                <img class="card-img-top" ng-src="{{recipe.recipeImg ? recipe.recipeImg : placeHolderImg }}" alt="{{recipe.recipeName}}">
+                <img class="card-img-top" ng-src="{{recipe.recipeImg ? recipe.recipeImg : placeHolderImg }}"
+                    alt="{{recipe.recipeName}}">
                 <div class="card-body text-center">
                     <h5 class="card-title font-italic">
                         <a href="#!/view-recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
-                        <div>{{recipe.createdAt |  date:'d/M/yy'}}</div><div>צפיות: {{recipe.views}}</div>
-<!-- <div>{{ownerId}} {{recipe.owner.id}}</div> -->
+                        <div>{{recipe.createdAt |  date:'d/M/yy'}}</div>
+                        <div>צפיות: {{recipe.views}}</div>
+                        <!-- <div>{{ownerId}} {{recipe.owner.id}}</div> -->
                     </h5>
                     <!-- <a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary" ng-show="{{isUserRecipePage}}">עריכה</a> -->
-                    
+
 
                 </div>
-                <div class="card-footer text-center" ng-show="{{ownerId === recipe.owner.id}}"><a href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary">עריכה</a></div>
+                <div class="card-footer text-center" ng-show="{{ownerId === recipe.owner.id}}"><a
+                        href="#!/edit-recipe/{{recipe.id}}" class="btn btn-primary">עריכה</a></div>
             </div>
             <!--Move to a directive?-->
         </div>
