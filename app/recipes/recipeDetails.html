@@ -1,11 +1,53 @@
 <h1>{{recipe.recipeName}}</h1>
 <div class="row">
-    <div style="float:right" class="font-weight-bold">מקור:&nbsp;</div><div style="float:right">
-        <a href="{{recipe.sourceUrl}}" target="_blank">{{recipe.source}}</a>
+        <div class="col-5">
+                <img class="card-img-top" ng-src="{{recipe.recipeImg ? recipe.recipeImg : placeHolderImg }}"
+                    alt="{{recipe.recipeName}}">
+            </div>
+    <div class="col-7">
+        <div class="row">
+            <div style="float:right" class="font-weight-bold">מקור:&nbsp;</div>
+            <div style="float:right">
+                <a href="{{recipe.sourceUrl}}" target="_blank">{{recipe.source}}</a>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
     </div>
+
+</div>
+<div class="container mt-5">
+<div class="row">
+    <h3>רכיבים</h3>
 </div>
 <div class="row">
-    <div style="float:right" class="font-weight-bold">מקור:&nbsp;</div><div style="float:right">
-        <a href="{{recipe.sourceUrl}}" target="_blank">{{recipe.source}}</a>
-    </div>
+    <ul class="list-group list-group-flush">
+        <li  ng-repeat="an_ingredient in recipe.ingredients" ng-class-odd="'striped'" 
+            class="list-group-item">
+            <div class="row">
+                <div class="col-sm-2 text-nowrap">{{an_ingredient.quantity}}</div>
+                <div class="col-sm-2">{{units[an_ingredient.unit].name}}</div>
+                <div class="col-sm-4">{{an_ingredient.ingredient}}</div>
+                <div class="col-sm-4">{{an_ingredient.ingredientComm}}</div>            
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+<div class="container mt-2">
+<div class="row">
+    <h3>הוראות הכנה</h3>
+</div>
+<div class="row">
+    <ul class="list-group list-group-flush">
+        <li ng-repeat="instruction in recipe.instructions" ng-class-odd="'striped'" 
+            class="list-group-item">
+            <div class="row">
+            <div class="col-sm-1">{{instruction.seq}}</div>
+            <div class="col-sm-11">{{instruction.instruction}}</div>
+            </div>
+        </li>
+    </ul>
+</div>
 </div>

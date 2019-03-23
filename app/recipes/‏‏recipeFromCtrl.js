@@ -83,12 +83,17 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, $anc
     newSIngredientObj["ingredientComm"] = $scope.ingredientComm;
     // console.log(newSIngredientObj);
     $scope.recipe.ingredients.push(newSIngredientObj);
+
+    // reset input fields
     $scope.quantity = "";
     $scope.unit = $scope.units[0][""];
     $scope.ingredient = ""; // TODO: clear value according to field type (select list?)
     $scope.ingredientOpt = $scope.ingredientsList[0][""]; // TODO: clear value according to field type (select list?)
     $scope.ingredientComm = "";
     $scope.ingredientExists = true;
+    // set focus for next ingredient
+    document.getElementById("quantity").focus();
+    
   }
 
   $scope.saveStepLocally = function () {
