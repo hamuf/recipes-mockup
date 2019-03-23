@@ -88,22 +88,8 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
         });
 
     }
-
-    // $scope.repeatPassErr = $scope.accountForm.newpwd.$modelValue === $scope.accountForm.newpwd2.$modelValue ? "הסיסמאות לא זהות" : "";
-    // $scope.repeatPassErr = (($scope.newpwd2 === $scope.user.newpwd) && !$scope.isEditProfile) ? "הסיסמאות לא זהות" : "";
-
     function isValid() {
-        // console.log("nickname invalid="+$scope.accountForm.nickname.$invalid);
-        // console.log("pwd2 invalid="+$scope.accountForm.newpwd2.$invalid);
-        if ($scope.newpwd2 == "") {
-            $scope.repeatPassErr = "שדה חובה";
-            $scope.accountForm.newpwd2.$invalid = false;
-        } else if ($scope.newpwd2 != $scope.newpwd) {
-            $scope.repeatPassErr = "הסיסמאות לא זהות";
-            $scope.accountForm.newpwd2.$invalid = false;
-        }
-
-
+        return true;
     }
 
     $scope.closeWin = function () {
