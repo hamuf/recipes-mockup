@@ -3,7 +3,7 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
 
   // recipes list
   $scope.recipes = [];
-  $scope.results = []; // will solve duplicate recipes bug?
+  $scope.results = []; // will solve duplicate recipes bug? It didn't
   $scope.ownerId = "";
   $scope.placeHolderImg = utilitySrv.PLACEHORDER_IMG;
 
@@ -20,7 +20,7 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
 
 
   // fetch existing pre defined recipes from the model
-  recipesSrv.getRecipeList($scope.isUserRecipePage).then(function (recipes) {
+  recipesSrv.getRecipeList($scope.isUserRecipePage).then(function(recipes) {
     $scope.recipes = recipes;
     // console.log($scope.ingredientsList);
   }, function (err) {
@@ -31,7 +31,7 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
     $scope.results = [];
     // loop over recipes and find the ones that match the searchText
     for (let i=0; i< $scope.recipes.length;i++) {
-      console.log($scope.recipes[i].id); // debug duplicate recipes bug
+      // console.log($scope.recipes[i].id); // debug duplicate recipes bug
       if ($scope.recipes[i].recipeName.indexOf($scope.searchText) >= 0)
         $scope.results.push($scope.recipes[i]);
     }
