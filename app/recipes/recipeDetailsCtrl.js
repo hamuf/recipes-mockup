@@ -18,7 +18,7 @@ app.controller("recipeDetailsCtrl", function ($scope, $location, $routeParams, r
       $location.path("/");
     })
 
-    console.log($scope.recipe);
+    // console.log($scope.recipe);
   }
 
 });
