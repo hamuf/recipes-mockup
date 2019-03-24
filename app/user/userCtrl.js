@@ -76,11 +76,11 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
         } else {
             console.log($scope.email + " logged out");
             userSrv.logout();
-            $scope.activeUser = null;
+            $scope.activeUser = userSrv.getActiveUser();
             $scope.connected = disconnected;
             $scope.email = "";
             $scope.pwd = "";
-            $location.path("/");
+            window.location.reload();
             // setElementVisibility("err","hidden"); // hide previous errors        
         }
     }
