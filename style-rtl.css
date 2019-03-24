@@ -12,6 +12,10 @@ h1, h2, h3, h4, .h4, h5, .h5 {
     text-align: right;
 }
 
+.dir-ltr {
+    direction: ltr;
+}
+
 .form-check {
     /* text-align: left; */
     text-align: right;
