@@ -25,10 +25,10 @@
         <ul class="navbar-nav">
 
             <li class="nav-item" ng-show="connected" ng-model="connected">
-                <a class="nav-link" href="javascript:void(0)" ng-click="toggleLogin(false)">התנתקות</a>
+                <a class="nav-link" href="javascript:void(0)" ng-click="logout()">התנתקות</a>
             </li>
             <li class="nav-item" ng-show="!connected" id="loginLink">
-                <a class="nav-link" ng-click="toggleLogin(true)" data-toggle="collapse" href="javascript:void(0)" role="button" 
+                <a class="nav-link" ng-click="showLoginWin()" data-toggle="collapse" href="javascript:void(0)" role="button" 
                     aria-expanded="false" aria-controls="collapseExample">התחברות</a>
                 <!-- <a class="nav-link" href="javascript:void(0)" ng-click="openLoginWin(true)">התחברות</a> -->
             </li>

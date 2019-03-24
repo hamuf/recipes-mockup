@@ -5,7 +5,6 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
 
     $scope.invalidLogin = false;
     $scope.connected = false;
-    $scope.activeUser = userSrv.getActiveUser();
 
     // TODO: remove
     // TEMP for easy login on development phase
@@ -17,17 +16,19 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
 
     $scope.signupMsg = "לפני שליחת הטופס יש למלא בצורה תקינה את השדות";
     $scope.initForm = function () {
-        if ($scope.isEditProfile) {
-            $scope.user = {};
-            $scope.user.nickname = $scope.activeUser.username;
-            $scope.user.newemail = $scope.activeUser.email;
-            $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.activeUser.dietTypes);
+        $scope.user = {};
+        $scope.user.nickname = $scope.activeUser.username;
+        $scope.user.newemail = $scope.activeUser.email;
+        $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.activeUser.dietTypes);
             // TODO: if user exsists show **** but save only if password was modified
             // solution? I comapare to second password any way, so I can leave it like this
             $scope.user.newpwd = "12345678";
-        }
     }
-    $scope.initForm();
+
+    // initiates (fills the fields) of teh profile page
+    if ($scope.isEditProfile) {
+        $scope.initForm();
+    }
 
     // Called on submit of signup form
     $scope.addUser = function () {
@@ -42,6 +43,7 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
         }, function (error) {
             console.log(error);
             $scope.accountForm.$invalid = true;
+            // TODO: Move error code logic to userSrv
             $scope.signupMsg = "ההרשמה נכשלה - ";
             if (error.code === 203) { // Account already exists for this email address.
                 $scope.signupMsg += "משתמש עם כתובת המייל כבר קיים במערכת";
@@ -57,7 +59,7 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
     // Called on submit of signup form
     $scope.updateUser = function () {
         $scope.user.dietTypes = utilitySrv.setTypeListForDB($scope.dietTypes);
-        // console.log($scope.user);
+         // console.log($scope.user);
 
         userSrv.updateUser($scope.user).then(function (aUser) {
             // console.log(aUser);
@@ -68,20 +70,24 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
         });
     }
 
-    // handle actions when login/logout menu linked are activated
-    $scope.toggleLogin = function (disconnected) {
-        if (disconnected) {
-            $('#loginWin').collapse('show');
-            document.getElementById("email").focus();
-        } else {
-            console.log($scope.email + " logged out");
-            userSrv.logout();
-            $scope.activeUser = userSrv.getActiveUser();
-            $scope.connected = disconnected;
-            $scope.email = "";
-            $scope.pwd = "";
+    //  show login form when clicking login menu item
+    $scope.showLoginWin = function () {
+        $('#loginWin').collapse('show');
+        document.getElementById("email").focus();
+    }
+
+    //  clear active user whenclicking the disconnect menu item
+    $scope.logout = function() {
+        console.log($scope.email + " logged out");
+        userSrv.logout();
+        $scope.activeUser = null;
+        $scope.connected = false;
+        $scope.email = "";
+        $scope.pwd = "";
+        if ($location.url() === "/") {
             window.location.reload();
-            // setElementVisibility("err","hidden"); // hide previous errors        
+        } else {
+            $location.path("/");
         }
     }
 

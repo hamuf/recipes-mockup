@@ -9,9 +9,8 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
 
   $scope.isUserRecipePage = ($location.url().indexOf("my-recipes") > 0 && $scope.activeUser !== null);
   // navigate to public recipes page, if no active user
-  if (!userSrv.getActiveUser()) {
-    $location.path("/");
-  } else {
+  // if ($scope.isUserRecipePage) {
+  if ($scope.activeUser) {
     $scope.ownerId = $scope.activeUser.id;
     console.log($scope.ownerId);
   }
