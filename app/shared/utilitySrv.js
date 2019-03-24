@@ -51,8 +51,7 @@ app.factory("utilitySrv", function ($http, $q, $log) {
     }
 
     // CONSTANTS
-    // const PLACEHORDER_IMG = "../assets/imgs/recipe-imge-ph.jpg";
-    const PLACEHORDER_IMG = "https://hamuf.github.io/recipes-mockup/assets/imgs/recipe-imge-ph.jpg"; // TEMP !!!
+    const PLACEHORDER_IMG = "assets/imgs/recipe-imge-ph.jpg";
     const RECIPE = "recipe";
     const INSTRUCTION = "instruction";
     const INGREDIENT = "ingredient";
