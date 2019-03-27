@@ -20,9 +20,20 @@
     </div>
 </div>
 <!-- sort by  END -->
+<!-- Filter by profile preferences START-->
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <h2>המתכונים סוננו לפי הגדרות הפרופיל:</h2>
+    </div>
+    <div class="col-lg-3 col-6">
+    <div class="form-group">
+        <checkbox-list></checkbox-list>
+    </div>
+    </div>
+</div>
+<!-- Filter by profile preferences END -->
 <!-- free search -->
 <div class="row">
-    <!-- <form class="search-box"> -->
     <div class="col-lg-6">
         <!-- Search form -->
         <div class="md-form active-pink active-pink-2 mb-3 mt-0">
@@ -34,15 +45,6 @@
                 ng-repeat="recipe in results | limitTo : 10">{{recipe.recipeName}}</a>
         </div>
     </div>
-
-
-    <!-- </form>     -->
-    <!-- <div class="col-lg-6">
-        Search form
-        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
-            <input class="form-control" type="text" placeholder="חיפוש מתכון" aria-label="Search">
-        </div>
-    </div>    -->
     <div class="col-lg-6"></div>
 </div>
 <div class="row">

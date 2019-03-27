@@ -1,5 +1,6 @@
 app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, utilitySrv) {
 
+    $scope.activeUser = userSrv.getActiveUser();
     $scope.dietTypeList = recipesSrv.dietTypeList;
     $scope.dietTypes = [];
 
@@ -12,7 +13,7 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
     $scope.pwd = "myRecipes19";
 
     // is there is a logged-in user and the referrer was my profile menu item
-    $scope.isEditProfile = ($location.url().indexOf("my-profile") > 0 && $scope.activeUser !== null);
+    $scope.isEditProfile = $scope.activeUser && $location.url().indexOf("my-profile") > 0;
 
     $scope.signupMsg = "לפני שליחת הטופס יש למלא בצורה תקינה את השדות";
     $scope.initForm = function () {

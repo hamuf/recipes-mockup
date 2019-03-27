@@ -13,6 +13,8 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
   if ($scope.activeUser) {
     $scope.ownerId = $scope.activeUser.id;
     console.log($scope.ownerId);
+    $scope.dietTypeList = recipesSrv.dietTypeList;
+    $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.activeUser.dietTypes);
   }
   
   $scope.byPropName = "views";
