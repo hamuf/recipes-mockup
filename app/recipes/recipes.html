@@ -48,9 +48,9 @@
     </div>
     <div class="col-lg-6"></div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-6">
-        <!-- Search form -->
+        Search form
         <div class="md-form active-pink active-pink-2 mb-3 mt-0">
             <input class="form-control" type="text" placeholder="חיפוש לפי רכיב" aria-label="Search">
         </div>
@@ -67,7 +67,7 @@
             </label>
         </div>
     </div>
-</div>
+</div> -->
 <!-- free search END -->
 <div class="displ" ng-show="recipes.length == 0">
     <div class="jumbotron jumbotron-fluid">
@@ -79,7 +79,8 @@
 <div class="card-deck" ng-show="recipes.length > 0">
     <div class="row flex-grow-1">
 
-        <div class="col-xl-3 col-md-4 col-sm-6 my-2" ng-repeat="recipe in recipes | orderBy: byPropName : true">
+        <div class="col-xl-3 col-md-4 col-sm-6 my-2" ng-model="dietTypes"
+            ng-repeat="recipe in recipes | filter: filterByDiet | orderBy: byPropName : true">
             <!--Move to a directive?-->
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->

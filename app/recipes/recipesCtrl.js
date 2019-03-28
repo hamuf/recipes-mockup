@@ -40,41 +40,18 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
   }
 
   // loop over the recipe ingredient. Show recipe only if all it has all the user's dietTyeps
-  $scope.isEmptyList = true;
-  $scope.filterByDiet = function(recipe) {
-    var isShowRecipe = false;
-    $scope.isEmptyList = true;  
+  $scope.filterByDiet = function (recipe) {
+    var isShowRecipe = true;
+    if (!$scope.isUserRecipePage && $scope.activeUser && $scope.activeUser.dietTypes) {
+      // loop over active user diet types 
+      Object.keys($scope.dietTypes).forEach(function (key, index) {
 
-    if (!$scope.isUserRecipePage && userSrv.getActiveUser() && $scope.activeUser.dietTypes) {
-      console.log(recipe.dietTypes);
-      console.log($scope.activeUser.dietTypes);  
-
-      if (recipe.dietTypes) {
-        // for each user diet type
-        // userSrv.getActiveUser().dietTypes.forEach(function (dietId) {
-        //   // recipe does not support user diet restriction
-        //   if (recipe.dietTypes.indexOf(dietId) < 0) {
-        //     isShowRecipe = false;
-        //     console.log(recipe.recipeName+' diet type not included=' + dietId);
-        //   }
-        // });
-        for (let index = 0; index < $scope.activeUser.dietTypes.length; index++) {
-          const element = $scope.activeUser.dietTypes[index];
-          if (recipe.dietTypes.indexOf(element) < 0) {
-                isShowRecipe = false;
-                console.log(recipe.recipeName+' diet type not included=' + element);
-              }          
-        }
-      } else {
-        // user has diet restrictions but recipe does not support them
-        isShowRecipe = false;
-      }
-    } else {
-      // no active user OR no diet types in user profile => show all public recipes      
-      isShowRecipe = true;
-      $scope.isEmptyList = false;
+        if ($scope.dietTypes[key] && recipe.dietTypes.indexOf(key) < 0) {
+          isShowRecipe = false;
+          console.log(recipe.recipeName+' diet type not included=' + key);
+        }        
+      });
     }
-
     return isShowRecipe;
   }
 
