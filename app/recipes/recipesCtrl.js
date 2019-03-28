@@ -7,7 +7,7 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
   $scope.ownerId = "";
   $scope.placeHolderImg = utilitySrv.PLACEHORDER_IMG;
 
-  $scope.isUserRecipePage = ($location.url().indexOf("my-recipes") > 0 && $scope.activeUser !== null);
+  $scope.isUserRecipePage = ($location.url().indexOf("my-recipes") > 0 && $scope.activeUser);
   // navigate to public recipes page, if no active user
   // if ($scope.isUserRecipePage) {
   if ($scope.activeUser) {
@@ -76,6 +76,10 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
     }
 
     return isShowRecipe;
+  }
+
+  $scope.isShowDiet = function(dietTypeVal) {
+    return dietTypeVal === true;
   }
 
 });

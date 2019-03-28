@@ -31,7 +31,7 @@
         <!-- validation pwd is equal to pwd2 -->
         <label for="newpwd" class="col-md-2">סיסמה</label>
         <input type="password" class="col-md-5 form-control" name="newpwd" ng-model="user.newpwd" ng-minlength="8"
-            required>
+            ng-required="!isEditProfile" ng-disabled="isEditProfile">
         <div class="col-md-5" ng-show="accountForm.newpwd.$touched && accountForm.newpwd.$invalid">
             <div class="form-control alert alert-danger" role="alert">
                     סיסמה לא תקינה
@@ -44,10 +44,10 @@
                 גדולה (באנגלית). ולא פחות מ-8 תווים </small>
         </div>
     </div>
-    <div class="form-group form-row">
+    <div class="form-group form-row" ng-show="!isEditProfile">
         <label for="newpwd2" class="col-md-2">אימות סיסמה</label>
         <input type="password" class="form-control col-md-5" name="newpwd2" ng-model="newpwd2"
-        compare-to="user.newpwd" ng-required="!isEditProfile">
+        compare-to="isEditProfile ? newpwd2 : user.newpwd" ng-required="!isEditProfile">
         <div class="col-md-5" ng-show="accountForm.newpwd2.$touched && accountForm.newpwd2.$invalid">
                 <div class="form-control alert alert-danger" role="alert">
                        הססמאות לא תואמות

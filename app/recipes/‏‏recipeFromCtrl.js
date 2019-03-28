@@ -275,4 +275,10 @@ function prepareRecipeObjForDB() {
   // $scope.recipe.dishTypeArr.push($scope.recipe.dishTypes);
 }
 
+// show all diet types
+$scope.isShowDiet = function(dietTypeVal) {
+  return true;
+}
+
+
 });

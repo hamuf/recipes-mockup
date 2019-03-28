@@ -39,6 +39,7 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
         userSrv.signup($scope.user).then(function (newUser) {
             console.log(newUser);
             $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.user.dietTypes); // TODO: still required?
+            // Disables submit button (to prevent an additional submit)
             $scope.accountForm.$invalid = true;
             $scope.signupMsg = "תודה שנרשמת!";
         }, function (error) {
@@ -62,10 +63,13 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
         $scope.user.dietTypes = utilitySrv.setTypeListForDB($scope.dietTypes);
          // console.log($scope.user);
 
-        userSrv.updateUser($scope.user).then(function (aUser) {
+        userSrv.updateUser($scope.user).then(function (updatedUSer) {
             // console.log(aUser);
-            // $scope.user = aUser;
-            $scope.dietTypes = utilitySrv.setTypeListFromDB(aUser.dietTypes);
+            $scope.activeUser = updatedUSer;
+            // $scope.dietTypes = utilitySrv.setTypeListFromDB(aUser.dietTypes);
+            $scope.initForm();
+            $scope.accountForm.$invalid = true;
+            $scope.signupMsg = "העדכון הסתיים בהצלחה";
         }, function (error) {
             console.log(error);
         });
@@ -113,6 +117,11 @@ app.controller("userCtrl", function ($scope, $location, userSrv, recipesSrv, uti
     $scope.closeWin = function () {
         setElementVisibility("err", "hidden"); // hide previous errors
         $('#loginWin').collapse('hide');
+    }
+
+    // show all diet types
+    $scope.isShowDiet = function(dietTypeVal) {
+        return true;
     }
 
     /**

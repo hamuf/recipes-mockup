@@ -65,8 +65,13 @@ app.factory("userSrv", function ($http, $q, $log) {
             // Saves the user with the updated data
             user.save().then((response) => {
                 console.log('Updated user', response);
-                console.log('user', aUser);
-                async.resolve(aUser);
+                // When I trie to use the User() constructor I recieved an error
+                // activeUser = new User(user);
+                activeUser.username = response.get("username");
+                activeUser.email = response.get("email");
+                activeUser.password = response.get("password");
+                activeUser.dietTypes = response.get("diettypes");
+                async.resolve(activeUser);
             }).catch((error) => {
                 // if (typeof document !== 'undefined') document.write(`Error while updating user: ${JSON.stringify(error)}`);
                 console.error('Error while updating user', error);

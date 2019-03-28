@@ -1,6 +1,7 @@
+<!-- Don't forget to define isShowDiet() in the controler -->
 <div class="form-check">
     <div class="form-row container">
-        <div class="col-lg-3 col-md-4 col-6" ng-repeat="(idx, diet) in dietTypeList">
+        <div class="col-lg-3 col-md-4 col-6" ng-repeat="(idx, diet) in dietTypeList" ng-show="isShowDiet(dietTypes[idx])">
             <input class="form-check-input" type="checkbox" value="" id="{{'diet'+idx}}" ng-model="dietTypes[idx]">
             <label class="form-check-label" for="{{'diet'+idx}}">{{diet[idx]}}
             </label>
