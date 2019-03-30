@@ -151,7 +151,7 @@ app.factory("recipesSrv", function ($q) {
         async.resolve(ingredientsList);
       }, function (err) {
         console.log(err);
-        async.reject(error);
+        async.reject(err);
       })
     }
     return async.promise;
