@@ -126,7 +126,7 @@ app.factory("recipesSrv", function ($q) {
       async.resolve(recipes);
     }, function (err) {
       console.log(err);
-      async.reject(error);
+      async.reject(err);
     })    
     
     return async.promise;
