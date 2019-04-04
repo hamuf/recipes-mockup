@@ -48,11 +48,15 @@
     </div>
     <div class="col-lg-6"></div>
 </div>
-<!-- <div class="row">
+<div class="row">
     <div class="col-lg-6">
-        Search form
+        <!-- Search form -->
         <div class="md-form active-pink active-pink-2 mb-3 mt-0">
-            <input class="form-control" type="text" placeholder="חיפוש לפי רכיב" aria-label="Search">
+            <input type="text" class="form-control" placeholder="חיפוש לפי רכיב" ng-model="searchIng" aria-label="Search"
+                ng-change="findIngredients()">
+        </div>
+        <div class="search-results list-group">
+            <div ng-click="displaySelected(ingredient)" ng-repeat="ingredient in ingredients | limitTo : 10">{{ingredient.name}}</div>
         </div>
     </div>
     <div class="col-lg-6">
@@ -67,7 +71,28 @@
             </label>
         </div>
     </div>
-</div> -->
+</div>
+<div class="row">
+    <div class="col-lg-12 my-2">
+        <!-- Search form -->
+        <!-- <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+            //<input class="form-control" type="text" placeholder="חיפוש לפי רכיב" aria-label="Search">
+            <select  class="form-control" name="repeatSelect"
+            ng-model="ingredientOpt" ng-change="displaySelected()"
+            ng-options="option.id as option.name group by option.type for option in ingredientsList">
+            <option value="">-- בחר אחד --</option>
+            </select>
+        </div> -->
+        <span ng-repeat="selIng in selectedIngredients" 
+            class="alert alert-success alert-dismissible fade show mx-1">
+            {{selIng.name}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </span>
+    </div>
+    <!-- <div class="col-lg-6">
+
+    </div> -->
+</div>
 <!-- free search END -->
 <div class="displ" ng-show="recipes.length == 0">
     <div class="jumbotron jumbotron-fluid">

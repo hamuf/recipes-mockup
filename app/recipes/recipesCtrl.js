@@ -1,4 +1,4 @@
-app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, utilitySrv) {
+app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, userSrv, utilitySrv) {
 
   $scope.activeUser = userSrv.getActiveUser();
   // recipes list
@@ -15,6 +15,8 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
     console.log($scope.ownerId);
     $scope.dietTypeList = recipesSrv.dietTypeList;
     $scope.dietTypes = utilitySrv.setTypeListFromDB($scope.activeUser.dietTypes);
+  } else {
+    $window.localStorage.clear(); // will solve Invalid session token error (on anonymus user)?
   }
   
   $scope.byPropName = "views";
@@ -23,6 +25,9 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
   // fetch existing pre defined recipes from the model
   recipesSrv.getRecipeList($scope.isUserRecipePage).then(function(savedRecipes) {
     $scope.recipes = savedRecipes;
+    $scope.ingredientsList = recipesSrv.getIngredientsFromRecipe(savedRecipes);
+    // sort array by ingredient name
+    utilitySrv.sortArrayByStrKey($scope.ingredientsList);
     // console.log($scope.ingredientsList);
   }, function (err) {
     console.log(err);
@@ -35,6 +40,17 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
       // console.log($scope.recipes[i].id); // debug duplicate recipes bug
       if ($scope.recipes[i].recipeName.indexOf($scope.searchText) >= 0)
         $scope.results.push($scope.recipes[i]);
+    }
+
+  }
+
+  $scope.findIngredients = function () {
+    $scope.ingredients = [];
+    // loop over recipes and find the ones that match the searchText
+    for (let i=0; i< $scope.ingredientsList.length;i++) {
+      // console.log($scope.recipes[i].id); // debug duplicate recipes bug
+      if ($scope.ingredientsList[i].name.indexOf($scope.searchIng) >= 0)
+        $scope.ingredients.push($scope.ingredientsList[i]);
     }
 
   }
@@ -57,6 +73,25 @@ app.controller("recipesCtrl", function ($scope, $location, recipesSrv, userSrv, 
 
   $scope.isShowDiet = function(dietTypeVal) {
     return dietTypeVal === true;
+  }  
+
+  // for multiple select
+  // function myFunc(item) {
+  //     var ing = $scope.ingredientsList.find( ing => ing.id === item);
+  //     console.log(ing.name);  
+  //   }      
+
+  // $scope.displaySelected = function() {
+  //   $scope.ingredientOpt.forEach(myFunc);
+  // }
+
+  // for single selection
+    $scope.selectedIngredients = [];
+    $scope.displaySelected = function(selectedIng) {
+      $scope.selectedIngredients.push(selectedIng);
+      $scope.searchIng = "";
+      $scope.ingredients = [];
+      // var ing = $scope.ingredientsList.find( ing => ing.id === $scope.ingredientOpt);
   }
 
 });

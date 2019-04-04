@@ -33,3 +33,13 @@ h1, h2, h3, h4, .h4, h5, .h5 {
 .align-left {
     text-align: left;
 }
+
+/* bs4 alerts */
+.alert-dismissible {
+    padding-left: 3rem;
+}
+
+.alert-dismissible .close {
+    right: initial;
+    left: 0;
+}

@@ -339,6 +339,7 @@ app.factory("recipesSrv", function ($q) {
     dietTypeList: dietTypeList,
     dishTypeList: dishTypeList,
     getIngredients: getIngredients,
+    getIngredientsFromRecipe: getIngredientsFromRecipe,
     ingredientExists: ingredientExists,
     units: units,
     createRecipe: createRecipe,
