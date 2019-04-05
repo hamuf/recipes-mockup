@@ -69,6 +69,19 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
         }        
       });
     }
+
+    // add boolean - at least one or all
+    var countIng = 0;
+    if ($scope.selectedIngredients.length > 0) {
+      if (recipe.ingredients) {
+        for (var i = 0; i < recipe.ingredients.length; i++) {
+          if ($scope.selectedIngredients.find( ing => ing.name === recipe.ingredients[i].ingredient)) {
+            countIng++;
+          }
+        }         
+      }
+      isShowRecipe = countIng > 0;
+    }
     return isShowRecipe;
   }
 
