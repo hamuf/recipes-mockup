@@ -49,10 +49,11 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
     // loop over recipes and find the ones that match the searchText
     for (let i=0; i< $scope.ingredientsList.length;i++) {
       // console.log($scope.recipes[i].id); // debug duplicate recipes bug
-      if ($scope.ingredientsList[i].name.indexOf($scope.searchIng) >= 0)
+      if ($scope.ingredientsList[i].name.indexOf($scope.searchIng) >= 0 
+          && !$scope.selectedIngredients.includes($scope.ingredientsList[i])) {
         $scope.ingredients.push($scope.ingredientsList[i]);
+      }
     }
-
   }
 
   // loop over the recipe ingredient. Show recipe only if all it has all the user's dietTyeps
@@ -75,23 +76,22 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
     return dietTypeVal === true;
   }  
 
-  // for multiple select
-  // function myFunc(item) {
-  //     var ing = $scope.ingredientsList.find( ing => ing.id === item);
-  //     console.log(ing.name);  
-  //   }      
+  $scope.removeFromSelected = function(ing) {
+    // renove the ingredient from the selected ingredients list
+    $scope.selectedIngredients.splice($scope.selectedIngredients.indexOf(ing), 1);
 
-  // $scope.displaySelected = function() {
-  //   $scope.ingredientOpt.forEach(myFunc);
-  // }
+    // clear serach list
+    $scope.searchIng = "";
+    $scope.ingredients = [];    
+  }
 
   // for single selection
-    $scope.selectedIngredients = [];
-    $scope.displaySelected = function(selectedIng) {
-      $scope.selectedIngredients.push(selectedIng);
-      $scope.searchIng = "";
-      $scope.ingredients = [];
-      // var ing = $scope.ingredientsList.find( ing => ing.id === $scope.ingredientOpt);
+  $scope.selectedIngredients = [];
+  $scope.displaySelected = function(selectedIng) {
+    $scope.selectedIngredients.push(selectedIng);
+    $scope.searchIng = "";
+    $scope.ingredients = [];
+    // var ing = $scope.ingredientsList.find( ing => ing.id === $scope.ingredientOpt);
   }
 
 });

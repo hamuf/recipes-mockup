@@ -33,13 +33,28 @@ h1, h2, h3, h4, .h4, h5, .h5 {
 .align-left {
     text-align: left;
 }
-
+/**
+** Selected Ingredients on recipes list
+**/
 /* bs4 alerts */
 .alert-dismissible {
     padding-left: 3rem;
+    padding-right: 1rem;
 }
 
 .alert-dismissible .close {
     right: initial;
     left: 0;
 }
+
+.list-inline {
+    padding-right: 0;
+    padding-left: initial;
+}
+
+.list-inline-item:not(:last-child) {
+    margin-right: initial;
+}
+/**
+** Selected Ingredients on recipes list END
+**/
