@@ -20,8 +20,7 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
   }
   
   $scope.byPropName = "views";
-
-
+  $scope.isAll = false;
   // fetch existing pre defined recipes from the model
   recipesSrv.getRecipeList($scope.isUserRecipePage).then(function(savedRecipes) {
     $scope.recipes = savedRecipes;
@@ -56,13 +55,13 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
     }
   }
 
-  // loop over the recipe ingredient. Show recipe only if all it has all the user's dietTyeps
-  $scope.filterByDiet = function (recipe) {
+  $scope.filterRecipes = function (recipe) {
     var isShowRecipe = true;
+
+    // filter by diet by active user diet restrictions (for logged-in user)
     if (!$scope.isUserRecipePage && $scope.activeUser && $scope.activeUser.dietTypes) {
       // loop over active user diet types 
       Object.keys($scope.dietTypes).forEach(function (key, index) {
-
         if ($scope.dietTypes[key] && recipe.dietTypes.indexOf(key) < 0) {
           isShowRecipe = false;
           console.log(recipe.recipeName+' diet type not included=' + key);
@@ -70,9 +69,10 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
       });
     }
 
-    // add boolean - at least one or all
-    var countIng = 0;
-    if ($scope.selectedIngredients.length > 0) {
+    // if recipe fits dietary restrictions, filter by selected ingredients
+    if (isShowRecipe && $scope.selectedIngredients.length > 0) {      
+      var countIng = 0; // # of selected ingredients in current recipe
+      
       if (recipe.ingredients) {
         for (var i = 0; i < recipe.ingredients.length; i++) {
           if ($scope.selectedIngredients.find( ing => ing.name === recipe.ingredients[i].ingredient)) {
@@ -80,7 +80,13 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
           }
         }         
       }
-      isShowRecipe = countIng > 0;
+      // if none of the selected ingredients was found in the recipe OR
+      // search if by "all selected" ingredients AND count is less than the selected ingredients number
+      // then don't show current recipe
+      if (countIng == 0 || ($scope.isAll && countIng < $scope.selectedIngredients.length)) {
+        isShowRecipe = false
+      }
+      // console.log(recipe.recipeName+": isAll="+$scope.isAll+", selected in recipe="+countIng+", selected="+$scope.selectedIngredients.length);
     }
     return isShowRecipe;
   }
@@ -92,7 +98,6 @@ app.controller("recipesCtrl", function ($scope, $location, $window, recipesSrv, 
   $scope.removeFromSelected = function(ing) {
     // renove the ingredient from the selected ingredients list
     $scope.selectedIngredients.splice($scope.selectedIngredients.indexOf(ing), 1);
-
     // clear serach list
     $scope.searchIng = "";
     $scope.ingredients = [];    

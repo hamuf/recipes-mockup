@@ -60,7 +60,7 @@ app.controller("recipeFormCtrl", function ($scope, $location, $routeParams, $anc
   // if the user selected the 'add ingrediet' option, we show an input field, 
   // else we set the selected value to the recipe ingredients list.
   $scope.addMissingIngredient = function() {
-    console.log($scope.ingredientOpt);
+    // console.log($scope.ingredientOpt);
     // ingredient does not exist yet
     if ($scope.ingredientOpt < 0) {
       // display input field for new ingredient

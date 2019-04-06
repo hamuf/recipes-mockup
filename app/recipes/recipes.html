@@ -62,12 +62,12 @@
     <div class="col-lg-6">
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio" checked>כולם
+                <input type="radio" class="form-check-input" name="multipleIng" ng-model="isAll" ng-value="true">כולם
             </label>
         </div>
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio">לפחות אחד
+                <input type="radio" class="form-check-input" name="multipleIng" ng-model="isAll" ng-value="false">לפחות אחד
             </label>
         </div>
     </div>
@@ -107,7 +107,7 @@
     <div class="row flex-grow-1">
 
         <div class="col-xl-3 col-md-4 col-sm-6 my-2" ng-model="dietTypes"
-            ng-repeat="recipe in recipes | filter: filterByDiet | orderBy: byPropName : true">
+            ng-repeat="recipe in recipes | filter: filterRecipes | orderBy: byPropName : true">
             <!--Move to a directive?-->
             <div class="card h-100">
                 <!-- make cards the same height as the tallest -->
