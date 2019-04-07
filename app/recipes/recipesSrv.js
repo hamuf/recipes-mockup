@@ -58,23 +58,18 @@ app.factory("recipesSrv", function ($q) {
     { id:"8", name: "יחידה" }, // for eggs, apples, atc. TODO: find a better name
     { id:"9", name: "יחידות" }, // for eggs, apples, atc.
     { id:"10", name: "קורט" }, 
-    { id:"10", name: "אריזה" }, 
-    { id:"10", name: "אריזות" },
-    { id:"10", name: "גביע" },
-    { id:"10", name: "גביעים" }
+    { id:"11", name: "אריזה" }, 
+    { id:"12", name: "אריזות" },
+    { id:"13", name: "גביע" },
+    { id:"14", name: "גביעים" },
+    { id:"15", name: "קילו" }
   ];
-  // var units = [
-  //   { "0": "גרם" },
-  //   { "1": "מיליליטר" }, //TODO: one working - change to מ"ל
-  //   { "2": "כפית" },
-  //   { "3": "כפיות" },
-  //   { "4": "כף" },
-  //   { "5": "כפות" },
-  //   { "6": "כוס" },
-  //   { "7": "כוסות" },
-  //   { "8": "יחידה" }, // for eggs, apples, atc. TODO: find a better name
-  //   { "9": "יחידות" }, // for eggs, apples, atc.
-  // ];
+
+  var sourceTypes = [
+    {id: 1, name: "curr_user"},
+    {id: 2, name: "internet"},
+    {id: 3, name: "other_user"}
+  ];
 
   // This array of recipes is used for displaying a single recipe (edit/view)
   var recipes = [];
@@ -168,7 +163,8 @@ app.factory("recipesSrv", function ($q) {
         for (var i = 0; i < recipeIngredients.length; i++) {
           // console.log(recipeIngredients[i].ingredient);
           // var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient, "type": "מהרשימה:" };
-          var an_ingredient = { "id": listIdx++, "name": recipeIngredients[i].ingredient };
+          // var an_ingredient = { "id": ++listIdx, "name": recipeIngredients[i].ingredient };
+          var an_ingredient = { "id": ing[recipeIdx].id+"-"+(++listIdx), "name": recipeIngredients[i].ingredient };
           if (!ingredientExists(an_ingredient.name,ingredientsList)) {
             ingredientsList.push(an_ingredient);
           }
@@ -342,6 +338,7 @@ app.factory("recipesSrv", function ($q) {
     getIngredientsFromRecipe: getIngredientsFromRecipe,
     ingredientExists: ingredientExists,
     units: units,
+    sourceTypes: sourceTypes,
     createRecipe: createRecipe,
     updateRecipe: updateRecipe,
     getRecipeById: getRecipeById,
