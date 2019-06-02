@@ -23,13 +23,15 @@
             <div class="row mt-2"> 
                     <div style="float:right" class="font-weight-bold">רכיבים:&nbsp;</div>               
                 <div ng-repeat="an_ingredient in recipe.ingredients">
-                    {{an_ingredient.ingredient}},&nbsp;
+                    <a href="#" target="_blank">{{an_ingredient.ingredient}}</a>
+                    <span ng-hide="$last">,&nbsp;</span>
                 </div>
             </div>               
             <div class="row mt-2"> 
                     <div style="float:right" class="font-weight-bold">מתאים ל:&nbsp;</div>               
                 <div ng-repeat="diet in dietTypes">
-                    {{diet}},&nbsp;
+                    <a href="#" target="_blank">{{diet}}</a>
+                    <span ng-hide="$last">,&nbsp;</span>
                 </div>
             </div>         
             <div class="row mt-2">                
